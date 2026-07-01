@@ -1,0 +1,368 @@
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+  Share,
+  Linking,
+  Alert,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { BrandBar, Eyebrow, H2, Body, Card, Button } from "../components/ui";
+import Icon from "../components/Icon";
+import ScoreRing from "../components/ScoreRing";
+import { colors, mono, radius, space, withAlpha, shadow } from "../theme";
+import { QUESTIONS, calculateResults, NIST_PQC, CISA_PQC, NSA_PQC } from "../data";
+import { generateReport } from "../report";
+
+const PRIORITY_BG = {
+  Immediate: colors.danger,
+  "Within 6 Months": colors.accent,
+  "Within 1 Year": colors.primary,
+};
+
+export default function AssessmentScreen() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [results, setResults] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const scrollRef = useRef(null);
+
+  const allAnswered = answers.q8 != null;
+  const progress = Math.round(((step + (allAnswered ? 1 : 0)) / QUESTIONS.length) * 100);
+
+  const answerSingle = (qid, value, index) => {
+    setAnswers((p) => ({ ...p, [qid]: value }));
+    if (index === step && step < QUESTIONS.length - 1) setStep(step + 1);
+  };
+
+  const toggleMulti = (qid, value) => {
+    setAnswers((p) => {
+      const cur = p[qid] || [];
+      let next;
+      if (value === "none" || value === "none-reg") {
+        next = cur.includes(value) ? [] : [value];
+      } else {
+        next = cur.includes(value)
+          ? cur.filter((v) => v !== value)
+          : [...cur.filter((v) => v !== "none" && v !== "none-reg"), value];
+      }
+      return { ...p, [qid]: next };
+    });
+  };
+
+  const generate = () => {
+    setResults(calculateResults(answers));
+    setTimeout(() => scrollRef.current?.scrollTo({ y: 0, animated: true }), 60);
+  };
+
+  const restart = () => {
+    setAnswers({});
+    setResults(null);
+    setStep(0);
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
+  const onDownload = async () => {
+    try {
+      setBusy(true);
+      await generateReport(results);
+    } catch (e) {
+      Alert.alert("Could not create report", String(e?.message || e));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const onShare = async () => {
+    try {
+      await Share.share({
+        message:
+          "Is your organization ready for the quantum era? Take the free Quantum4Colorado post-quantum cybersecurity readiness assessment.",
+      });
+    } catch (e) {
+      /* user dismissed */
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.safe} edges={["top"]}>
+      <BrandBar />
+      <ScrollView
+        ref={scrollRef}
+        style={{ flex: 1, backgroundColor: colors.bg }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 48 }}
+        showsVerticalScrollIndicator={false}
+      >
+        <Eyebrow>READINESS ASSESSMENT</Eyebrow>
+        <H2>Is Your Organization Quantum-Ready?</H2>
+        <Body style={{ marginTop: 10 }}>
+          NIST finalized post-quantum cryptography standards in 2024. Every organization handling
+          sensitive data needs to understand its exposure and begin migrating. This free assessment
+          takes 3 minutes.
+        </Body>
+
+        <View style={styles.explainBox}>
+          <Text style={styles.explainText}>
+            Current encryption protects your data the way a combination lock protects a safe. A
+            quantum computer would be like a machine that tries every combination simultaneously — in
+            seconds. NIST's new PQC standards are the solution. Here's where your organization stands.
+          </Text>
+        </View>
+
+        {!results ? (
+          <>
+            {/* progress */}
+            <View style={{ marginTop: 24 }}>
+              <View style={styles.progressLabels}>
+                <Text style={styles.progressText}>
+                  Question {Math.min(step + 1, QUESTIONS.length)} of {QUESTIONS.length}
+                </Text>
+                <Text style={styles.progressText}>{progress}%</Text>
+              </View>
+              <View style={styles.progressTrack}>
+                <View style={[styles.progressFill, { width: `${progress}%` }]} />
+              </View>
+            </View>
+
+            {/* questions */}
+            <View style={{ gap: 16, marginTop: 20 }}>
+              {QUESTIONS.slice(0, step + 1).map((q, index) => {
+                const isMulti = q.type === "multi";
+                const value = answers[q.id];
+                return (
+                  <View key={q.id} style={styles.qCard}>
+                    <Text style={styles.qNum}>Q{index + 1}</Text>
+                    <Text style={styles.qPrompt}>{q.prompt}</Text>
+                    <View style={{ gap: 8, marginTop: 12 }}>
+                      {q.options.map((opt) => {
+                        const selected = isMulti
+                          ? (value || []).includes(opt.id)
+                          : value === opt.id;
+                        return (
+                          <Pressable
+                            key={opt.id}
+                            onPress={() =>
+                              isMulti
+                                ? toggleMulti(q.id, opt.id)
+                                : answerSingle(q.id, opt.id, index)
+                            }
+                            style={[styles.opt, selected && styles.optSelected]}
+                          >
+                            <View
+                              style={[
+                                styles.check,
+                                { borderRadius: isMulti ? 6 : 999 },
+                                selected && { backgroundColor: colors.primary, borderColor: colors.primary },
+                              ]}
+                            >
+                              {selected && <Icon name="CheckCircle2" size={13} color="#fff" />}
+                            </View>
+                            <Text style={[styles.optText, selected && styles.optTextSelected]}>
+                              {opt.label}
+                            </Text>
+                          </Pressable>
+                        );
+                      })}
+                    </View>
+
+                    {isMulti && index === step && step < QUESTIONS.length - 1 && (
+                      <Button
+                        label="Continue"
+                        iconRight="ArrowRight"
+                        onPress={() => setStep(step + 1)}
+                        style={{ marginTop: 14, alignSelf: "flex-start", paddingHorizontal: 24 }}
+                      />
+                    )}
+                  </View>
+                );
+              })}
+
+              {allAnswered && (
+                <Button
+                  label="See my organization's results"
+                  variant="gold"
+                  icon="ClipboardCheck"
+                  onPress={generate}
+                  style={{ marginTop: 4 }}
+                />
+              )}
+            </View>
+          </>
+        ) : (
+          <Results
+            results={results}
+            busy={busy}
+            onDownload={onDownload}
+            onShare={onShare}
+            onRestart={restart}
+          />
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+function Results({ results, busy, onDownload, onShare, onRestart }) {
+  const t = results.tier;
+  return (
+    <View style={{ marginTop: 24 }}>
+      <View style={styles.resultsHead}>
+        <Text style={styles.resultsTitle}>Your Readiness Profile</Text>
+        <Pressable onPress={onRestart} style={styles.retake}>
+          <Icon name="RotateCcw" size={15} color={colors.textSecondary} />
+          <Text style={styles.retakeText}>Retake</Text>
+        </Pressable>
+      </View>
+
+      {/* score */}
+      <Card tint={t.bg} style={{ marginTop: 14, alignItems: "center", borderColor: withAlpha(t.color, 0.35) }}>
+        <ScoreRing score={results.score} color={t.color} />
+        <View style={styles.tierRow}>
+          <Icon name={t.icon} size={18} color={t.color} />
+          <Text style={[styles.tierName, { color: t.color }]}>{t.name}</Text>
+        </View>
+        <Text style={styles.interpret}>{results.interpretation}</Text>
+      </Card>
+
+      {/* factors */}
+      <Card style={{ marginTop: 14 }}>
+        <Text style={styles.panelH}>Your specific risk factors</Text>
+        <View style={{ marginTop: 12, gap: 12 }}>
+          {results.factors.map((f, i) => (
+            <View key={i} style={styles.factorRow}>
+              <Icon name="AlertCircle" size={16} color={t.color} />
+              <Text style={styles.factorText}>{f}</Text>
+            </View>
+          ))}
+        </View>
+      </Card>
+
+      {/* actions */}
+      <Card style={{ marginTop: 14 }}>
+        <Text style={styles.panelH}>Your priority action list</Text>
+        <View style={{ marginTop: 14, gap: 18 }}>
+          {results.priorityActions.map((a, i) => (
+            <View key={i}>
+              <View style={[styles.prioBadge, { backgroundColor: PRIORITY_BG[a.priority] || colors.primary }]}>
+                <Text style={styles.prioText}>{a.priority}</Text>
+              </View>
+              <Text style={styles.actionTitle}>{a.title}</Text>
+              <Text style={styles.actionDesc}>{a.description}</Text>
+              {a.resource && (
+                <Pressable style={styles.resLink} onPress={() => Linking.openURL(a.resource.url)}>
+                  <Text style={styles.resLinkText}>{a.resource.label}</Text>
+                  <Icon name="ExternalLink" size={12} color={colors.primary} />
+                </Pressable>
+              )}
+            </View>
+          ))}
+        </View>
+      </Card>
+
+      {/* buttons */}
+      <View style={{ gap: 10, marginTop: 18 }}>
+        <Button
+          label={busy ? "Preparing report…" : "Download my report (PDF)"}
+          icon="Download"
+          onPress={busy ? undefined : onDownload}
+        />
+        <Button label="Share this assessment" variant="outline" icon="Share2" onPress={onShare} />
+      </View>
+
+      {/* resources */}
+      <Card tint={colors.bg} style={{ marginTop: 18 }}>
+        <Text style={styles.panelH}>Learn more from the source</Text>
+        <View style={{ marginTop: 12, gap: 8 }}>
+          {[NIST_PQC, CISA_PQC, NSA_PQC].map((r) => (
+            <Pressable key={r.url} style={styles.sourceRow} onPress={() => Linking.openURL(r.url)}>
+              <Icon name="ExternalLink" size={16} color={colors.primary} />
+              <Text style={styles.sourceText}>{r.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+      </Card>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: { flex: 1, backgroundColor: colors.bg },
+  explainBox: {
+    marginTop: 16,
+    backgroundColor: colors.blueTint,
+    borderLeftWidth: 4,
+    borderLeftColor: colors.primary,
+    borderTopRightRadius: radius.md,
+    borderBottomRightRadius: radius.md,
+    padding: 16,
+  },
+  explainText: { fontSize: 14, color: colors.textPrimary, lineHeight: 21 },
+  progressLabels: { flexDirection: "row", justifyContent: "space-between", marginBottom: 6 },
+  progressText: { fontFamily: mono, fontSize: 12, color: colors.textSecondary },
+  progressTrack: { height: 8, borderRadius: 999, backgroundColor: colors.border, overflow: "hidden" },
+  progressFill: { height: 8, borderRadius: 999, backgroundColor: colors.primary },
+
+  qCard: {
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.lg,
+    padding: 18,
+  },
+  qNum: { fontFamily: mono, fontSize: 11, color: colors.accent, fontWeight: "700" },
+  qPrompt: { fontSize: 16, fontWeight: "800", color: colors.textPrimary, marginTop: 4, lineHeight: 22 },
+  opt: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
+    padding: 13,
+    borderRadius: radius.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+  },
+  optSelected: { borderColor: colors.primary, backgroundColor: withAlpha(colors.primary, 0.06) },
+  check: {
+    width: 20,
+    height: 20,
+    borderWidth: 2,
+    borderColor: "#CBD5E0",
+    backgroundColor: colors.surface,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+  },
+  optText: { flex: 1, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
+  optTextSelected: { color: colors.textPrimary, fontWeight: "700" },
+
+  resultsHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  resultsTitle: { fontSize: 22, fontWeight: "900", color: colors.textPrimary, letterSpacing: -0.5 },
+  retake: { flexDirection: "row", alignItems: "center", gap: 5 },
+  retakeText: { fontSize: 14, fontWeight: "700", color: colors.textSecondary },
+  tierRow: { flexDirection: "row", alignItems: "center", gap: 8, marginTop: 16 },
+  tierName: { fontSize: 18, fontWeight: "800" },
+  interpret: { fontSize: 14, color: colors.textPrimary, lineHeight: 21, textAlign: "center", marginTop: 10 },
+  panelH: { fontSize: 17, fontWeight: "800", color: colors.textPrimary },
+  factorRow: { flexDirection: "row", gap: 10, alignItems: "flex-start" },
+  factorText: { flex: 1, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
+  prioBadge: { alignSelf: "flex-start", borderRadius: 999, paddingHorizontal: 10, paddingVertical: 3 },
+  prioText: { color: "#fff", fontFamily: mono, fontSize: 10, fontWeight: "700", letterSpacing: 0.5, textTransform: "uppercase" },
+  actionTitle: { fontSize: 15, fontWeight: "800", color: colors.textPrimary, marginTop: 6, lineHeight: 20 },
+  actionDesc: { fontSize: 14, color: colors.textSecondary, lineHeight: 20, marginTop: 4 },
+  resLink: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 6 },
+  resLinkText: { fontSize: 13, fontWeight: "700", color: colors.primary },
+  sourceRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.md,
+    padding: 14,
+  },
+  sourceText: { flex: 1, fontSize: 14, fontWeight: "700", color: colors.textPrimary },
+});
