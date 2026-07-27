@@ -1,0 +1,69 @@
+import React from "react";
+import {
+  Atom,
+  Lock,
+  Shield,
+  ShieldCheck,
+  ShieldAlert,
+  MapPin,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  Share2,
+  CheckCircle2,
+  AlertTriangle,
+  AlertCircle,
+  Building2,
+  GraduationCap,
+  Cpu,
+  Landmark,
+  FileText,
+  Mail,
+  ExternalLink,
+  RotateCcw,
+  TrendingUp,
+  Users,
+  ClipboardCheck,
+  Info,
+  Compass,
+} from "lucide-react-native";
+
+/* Registry so data files can reference icons by string name. */
+const REGISTRY = {
+  Atom,
+  Lock,
+  Shield,
+  ShieldCheck,
+  ShieldAlert,
+  MapPin,
+  ArrowRight,
+  ChevronDown,
+  ChevronUp,
+  Download,
+  Share2,
+  CheckCircle2,
+  AlertTriangle,
+  AlertCircle,
+  Building2,
+  GraduationCap,
+  Cpu,
+  Landmark,
+  FileText,
+  Mail,
+  ExternalLink,
+  RotateCcw,
+  TrendingUp,
+  Users,
+  ClipboardCheck,
+  Info,
+  Compass,
+};
+
+export default function Icon({ name, size = 20, color = "#1A1A2E", strokeWidth = 2 }) {
+  const Cmp = REGISTRY[name];
+  if (!Cmp) return null;
+  return <Cmp size={size} color={color} strokeWidth={strokeWidth} />;
+}
+
+export { REGISTRY };

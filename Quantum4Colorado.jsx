@@ -25,6 +25,19 @@ import {
   TrendingUp,
   Users,
   ClipboardCheck,
+  Briefcase,
+  Globe,
+  Layers,
+  Link2,
+  KeyRound,
+  Zap,
+  Trophy,
+  FlaskConical,
+  Laptop,
+  Code2,
+  Handshake,
+  Compass,
+  Sparkles,
 } from "lucide-react";
 import {
   BarChart,
@@ -994,6 +1007,7 @@ export default function App() {
   const storyRef = useRef(null);
   const assessmentRef = useRef(null);
   const repsRef = useRef(null);
+  const youthRef = useRef(null);
   const aboutRef = useRef(null);
   const resultsRef = useRef(null);
 
@@ -1001,12 +1015,13 @@ export default function App() {
     story: storyRef,
     assessment: assessmentRef,
     representatives: repsRef,
+    youth: youthRef,
     about: aboutRef,
   };
 
   /* active section tracking */
   useEffect(() => {
-    const refs = [storyRef, assessmentRef, repsRef, aboutRef];
+    const refs = [storyRef, assessmentRef, repsRef, youthRef, aboutRef];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1106,6 +1121,7 @@ export default function App() {
     { key: "story", label: "Colorado's Quantum Story" },
     { key: "assessment", label: "Is Your Org Ready?" },
     { key: "representatives", label: "For Representatives" },
+    { key: "youth", label: "Youth and Education" },
     { key: "about", label: "About" },
   ];
 
@@ -2055,6 +2071,16 @@ export default function App() {
         </div>
 
         {/* ======================================================= SECTION 4 */}
+        <section id="youth" ref={youthRef} className="scroll-mt-16">
+          <YouthEducation scrollTo={scrollTo} />
+        </section>
+
+        {/* Divider */}
+        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+          <QuantumLine />
+        </div>
+
+        {/* ======================================================= SECTION 5 */}
         <section
           id="about"
           ref={aboutRef}
@@ -2283,5 +2309,901 @@ function DetailRow({ label, value }) {
       </p>
       <p className="mt-1 text-sm text-[#1A1A2E] leading-relaxed">{value}</p>
     </div>
+  );
+}
+
+// ===== SECTION 4: YOUTH EDUCATION =====
+/* ---------------------------------------------------------------------------
+   "Quantum for Colorado Youth" — a fourth top-level section for students with
+   zero prior quantum knowledge. Four layers: an expandable hero, four plain-
+   language concept cards, a five-tab resource platform (competitions, summer
+   programs, online courses, Colorado-specific opportunities, and careers),
+   and a self-contained "Find Your Quantum Path" quiz.
+
+   Icon accessibility note: every icon here sits directly beside visible text
+   that already conveys the same meaning (a card title, a tab label, an
+   option label), so icons are marked aria-hidden="true" — the standard
+   accessible pattern for icons that reinforce rather than replace text.
+   Nothing in this section relies on an icon or color alone to convey meaning.
+   --------------------------------------------------------------------------- */
+
+const HERO_CARDS = [
+  {
+    title: "Your Privacy",
+    icon: Lock,
+    teaser:
+      "Every text, photo, and password you use is protected by encryption a quantum computer could eventually break.",
+    expanded:
+      "Websites and apps use math problems that are nearly impossible for regular computers to solve quickly — that's what keeps your data locked. A powerful enough quantum computer could eventually solve those same problems in a fraction of the time, which is why NIST finalized new \"quantum-safe\" encryption standards in 2024. The good news: those new standards already exist, and organizations everywhere — including right here in Colorado — are starting to switch to them.",
+  },
+  {
+    title: "Your Future Career",
+    icon: Briefcase,
+    teaser:
+      "Colorado is home to some of the world's most important quantum research institutions. These jobs didn't exist ten years ago.",
+    expanded:
+      "Ten years ago, \"quantum software developer\" wasn't a job title anywhere in the world — now Colorado companies like Quantinuum are hiring for it. Between JILA, NIST Boulder, and a growing cluster of quantum companies, Colorado has one of the highest concentrations of quantum-related job openings in the country. Whether you like physics, code, policy, or business, there's very likely a version of this field built for you.",
+  },
+  {
+    title: "The Global Race",
+    icon: Globe,
+    teaser:
+      "The US, China, and the EU are racing to build quantum computers that will reshape medicine, security, and the world economy.",
+    expanded:
+      "Countries are pouring billions of dollars into quantum computing because whoever builds the most powerful systems first could gain a major edge in medicine, encryption, and military technology. The United States' quantum strategy runs partly through Colorado — NIST Boulder wrote the post-quantum cryptography rules the rest of the world is now adopting. That puts Colorado students unusually close to the center of a decision that will shape the next few decades.",
+  },
+];
+
+const CONCEPT_CARDS = [
+  {
+    title: "Superposition",
+    icon: Layers,
+    body:
+      "Imagine flipping a coin and, while it's spinning in the air, it's genuinely both heads AND tails at once — not just unknown, but truly both. Only when it lands (when you \"observe\" it) does it become one or the other. A quantum bit, or \"qubit,\" works the same way: it can exist as both 0 and 1 simultaneously until it's measured. That's what lets quantum computers explore many possibilities at once instead of one at a time.",
+    resourceLabel: "Khan Academy",
+    // TODO: link to Khan Academy's physics fundamentals content —
+    // https://www.khanacademy.org/science/physics (accessible entry point, no prior background needed)
+  },
+  {
+    title: "Entanglement",
+    icon: Link2,
+    body:
+      "Picture two coins that are magically linked: no matter how far apart you carry them, flipping one to heads instantly makes the other one tails — every single time, faster than any signal could travel between them. Einstein called this \"spooky action at a distance\" because it seemed to break the rules of physics as he understood them. Entangled particles behave in a way that has no equivalent in everyday life, and it's a core resource quantum computers use to link qubits and quantum networks use to communicate securely.",
+    resourceLabel: "MIT OpenCourseWare",
+    // TODO: link to MIT OpenCourseWare's quantum mechanics / quantum computation materials —
+    // https://ocw.mit.edu (search "quantum entanglement") for students ready to go deeper
+  },
+  {
+    title: "Post-Quantum Cryptography",
+    icon: KeyRound,
+    body:
+      "Think of your data as valuables inside a safe, and encryption as the combination lock protecting it. Today's locks are strong enough that even a room full of regular computers guessing forever couldn't crack them in a human lifetime. A powerful quantum computer could eventually try every combination at once, cracking today's locks in a reasonable amount of time. In 2024, NIST Boulder — right here in Colorado — finalized the first official set of \"post-quantum\" locks: new encryption standards specifically designed so that even a quantum computer can't pick them.",
+    resourceLabel: "IBM Quantum Learning",
+    // TODO: link to IBM Quantum Learning's cryptography-focused modules —
+    // https://learning.quantum.ibm.com (hands-on, uses real quantum hardware)
+  },
+  {
+    title: "Quantum Advantage",
+    icon: Zap,
+    body:
+      "A common misconception is that quantum computers are just \"faster\" regular computers — they're not, and for most everyday tasks (email, browsing, homework) they'd actually be worse. Quantum computers only pull ahead on specific kinds of problems: simulating molecules for drug discovery, optimizing massive logistics networks, and breaking or building certain kinds of cryptography. \"Quantum advantage\" means finding the narrow set of problems where a quantum computer meaningfully beats the best classical computer — and scientists are still mapping out exactly where that line is.",
+    resourceLabel: "IBM Quantum Learning",
+    // TODO: link to IBM Quantum Learning's quantum advantage explainers —
+    // https://learning.quantum.ibm.com (demonstrates real use cases on real hardware)
+  },
+];
+
+const RESOURCE_TABS = [
+  {
+    id: "competitions",
+    label: "Competitions & Recognition",
+    icon: Trophy,
+    items: [
+      {
+        name: "Science Olympiad",
+        description:
+          "A national STEM competition with quantum mechanics event categories where high schoolers test their physics knowledge head-to-head.",
+        href: "#", // TODO: https://www.soinc.org
+      },
+      {
+        name: "ISEF (International Science and Engineering Fair)",
+        description:
+          "The world's largest pre-college science competition, with computational and physical sciences categories that regularly feature quantum projects.",
+        href: "#", // TODO: https://www.societyforscience.org/isef
+      },
+      {
+        name: "Q-12 Education Partnership",
+        description:
+          "A national partnership running student quantum competitions and challenges built specifically for K-12 and high school students.",
+        href: "#", // TODO: https://q12education.org
+      },
+      {
+        name: "Congressional App Challenge",
+        description:
+          "This very app is an example of a pathway into quantum policy work — a nationwide competition for student-built software with a real civic purpose.",
+        href: "#", // TODO: https://www.congressionalappchallenge.us
+      },
+    ],
+  },
+  {
+    id: "summer",
+    label: "Summer Programs & Research",
+    icon: FlaskConical,
+    items: [
+      {
+        name: "CU Boulder JILA",
+        description:
+          "Summer research opportunities for high school students to work alongside real quantum physicists in one of the world's top labs.",
+        href: "#", // TODO: https://jila.colorado.edu
+      },
+      {
+        name: "Qubit by Qubit",
+        description:
+          "An intensive summer program designed specifically for high schoolers learning quantum computing from scratch — no prior experience required.",
+        href: "#", // TODO: https://qubitbyqubit.org
+      },
+      {
+        name: "MIT Lincoln Laboratory",
+        description:
+          "High school research programs at one of the country's leading defense and quantum technology research centers.",
+        href: "#", // TODO: https://www.ll.mit.edu (see education/outreach programs)
+      },
+      {
+        name: "IBM Quantum Learning",
+        description:
+          "Summer cohort programs that pair students with mentors and real IBM quantum hardware.",
+        href: "#", // TODO: https://learning.quantum.ibm.com
+      },
+      {
+        name: "Q-12 Summer Institutes",
+        description:
+          "National quantum education summer institutes that bring students together from across the country to learn hands-on.",
+        href: "#", // TODO: https://q12education.org (summer institutes program page)
+      },
+    ],
+  },
+  {
+    id: "online",
+    label: "Online Learning Pathways",
+    icon: Laptop,
+    items: [
+      {
+        name: "IBM Quantum Learning",
+        description:
+          "A free platform that takes you from complete beginner to advanced quantum programming, using real quantum computers.",
+        href: "#", // TODO: https://learning.quantum.ibm.com
+      },
+      {
+        name: "Qubit by Qubit Intro Course",
+        description:
+          "The most accessible structured curriculum built specifically for high schoolers with zero background.",
+        href: "#", // TODO: https://qubitbyqubit.org/courses
+      },
+      {
+        name: "MIT OpenCourseWare",
+        description:
+          "Full quantum computation courses from MIT, free and open, for students ready for a deeper technical challenge.",
+        href: "#", // TODO: https://ocw.mit.edu (search "quantum computation")
+      },
+      {
+        name: "Microsoft Azure Quantum Learning",
+        description:
+          "Free, self-paced modules covering quantum concepts and Microsoft's quantum development tools.",
+        href: "#", // TODO: https://learn.microsoft.com/azure/quantum
+      },
+      {
+        name: "Quantum Computing UK",
+        description:
+          "Free educational resources and explainers written for learners at every level.",
+        href: "#", // TODO: https://quantumcomputinguk.org
+      },
+    ],
+  },
+  {
+    id: "colorado",
+    label: "Colorado-Specific Opportunities",
+    icon: MapPin,
+    items: [
+      {
+        name: "CU Boulder Quantum Research Programs",
+        description:
+          "How to reach out to faculty directly — many CU Boulder quantum researchers welcome motivated high schoolers who ask.",
+        href: "#", // TODO: https://www.colorado.edu/physics (faculty directory)
+      },
+      {
+        name: "NIST Boulder Public Programs",
+        description:
+          "Educational events and public programming hosted by the federal lab that sets the world's quantum security standards, right here in Boulder.",
+        href: "#", // TODO: https://www.nist.gov/public_affairs/visitor (Boulder public programs)
+      },
+      {
+        name: "Colorado Quantum Network",
+        description:
+          "Student engagement opportunities through Colorado's statewide consortium of quantum researchers and industry partners.",
+        href: "#", // TODO: https://coloradoquantum.org
+      },
+      {
+        name: "Colorado School of Mines",
+        description:
+          "Quantum materials research with a student inquiry contact for high schoolers interested in the physical-science side of quantum technology.",
+        href: "#", // TODO: https://www.mines.edu (physics department)
+      },
+      {
+        name: "CU Boulder Q-12 Affiliated Programs",
+        description:
+          "Programs affiliated with the national Q-12 partnership, based right on the CU Boulder campus.",
+        href: "#", // TODO: https://q12education.org (affiliated programs list)
+      },
+    ],
+  },
+  {
+    id: "careers",
+    label: "Careers in Quantum",
+    icon: Briefcase,
+    items: [], // rendered separately from CAREER_TRACKS below
+  },
+];
+
+/* Six career tracks. Shared between the Careers tab (Layer 3) and the
+   "Find Your Quantum Path" quiz results (Layer 4). */
+const CAREER_TRACKS = [
+  {
+    id: "hardware",
+    label: "Quantum Hardware Engineer",
+    icon: Cpu,
+    oneLiner: "Builds the physical machines — the actual quantum computers themselves.",
+    whatTheyBuild:
+      "The physical quantum computers themselves — superconducting circuits, trapped-ion systems, and the ultra-cold refrigeration and control electronics that keep qubits stable long enough to compute with.",
+    degreePath:
+      "A bachelor's in physics or electrical engineering, usually followed by a master's or PhD in quantum engineering or applied physics.",
+    coloradoEmployers:
+      "Quantinuum, Lockheed Martin, Ball Aerospace, and CU Boulder's JILA labs.",
+    nextStep:
+      "Take the highest-level physics and calculus your school offers, and get your hands on something — a robotics club, an Arduino kit, or a physics research project all count.",
+    resultBlurb:
+      "You lit up at \"figuring out how things physically work\" and \"building hardware that doesn't exist yet\" — that's a hardware engineer's instinct. This path is for people who want to touch the actual machine, not just the code running on it, and Colorado happens to have some of the best hardware labs on the planet.",
+    firstSteps: [
+      "Apply for a JILA summer research opportunity at CU Boulder — real lab time with real quantum physicists.",
+      "Enter Science Olympiad's quantum mechanics event category to test what you already know.",
+      "Look into Colorado School of Mines' quantum materials research for the physical-science side of hardware.",
+    ],
+  },
+  {
+    id: "software",
+    label: "Quantum Software Developer",
+    icon: Code2,
+    oneLiner: "Writes the algorithms and code that run on quantum computers.",
+    whatTheyBuild:
+      "The algorithms and programming languages that run on quantum computers, and the software that translates real-world problems into instructions a quantum processor can actually execute.",
+    degreePath:
+      "A bachelor's in computer science, often paired with coursework in linear algebra or physics.",
+    coloradoEmployers:
+      "Quantinuum's software teams, CU Boulder's Quantum Initiative, and IBM Quantum's partner network.",
+    nextStep:
+      "Start learning Python now — it's the language almost every quantum software framework, including IBM's Qiskit, is built on.",
+    resultBlurb:
+      "\"Writing code\" and \"writing software that solves hard problems\" stood out in your answers — that's a software developer's mindset. This path is for people who want to build the programs that make quantum hardware actually useful, and you can start writing real quantum code for free, today.",
+    firstSteps: [
+      "Create a free IBM Quantum Learning account and run your first program on real quantum hardware.",
+      "Work through the Qubit by Qubit Intro Course — the most beginner-friendly quantum coding curriculum built for high schoolers.",
+      "Apply to a Qubit by Qubit summer program to go deeper with structured mentorship.",
+    ],
+  },
+  {
+    id: "policy",
+    label: "Quantum Policy Analyst",
+    icon: Landmark,
+    oneLiner: "Shapes the rules and funding that determine how quantum technology gets used.",
+    whatTheyBuild:
+      "The rules, funding strategies, and international agreements that determine how quantum technology gets regulated, funded, shared, or restricted across borders. This app itself — the ecosystem data, the policy recommendations, the representative-facing tools — is an example of what this work looks like.",
+    degreePath:
+      "A bachelor's in political science, public policy, or international relations — often paired with a technical minor or a policy-focused master's degree later.",
+    coloradoEmployers:
+      "Colorado OEDIT, the Colorado Quantum Network, congressional offices including Rep. Jason Crow's, and NIST Boulder's policy divisions.",
+    nextStep:
+      "Join a debate team, Model UN, or student government, and read one real piece of technology legislation from start to finish.",
+    resultBlurb:
+      "\"Explaining complex ideas to others\" and \"influencing government policy\" point toward policy work — turning technical complexity into decisions people can actually act on. You're already closer to this path than you think: building Quantum4Colorado's Representatives section is quantum policy work.",
+    firstSteps: [
+      "Read the Representatives section of this app — it's a working example of quantum policy analysis.",
+      "Enter the Congressional App Challenge yourself; civic tech is a direct pathway into policy work.",
+      "Reach out to the Colorado Quantum Network about student engagement opportunities in state-level quantum advocacy.",
+    ],
+  },
+  {
+    id: "crypto",
+    label: "Quantum Cryptography Specialist",
+    icon: Lock,
+    oneLiner: "Protects real organizations' data against quantum-era threats.",
+    whatTheyBuild:
+      "The encryption systems that protect data against quantum attacks — implementing and testing the new NIST post-quantum cryptography standards inside real hospitals, schools, businesses, and governments.",
+    degreePath:
+      "A bachelor's in computer science, mathematics, or cybersecurity, often followed by a security certification or a master's degree.",
+    coloradoEmployers:
+      "Raytheon Technologies, Lockheed Martin, NIST Boulder, and any Colorado hospital, school district, or municipal government beginning PQC migration.",
+    nextStep:
+      "Try a beginner \"capture the flag\" cybersecurity challenge online to see what breaking and defending systems actually feels like.",
+    resultBlurb:
+      "\"Understanding why systems fail\" and \"protecting systems from attack\" are a cryptography specialist's core instincts. This path sits right at the center of the quantum threat this whole app is about — and you can see exactly what this work looks like in the readiness tool in Section 2 of this site.",
+    firstSteps: [
+      "Take the PQC Readiness Tool in Section 2 yourself and see the kind of risk analysis this job actually involves.",
+      "Try a beginner capture-the-flag cybersecurity competition to test your instincts.",
+      "Read NIST's post-quantum cryptography standards overview — the actual rules this job is built around.",
+    ],
+  },
+  {
+    id: "researcher",
+    label: "Quantum Researcher",
+    icon: GraduationCap,
+    oneLiner: "Discovers the physics that makes future quantum technology possible.",
+    whatTheyBuild:
+      "New scientific knowledge — discovering the physics that makes future quantum computers, sensors, and communication systems possible in the first place.",
+    degreePath:
+      "A bachelor's in physics, then a PhD (typically five to six years) at a research university. Colorado is home to one of the best programs anywhere: CU Boulder's JILA.",
+    coloradoEmployers:
+      "JILA, NIST Boulder, CU Boulder's Quantum Initiative, and national labs like NREL.",
+    nextStep:
+      "Email a CU Boulder or JILA professor whose research interests you and ask if they take high school interns — many genuinely do.",
+    resultBlurb:
+      "\"I love unsolved problems\" and a pull toward math and physics point to research — the path for people who want to discover something no one has proven yet. You happen to live in a state with one of the best quantum physics institutes on Earth.",
+    firstSteps: [
+      "Apply for a JILA summer research opportunity at CU Boulder.",
+      "Work through MIT OpenCourseWare's quantum computation materials to see what the coursework actually looks like.",
+      "Enter ISEF's computational or physical sciences category with an independent research project.",
+    ],
+  },
+  {
+    id: "business",
+    label: "Quantum Business Development",
+    icon: Handshake,
+    oneLiner: "Turns quantum research into companies, partnerships, and jobs.",
+    whatTheyBuild:
+      "The partnerships, funding deals, and go-to-market strategy that turn quantum research into actual companies, products, and jobs — the connective tissue between the lab and the market.",
+    degreePath:
+      "A bachelor's in business, economics, or a technical field, often paired with an MBA later. Technical fluency helps but isn't required.",
+    coloradoEmployers:
+      "Quantinuum's business and partnerships teams, Colorado OEDIT's Advanced Industries program, and quantum-adjacent startups statewide.",
+    nextStep:
+      "Start following Colorado's quantum startup funding news, and practice explaining a complex technical idea to a non-technical friend in under a minute.",
+    resultBlurb:
+      "\"Strategy and big-picture thinking\" and the pull toward the \"intersection of business and technology\" point toward business development — the role that turns brilliant research into a company people can actually work at. Colorado's quantum industry needs this as much as it needs engineers.",
+    firstSteps: [
+      "Follow Colorado OEDIT's Advanced Industries program to see how the state supports quantum companies.",
+      "Enter a business plan or pitch competition, even a school-level one, to practice the core skill.",
+      "Read about Quantinuum's growth from a Colorado-headquartered company into a global leader.",
+    ],
+  },
+];
+
+/* Five questions. Each option maps to one of the six CAREER_TRACKS ids.
+   The mapping order is deliberately varied question-to-question (not a
+   fixed option-index → track formula) so results feel genuinely
+   personalized rather than mechanical. */
+const QUIZ_QUESTIONS = [
+  {
+    prompt: "What do you like most about problem-solving?",
+    options: [
+      { label: "Figuring out how things physically work", track: "hardware" },
+      { label: "Writing code", track: "software" },
+      { label: "Understanding why systems fail", track: "crypto" },
+      { label: "Explaining complex ideas to others", track: "policy" },
+      { label: "Strategy and big-picture thinking", track: "business" },
+    ],
+  },
+  {
+    prompt: "Which subject comes most naturally to you?",
+    options: [
+      { label: "Physics", track: "hardware" },
+      { label: "Computer Science", track: "software" },
+      { label: "Math", track: "researcher" },
+      { label: "Writing and debate", track: "policy" },
+      { label: "Economics and social science", track: "business" },
+    ],
+  },
+  {
+    prompt: "What sounds most exciting?",
+    options: [
+      { label: "Building hardware that doesn't exist yet", track: "hardware" },
+      { label: "Writing software that solves hard problems", track: "software" },
+      { label: "Protecting systems from attack", track: "crypto" },
+      { label: "Influencing government policy", track: "policy" },
+      {
+        label: "Working at the intersection of business and technology",
+        track: "business",
+      },
+    ],
+  },
+  {
+    prompt: "What's your relationship with ambiguity?",
+    options: [
+      { label: "I love unsolved problems", track: "researcher" },
+      { label: "I prefer clear specifications", track: "hardware" },
+      { label: "I like figuring out the rules of a system", track: "crypto" },
+      { label: "I like arguing about what the rules should be", track: "policy" },
+    ],
+  },
+  {
+    prompt: "Where do you want to work?",
+    options: [
+      { label: "Research lab or university", track: "researcher" },
+      { label: "Tech company", track: "software" },
+      { label: "Government or national security", track: "crypto" },
+      { label: "Policy organization or think tank", track: "policy" },
+      { label: "Startup", track: "business" },
+    ],
+  },
+];
+
+/* Stable tally order — used only to break ties deterministically (first
+   track reaching the high score in this order wins). */
+const TRACK_TALLY_ORDER = [
+  "hardware",
+  "software",
+  "policy",
+  "crypto",
+  "researcher",
+  "business",
+];
+
+function computeQuizResult(answers) {
+  const tally = {};
+  TRACK_TALLY_ORDER.forEach((id) => (tally[id] = 0));
+  answers.forEach((track) => {
+    if (track && tally[track] != null) tally[track] += 1;
+  });
+  let bestId = TRACK_TALLY_ORDER[0];
+  TRACK_TALLY_ORDER.forEach((id) => {
+    if (tally[id] > tally[bestId]) bestId = id;
+  });
+  return CAREER_TRACKS.find((track) => track.id === bestId);
+}
+
+function YouthEducation({ scrollTo }) {
+  // Layer 1: entry-point hero (expand-in-place, not a modal)
+  const [expandedHero, setExpandedHero] = useState(null);
+
+  // Layer 3: resource platform tabs + expandable career cards
+  const [activeResourceTab, setActiveResourceTab] = useState("competitions");
+  const [expandedCareer, setExpandedCareer] = useState(null);
+
+  // Layer 4: "Find Your Quantum Path" quiz — self-contained state
+  const [quizStep, setQuizStep] = useState(0);
+  const [quizAnswers, setQuizAnswers] = useState([]);
+  const [quizDone, setQuizDone] = useState(false);
+
+  const selectQuizAnswer = (questionIndex, track) => {
+    setQuizAnswers((prev) => {
+      const next = [...prev];
+      next[questionIndex] = track;
+      return next;
+    });
+    if (questionIndex === quizStep) {
+      if (quizStep < QUIZ_QUESTIONS.length - 1) {
+        setQuizStep(quizStep + 1);
+      } else {
+        setQuizDone(true);
+      }
+    }
+  };
+
+  const retakeQuiz = () => {
+    setQuizStep(0);
+    setQuizAnswers([]);
+    setQuizDone(false);
+  };
+
+  const quizResult = quizDone ? computeQuizResult(quizAnswers) : null;
+  const quizAnsweredCount = quizAnswers.filter(Boolean).length;
+
+  return (
+    <>
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
+        <QuantumLine />
+      </div>
+
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
+        {/* header */}
+        <div className="max-w-3xl">
+          <SectionLabel>Youth &amp; Education</SectionLabel>
+          <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+            Quantum for Colorado Youth
+          </h2>
+          <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
+            You don't need to know any physics to start here. This is what
+            quantum computing actually means for you — your privacy, your
+            future job, and Colorado's place in a race that's already
+            underway.
+          </p>
+        </div>
+
+        {/* -------------------------- Layer 1: hero cards -------------------------- */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+          {HERO_CARDS.map((card, i) => {
+            const Icon = card.icon;
+            const open = expandedHero === i;
+            return (
+              <div
+                key={card.title}
+                className={`rounded-2xl border p-6 transition-colors ${
+                  open
+                    ? "border-[#1B3A6B] bg-[#1B3A6B]/5"
+                    : "border-[#E2E8F0] bg-white"
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setExpandedHero(open ? null : i)}
+                  aria-expanded={open}
+                  className="w-full text-left rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                >
+                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#1B3A6B]/10">
+                    <Icon className="w-6 h-6 text-[#1B3A6B]" aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 font-bold text-lg text-[#1A1A2E]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-2 text-[#4A5568] leading-relaxed">
+                    {card.teaser}
+                  </p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
+                    {open ? "Show less" : "Tell me more"}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        open ? "rotate-180" : ""
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </span>
+                </button>
+                {open && (
+                  <p className="mt-4 pt-4 border-t border-[#E2E8F0] text-sm text-[#1A1A2E] leading-relaxed">
+                    {card.expanded}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* -------------------------- Layer 2: concept cards ------------------------ */}
+        <div className="mt-16">
+          <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
+            Quantum Concepts You Can Actually Understand
+          </h3>
+          <p className="mt-2 text-[#4A5568]">
+            No math. No formulas. Just the ideas, explained with things you
+            already know.
+          </p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {CONCEPT_CARDS.map((c) => {
+              const Icon = c.icon;
+              return (
+                <div
+                  key={c.title}
+                  className="rounded-2xl bg-white border border-[#E2E8F0] p-7"
+                >
+                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#2E7D52]/10">
+                    <Icon className="w-6 h-6 text-[#2E7D52]" aria-hidden="true" />
+                  </span>
+                  <h4 className="mt-4 font-bold text-lg text-[#1A1A2E]">
+                    {c.title}
+                  </h4>
+                  <p className="mt-3 text-[#4A5568] leading-relaxed">
+                    {c.body}
+                  </p>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                  >
+                    Go deeper on {c.resourceLabel}
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* -------------------------- Layer 3: resource platform --------------------- */}
+        <div className="mt-16">
+          <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
+            Your Roadmap: Competitions, Programs, and Careers
+          </h3>
+          <p className="mt-2 text-[#4A5568]">
+            Real opportunities, organized by what you're looking for.
+          </p>
+
+          <div
+            className="mt-6 flex flex-wrap gap-2"
+            role="tablist"
+            aria-label="Youth resource categories"
+          >
+            {RESOURCE_TABS.map((tab) => {
+              const Icon = tab.icon;
+              const active = activeResourceTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  onClick={() => setActiveResourceTab(tab.id)}
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2 ${
+                    active
+                      ? "bg-[#1B3A6B] text-white border-[#1B3A6B]"
+                      : "bg-white text-[#4A5568] border-[#E2E8F0] hover:border-[#1B3A6B]/40"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" aria-hidden="true" />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* non-career resource tabs */}
+          {RESOURCE_TABS.filter(
+            (t) => t.id === activeResourceTab && t.id !== "careers"
+          ).map((tab) => (
+            <div
+              key={tab.id}
+              role="tabpanel"
+              className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5"
+            >
+              {tab.items.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] p-6 hover:border-[#1B3A6B]/40 hover:shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h4 className="font-bold text-[#1A1A2E] leading-snug">
+                      {item.name}
+                    </h4>
+                    <ExternalLink
+                      className="w-4 h-4 text-[#1B3A6B] shrink-0 opacity-60 group-hover:opacity-100"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-[#4A5568] leading-relaxed">
+                    {item.description}
+                  </p>
+                </a>
+              ))}
+            </div>
+          ))}
+
+          {/* careers tab */}
+          {activeResourceTab === "careers" && (
+            <div
+              role="tabpanel"
+              className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5"
+            >
+              {CAREER_TRACKS.map((track, i) => {
+                const Icon = track.icon;
+                const open = expandedCareer === i;
+                return (
+                  <div
+                    key={track.id}
+                    className={`rounded-2xl border bg-white p-6 ${
+                      open ? "border-[#1B3A6B]" : "border-[#E2E8F0]"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setExpandedCareer(open ? null : i)}
+                      aria-expanded={open}
+                      className="w-full text-left rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#1B3A6B]/10 shrink-0">
+                          <Icon
+                            className="w-5 h-5 text-[#1B3A6B]"
+                            aria-hidden="true"
+                          />
+                        </span>
+                        <ChevronDown
+                          className={`w-5 h-5 text-[#1B3A6B] shrink-0 mt-2 transition-transform ${
+                            open ? "rotate-180" : ""
+                          }`}
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <h4 className="mt-3 font-bold text-lg text-[#1A1A2E]">
+                        {track.label}
+                      </h4>
+                      <p className="mt-1 text-sm text-[#4A5568]">
+                        {track.oneLiner}
+                      </p>
+                    </button>
+                    {open && (
+                      <div className="mt-4 pt-4 border-t border-[#E2E8F0] space-y-3">
+                        <DetailRow
+                          label="What they build"
+                          value={track.whatTheyBuild}
+                        />
+                        <DetailRow label="Degree path" value={track.degreePath} />
+                        <DetailRow
+                          label="Colorado employers"
+                          value={track.coloradoEmployers}
+                        />
+
+                        {track.id === "crypto" && (
+                          <button
+                            type="button"
+                            onClick={() => scrollTo && scrollTo("assessment")}
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                          >
+                            See the PQC Readiness Tool in action
+                            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          </button>
+                        )}
+                        {track.id === "policy" && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              scrollTo && scrollTo("representatives")
+                            }
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                          >
+                            See Colorado quantum policy in action
+                            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          </button>
+                        )}
+
+                        <p className="text-sm text-[#1A1A2E] leading-relaxed">
+                          <span className="font-bold">
+                            Your Next Step From High School:{" "}
+                          </span>
+                          {track.nextStep}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* -------------------------- Layer 4: quiz ---------------------------------- */}
+        <div className="mt-16 rounded-2xl bg-[#1B3A6B] text-white p-7 sm:p-10">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 shrink-0">
+              <Compass className="w-6 h-6 text-[#C4872A]" aria-hidden="true" />
+            </span>
+            <div>
+              <h3 className="font-black tracking-tight text-2xl">
+                Find Your Quantum Path
+              </h3>
+              <p className="text-blue-100/80 text-sm mt-0.5">
+                Five quick questions. No wrong answers.
+              </p>
+            </div>
+          </div>
+
+          {!quizDone && (
+            <div className="mt-8">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-mono text-xs tracking-wider uppercase text-blue-100/70">
+                  Question {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)} of{" "}
+                  {QUIZ_QUESTIONS.length}
+                </span>
+              </div>
+              <div className="h-2 rounded-full bg-white/15 overflow-hidden">
+                <div
+                  className="h-full bg-[#C4872A] transition-all duration-500"
+                  style={{
+                    width: `${(quizAnsweredCount / QUIZ_QUESTIONS.length) * 100}%`,
+                  }}
+                />
+              </div>
+
+              <div className="mt-6">
+                <p className="font-bold text-lg">
+                  {QUIZ_QUESTIONS[quizStep].prompt}
+                </p>
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {QUIZ_QUESTIONS[quizStep].options.map((opt) => {
+                    const selected = quizAnswers[quizStep] === opt.track;
+                    return (
+                      <button
+                        key={opt.label}
+                        type="button"
+                        onClick={() => selectQuizAnswer(quizStep, opt.track)}
+                        aria-pressed={selected}
+                        className={`text-left rounded-xl border p-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2 ${
+                          selected
+                            ? "border-[#C4872A] bg-white/10 font-semibold"
+                            : "border-white/20 bg-white/5 hover:border-white/40"
+                        }`}
+                      >
+                        {opt.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {quizDone && quizResult && (
+            <div className="mt-8">
+              <p className="font-mono text-xs tracking-wider uppercase text-[#C4872A]">
+                Your result
+              </p>
+              <h4 className="mt-1 font-black text-2xl sm:text-3xl flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-[#C4872A]" aria-hidden="true" />
+                You're built for {quizResult.label}
+              </h4>
+              <p className="mt-3 text-blue-100/90 leading-relaxed max-w-2xl">
+                {quizResult.resultBlurb}
+              </p>
+
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {quizResult.firstSteps.map((step, i) => (
+                  <div
+                    key={i}
+                    className="rounded-xl bg-white/10 border border-white/15 p-4"
+                  >
+                    <span className="font-mono text-xs text-[#C4872A]">
+                      Step {i + 1}
+                    </span>
+                    <p className="mt-1 text-sm text-white leading-relaxed">
+                      {step}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {quizResult.id === "policy" && (
+                <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
+                  <p className="text-sm text-white leading-relaxed mb-2">
+                    Quantum policy work looks a lot like the Representatives
+                    section of this very app.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => scrollTo && scrollTo("representatives")}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                  >
+                    See what quantum policy work looks like in practice
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+              {quizResult.id === "crypto" && (
+                <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
+                  <p className="text-sm text-white leading-relaxed mb-2">
+                    Curious what this looks like in the real world?
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => scrollTo && scrollTo("assessment")}
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                  >
+                    See how quantum cryptography protects real organizations
+                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                  </button>
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={retakeQuiz}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
+              >
+                <RotateCcw className="w-4 h-4" aria-hidden="true" />
+                Retake quiz
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 }
