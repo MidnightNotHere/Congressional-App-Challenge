@@ -36,7 +36,7 @@ npm run build
 npm run preview
 ```
 
-## Generating the readiness report (PDF)
+## Generating the readiness report (Is PDF)
 
 In the **Is Your Org Ready?** section, complete the assessment and click **Download my organization's report (PDF)**. This triggers the browser's print dialog showing only the formatted report — choose **Save as PDF** as the destination.
 
