@@ -9,6 +9,7 @@ import { colors } from "./src/theme";
 import StoryScreen from "./src/screens/StoryScreen";
 import AssessmentScreen from "./src/screens/AssessmentScreen";
 import RepsScreen from "./src/screens/RepsScreen";
+import YouthScreen from "./src/screens/YouthScreen";
 import AboutScreen from "./src/screens/AboutScreen";
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +18,7 @@ const TAB_ICON = {
   Story: "Compass",
   Assessment: "ShieldCheck",
   Reps: "Landmark",
+  Youth: "GraduationCap",
   About: "Info",
 };
 
@@ -50,6 +52,7 @@ export default function App() {
             options={{ tabBarLabel: "Readiness" }}
           />
           <Tab.Screen name="Reps" component={RepsScreen} options={{ tabBarLabel: "Policy" }} />
+          <Tab.Screen name="Youth" component={YouthScreen} options={{ tabBarLabel: "Youth" }} />
           <Tab.Screen name="About" component={AboutScreen} options={{ tabBarLabel: "About" }} />
         </Tab.Navigator>
       </NavigationContainer>

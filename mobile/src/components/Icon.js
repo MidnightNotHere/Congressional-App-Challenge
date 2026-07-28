@@ -27,6 +27,18 @@ import {
   ClipboardCheck,
   Info,
   Compass,
+  Briefcase,
+  Globe,
+  Layers,
+  Link2,
+  KeyRound,
+  Zap,
+  Trophy,
+  FlaskConical,
+  Laptop,
+  Code2,
+  Handshake,
+  Sparkles,
 } from "lucide-react-native";
 
 /* Registry so data files can reference icons by string name. */
@@ -58,6 +70,18 @@ const REGISTRY = {
   ClipboardCheck,
   Info,
   Compass,
+  Briefcase,
+  Globe,
+  Layers,
+  Link2,
+  KeyRound,
+  Zap,
+  Trophy,
+  FlaskConical,
+  Laptop,
+  Code2,
+  Handshake,
+  Sparkles,
 };
 
 export default function Icon({ name, size = 20, color = "#1A1A2E", strokeWidth = 2 }) {
