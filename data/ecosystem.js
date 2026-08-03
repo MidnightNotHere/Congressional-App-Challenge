@@ -59,6 +59,7 @@ export const ECOSYSTEM_TABS = [
         role: "Sets US post-quantum cryptography standards.",
         significance:
           "PQC standards finalized here in 2024 are the foundation of national quantum security policy.",
+        source: "https://csrc.nist.gov/projects/post-quantum-cryptography",
       },
       {
         name: "National Renewable Energy Laboratory (NREL)",
@@ -66,6 +67,7 @@ export const ECOSYSTEM_TABS = [
         role: "Quantum computing applications for energy systems.",
         significance:
           "Connects Colorado's quantum capacity to the future of the national power grid.",
+        source: "https://www.nrel.gov",
       },
       {
         name: "Rocky Mountain Regional Cyber Center",
@@ -90,6 +92,7 @@ export const ECOSYSTEM_TABS = [
           "World-class quantum physics research institute, a joint CU Boulder / NIST program. 140+ researchers.",
         significance:
           "Consistently ranked among the top quantum physics institutes in the world.",
+        source: "https://jila.colorado.edu",
       },
       {
         name: "CU Boulder Quantum Initiative",
@@ -98,6 +101,7 @@ export const ECOSYSTEM_TABS = [
           "Undergraduate and graduate quantum research programs, with multiple active quantum computing labs.",
         significance:
           "The talent pipeline feeding national labs and Colorado's quantum companies.",
+        source: "https://www.colorado.edu/physics",
       },
       {
         name: "Colorado School of Mines",
@@ -105,6 +109,7 @@ export const ECOSYSTEM_TABS = [
         role: "Quantum materials research programs.",
         significance:
           "Builds the foundational materials science that quantum hardware depends on.",
+        source: "https://www.mines.edu",
       },
       {
         name: "Colorado State University",
@@ -112,6 +117,7 @@ export const ECOSYSTEM_TABS = [
         role: "Quantum sensing and photonics research.",
         significance:
           "Extends Colorado's quantum strength beyond the Front Range corridor.",
+        source: "https://www.colostate.edu",
       },
     ],
   },
@@ -129,6 +135,7 @@ export const ECOSYSTEM_TABS = [
           "Quantum computing hardware and software — one of the world's leading quantum computing companies, headquartered in Colorado.",
         significance:
           "A globally significant quantum company chose Colorado as its home base.",
+        source: "https://www.quantinuum.com",
       },
       {
         name: "Ball Aerospace",
@@ -167,6 +174,7 @@ export const ECOSYSTEM_TABS = [
           "Consortium of Colorado quantum researchers and industry partners advocating for state quantum investment.",
         significance:
           "The closest thing Colorado has to a coordinated quantum strategy today.",
+        source: "https://coloradoquantum.org",
       },
       {
         name:
@@ -176,6 +184,7 @@ export const ECOSYSTEM_TABS = [
           "Advanced Industries program covering the quantum technology sector.",
         significance:
           "The state agency best positioned to lead a formal quantum initiative.",
+        source: "https://oedit.colorado.gov",
       },
     ],
   },
@@ -207,6 +216,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Thousands of federal scientists and staff across NIST Boulder.",
     connection:
       "NIST Boulder authored the post-quantum cryptography standards finalized in 2024 that now anchor national and global quantum security policy. No other state hosts the body that writes these rules.",
+    source: "https://csrc.nist.gov/projects/post-quantum-cryptography",
   },
   {
     name: "JILA at CU Boulder",
@@ -216,6 +226,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "140+ researchers, plus graduate and postdoctoral scientists.",
     connection:
       "JILA is consistently ranked among the world's premier quantum physics institutes and is a primary reason quantum talent and companies cluster in Colorado.",
+    source: "https://jila.colorado.edu",
   },
   {
     name: "Quantinuum",
@@ -225,6 +236,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Hundreds of employees across its Colorado operations.",
     connection:
       "One of the world's leading quantum computing companies is headquartered in Colorado, giving the state a globally significant private-sector anchor.",
+    source: "https://www.quantinuum.com",
   },
   {
     name: "CU Boulder Quantum Initiative",
@@ -234,6 +246,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Faculty, research staff, and a large student population.",
     connection:
       "Produces the steady supply of quantum-trained graduates that national labs and Colorado companies depend on.",
+    source: "https://www.colorado.edu/physics",
   },
   {
     name: "National Renewable Energy Laboratory (NREL)",
@@ -243,6 +256,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "A large federal research workforce in Golden.",
     connection:
       "Links Colorado's quantum capability to national energy infrastructure and clean-energy leadership.",
+    source: "https://www.nrel.gov",
   },
   {
     name: "Colorado School of Mines",
@@ -252,6 +266,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Faculty and graduate research programs.",
     connection:
       "Strengthens the materials-science foundation that quantum hardware development requires.",
+    source: "https://www.mines.edu",
   },
   {
     name: "Colorado State University",
@@ -261,6 +276,7 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Faculty and graduate research programs.",
     connection:
       "Broadens Colorado's quantum strengths beyond the Boulder–Denver corridor into northern Colorado.",
+    source: "https://www.colostate.edu",
   },
   {
     name: "Colorado Quantum Network (CQN)",
@@ -271,19 +287,87 @@ export const DETAILED_ECOSYSTEM = [
     employment: "Member institutions across the state.",
     connection:
       "The most natural partner for any future state-led quantum economic development initiative.",
+    source: "https://coloradoquantum.org",
   },
 ];
 
-/* About section's simple source list. Phase 3 replaces/expands this with a
-   full "Where This Data Comes From" page (organization, what it supports,
-   and a link) — kept here in the meantime since both apps already share it. */
-export const DATA_SOURCES = [
-  "NIST (National Institute of Standards and Technology)",
-  "CISA Post-Quantum Cryptography Initiative",
-  "NSA quantum-resistant algorithm guidance",
-  "CU Boulder and JILA public records",
-  "Colorado OEDIT — Advanced Industries program",
-  "Colorado Quantum Network",
-  "Publicly available company information",
-  "State quantum initiative public announcements",
+/* About section's "Where This Data Comes From" page. Every factual claim
+   in the app traces back to one of these — organization, what it supports
+   in the app, and (where a single canonical page exists) a link. Entries
+   without a `url` are broad categories (e.g. public company information
+   spread across several sources) rather than one citable page. */
+export const SOURCES = [
+  {
+    organization: "NIST (National Institute of Standards and Technology)",
+    supports:
+      "The post-quantum cryptography standards behind the Readiness Tool's scoring, the PQC concept explainers, and NIST Boulder's ecosystem entries.",
+    url: "https://csrc.nist.gov/projects/post-quantum-cryptography",
+  },
+  {
+    organization: "CISA (Cybersecurity and Infrastructure Security Agency)",
+    supports:
+      "Public-sector post-quantum migration guidance behind several of the Readiness Tool's action-list recommendations.",
+    url: "https://www.cisa.gov/quantum",
+  },
+  {
+    organization: "NSA (National Security Agency)",
+    supports:
+      "Quantum-resistant algorithm guidance referenced in the Readiness Tool's defense-contractor action list.",
+    url: "https://www.nsa.gov/Cybersecurity/Quantum-Key-Distribution-QKD-and-Quantum-Cryptography-QC/",
+  },
+  {
+    organization: "JILA at CU Boulder",
+    supports:
+      "Researcher counts, program descriptions, and the \"Why Colorado Is Leading\" framing across the ecosystem map.",
+    url: "https://jila.colorado.edu",
+  },
+  {
+    organization: "CU Boulder Department of Physics",
+    supports: "The CU Boulder Quantum Initiative's ecosystem entries.",
+    url: "https://www.colorado.edu/physics",
+  },
+  {
+    organization: "Colorado OEDIT (Office of Economic Development and International Trade)",
+    supports:
+      "The state economic development framing and the Advanced Industries program entry in the ecosystem map and policy recommendations.",
+    url: "https://oedit.colorado.gov",
+  },
+  {
+    organization: "Colorado Quantum Network",
+    supports:
+      "The statewide consortium entry in the ecosystem map and the investment-gap policy framing.",
+    url: "https://coloradoquantum.org",
+  },
+  {
+    organization: "National Renewable Energy Laboratory (NREL)",
+    supports: "The federal facility entry covering energy-sector quantum applications.",
+    url: "https://www.nrel.gov",
+  },
+  {
+    organization: "Colorado School of Mines",
+    supports: "The university research entry covering quantum materials research.",
+    url: "https://www.mines.edu",
+  },
+  {
+    organization: "Colorado State University",
+    supports: "The university research entry covering quantum sensing and photonics.",
+    url: "https://www.colostate.edu",
+  },
+  {
+    organization: "Quantinuum",
+    supports: "The industry entry covering Colorado-headquartered quantum computing hardware and software.",
+    url: "https://www.quantinuum.com",
+  },
+  {
+    organization: "Publicly available company information",
+    supports:
+      "Industry entries without a single dedicated source page — Ball Aerospace, Lockheed Martin, and Raytheon Technologies' quantum-relevant work.",
+    url: null,
+  },
+  {
+    organization: "State quantum initiative public announcements",
+    supports:
+      "The investment-gap comparison table (Illinois Quantum Act, New York's IBM quantum campus, California's research funding).",
+    url: null,
+  },
 ];

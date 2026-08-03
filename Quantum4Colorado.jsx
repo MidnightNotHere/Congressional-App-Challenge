@@ -56,7 +56,7 @@ import {
   STRENGTHS,
   GAPS,
   DETAILED_ECOSYSTEM,
-  DATA_SOURCES,
+  SOURCES,
 } from "./data/ecosystem.js";
 import {
   QUESTIONS,
@@ -1303,18 +1303,46 @@ export default function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#1A1A2E]">Data sources</h3>
-                <ul className="mt-2 grid gap-2 sm:grid-cols-2">
-                  {DATA_SOURCES.map((src) => (
-                    <li
-                      key={src}
-                      className="flex gap-2 text-sm text-[#4A5568]"
-                    >
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#C4872A] shrink-0" />
-                      {src}
-                    </li>
-                  ))}
-                </ul>
+                <h3 className="font-bold text-lg text-[#1A1A2E]">
+                  Where This Data Comes From
+                </h3>
+                <p className="mt-2 text-sm text-[#4A5568]">
+                  Every ecosystem entry, assessment recommendation, and policy
+                  claim in this app traces back to one of these sources.
+                </p>
+                <div className="mt-4 rounded-2xl border border-[#E2E8F0] bg-white divide-y divide-[#E2E8F0] overflow-hidden">
+                  {SOURCES.map((src) => {
+                    const content = (
+                      <>
+                        <p className="font-semibold text-sm text-[#1A1A2E]">
+                          {src.organization}
+                        </p>
+                        <p className="mt-1 text-xs text-[#4A5568] leading-relaxed">
+                          {src.supports}
+                        </p>
+                      </>
+                    );
+                    return src.url ? (
+                      <a
+                        key={src.organization}
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-start justify-between gap-3 p-4 hover:bg-[#F7F8FA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-inset"
+                      >
+                        <div>{content}</div>
+                        <ExternalLink
+                          className="w-4 h-4 text-[#1B3A6B] shrink-0 mt-0.5 opacity-60 group-hover:opacity-100"
+                          aria-hidden="true"
+                        />
+                      </a>
+                    ) : (
+                      <div key={src.organization} className="p-4">
+                        {content}
+                      </div>
+                    );
+                  })}
+                </div>
                 <p className="mt-3 text-xs text-[#4A5568] leading-relaxed">
                   Statistics are drawn from public sources. Figures such as
                   federal investment and researcher counts are approximate and

@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, Pressable, StyleSheet, Linking } from "react-native";
-import { Screen, Eyebrow, H2, Body, Card } from "../components/ui";
+import { Screen, Eyebrow, H2, Body } from "../components/ui";
 import Icon from "../components/Icon";
 import QuantumLine from "../components/QuantumLine";
 import { colors, mono, radius, withAlpha } from "../theme";
-import { DATA_SOURCES } from "../data";
+import { SOURCES } from "../data";
 
 export default function AboutScreen() {
   return (
@@ -25,17 +25,37 @@ export default function AboutScreen() {
           act on it deserve a clear, accessible resource to start from.
         </Block>
 
-        <Text style={styles.blockTitle}>Data sources</Text>
-        <Card tint={colors.bg} style={{ marginTop: 10 }}>
-          <View style={{ gap: 10 }}>
-            {DATA_SOURCES.map((s) => (
-              <View key={s} style={styles.srcRow}>
-                <View style={styles.srcDot} />
-                <Text style={styles.srcText}>{s}</Text>
+        <Text style={styles.blockTitle}>Where This Data Comes From</Text>
+        <Body style={{ marginTop: 6 }}>
+          Every ecosystem entry, assessment recommendation, and policy claim in this app traces
+          back to one of these sources.
+        </Body>
+        <View style={styles.sourceList}>
+          {SOURCES.map((s, i) => {
+            const row = (
+              <>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.sourceOrg}>{s.organization}</Text>
+                  <Text style={styles.sourceSupports}>{s.supports}</Text>
+                </View>
+                {s.url && <Icon name="ExternalLink" size={16} color={colors.primary} />}
+              </>
+            );
+            return s.url ? (
+              <Pressable
+                key={s.organization}
+                onPress={() => Linking.openURL(s.url)}
+                style={[styles.sourceRow, i > 0 && styles.sourceDivider]}
+              >
+                {row}
+              </Pressable>
+            ) : (
+              <View key={s.organization} style={[styles.sourceRow, i > 0 && styles.sourceDivider]}>
+                {row}
               </View>
-            ))}
-          </View>
-        </Card>
+            );
+          })}
+        </View>
         <Text style={styles.disclaimer}>
           Statistics are drawn from public sources and are approximate, reflecting the most recent
           publicly available reporting. Quantum-threat timelines are inherently uncertain; this
@@ -74,9 +94,18 @@ function Block({ title, children }) {
 const styles = StyleSheet.create({
   section: { paddingHorizontal: 20, paddingVertical: 28 },
   blockTitle: { fontSize: 17, fontWeight: "800", color: colors.textPrimary, marginTop: 24 },
-  srcRow: { flexDirection: "row", alignItems: "flex-start", gap: 10 },
-  srcDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: colors.accent, marginTop: 7 },
-  srcText: { flex: 1, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
+  sourceList: {
+    marginTop: 14,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.lg,
+    overflow: "hidden",
+  },
+  sourceRow: { flexDirection: "row", alignItems: "flex-start", gap: 10, padding: 14 },
+  sourceDivider: { borderTopWidth: 1, borderTopColor: colors.border },
+  sourceOrg: { fontSize: 14, fontWeight: "700", color: colors.textPrimary },
+  sourceSupports: { fontSize: 12, color: colors.textSecondary, lineHeight: 18, marginTop: 3 },
   disclaimer: { fontSize: 12, color: colors.textMuted, lineHeight: 18, marginTop: 12 },
   mail: {
     flexDirection: "row",
