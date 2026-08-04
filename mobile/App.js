@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Icon from "./src/components/Icon";
 import { colors } from "./src/theme";
+import { LanguageProvider } from "./src/i18n/LanguageContext";
 import StoryScreen from "./src/screens/StoryScreen";
 import AssessmentScreen from "./src/screens/AssessmentScreen";
 import RepsScreen from "./src/screens/RepsScreen";
@@ -25,6 +26,7 @@ const TAB_ICON = {
 export default function App() {
   return (
     <SafeAreaProvider>
+      <LanguageProvider>
       <StatusBar style="dark" />
       <NavigationContainer>
         <Tab.Navigator
@@ -56,6 +58,7 @@ export default function App() {
           <Tab.Screen name="About" component={AboutScreen} options={{ tabBarLabel: "About" }} />
         </Tab.Navigator>
       </NavigationContainer>
+      </LanguageProvider>
     </SafeAreaProvider>
   );
 }

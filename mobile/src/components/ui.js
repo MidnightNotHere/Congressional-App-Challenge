@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "./Icon";
 import { colors, mono, radius, space, shadow, withAlpha } from "../theme";
+import { useLanguage, LANGUAGES } from "../i18n/LanguageContext";
 
 /* Gold uppercase eyebrow label above section headings. */
 export function Eyebrow({ children, color = colors.accent }) {
@@ -76,14 +77,33 @@ const VARIANTS = {
 
 /* Branded top bar shown on every screen. */
 export function BrandBar() {
+  const { lang, setLang } = useLanguage();
   return (
     <View style={styles.brandBar}>
       <View style={styles.logoMark}>
         <Icon name="Atom" size={18} color={colors.accent} />
       </View>
-      <Text style={styles.brandText}>
+      <Text style={[styles.brandText, { flex: 1 }]}>
         Quantum<Text style={{ color: colors.accent }}>4</Text>Colorado
       </Text>
+      <View style={styles.langToggle}>
+        {LANGUAGES.map((l) => {
+          const active = lang === l.code;
+          return (
+            <Pressable
+              key={l.code}
+              onPress={() => setLang(l.code)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: active }}
+              style={[styles.langPill, active && styles.langPillActive]}
+            >
+              <Text style={[styles.langPillText, active && styles.langPillTextActive]}>
+                {l.shortLabel}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
 }
@@ -162,6 +182,18 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   brandText: { fontSize: 17, fontWeight: "900", color: colors.primary, letterSpacing: -0.3 },
+  langToggle: {
+    flexDirection: "row",
+    backgroundColor: colors.bg,
+    borderRadius: radius.pill,
+    borderWidth: 1,
+    borderColor: colors.border,
+    padding: 2,
+  },
+  langPill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.pill },
+  langPillActive: { backgroundColor: colors.primary },
+  langPillText: { fontFamily: mono, fontSize: 11, fontWeight: "800", color: colors.textSecondary },
+  langPillTextActive: { color: "#fff" },
   safe: { flex: 1, backgroundColor: colors.bg },
   scroll: { flex: 1, backgroundColor: colors.bg },
   scrollContent: { paddingBottom: 40 },

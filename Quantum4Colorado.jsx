@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect } from "react";
+﻿import React, { useState, useRef, useEffect, createContext, useContext } from "react";
 import {
   Atom,
   Lock,
@@ -69,6 +69,7 @@ import { INVESTMENT_CHART, INVESTMENT_TABLE, RECOMMENDATIONS } from "./data/poli
 import { CAREERS } from "./data/careers.js";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS } from "./data/resources.js";
 import { QUIZ_QUESTIONS, computeQuizResult, QUIZ_RESULTS } from "./data/quiz-data.js";
+import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "./data/i18n.js";
 
 /* =========================================================================
    Quantum4Colorado
@@ -174,8 +175,71 @@ function SectionLabel({ children }) {
   );
 }
 
+/* ------------------------------ Language context --------------------------- */
+/* Bilingual support (English/Spanish). Content fields are { en, es } pairs
+   living directly in /data (see data/i18n.js); this context tracks which
+   language is active and persists the user's choice across sessions. */
+const LANG_STORAGE_KEY = "q4co-lang";
+
+const LanguageContext = createContext({
+  lang: DEFAULT_LANGUAGE,
+  setLang: () => {},
+  t: makeTranslator(DEFAULT_LANGUAGE),
+});
+
+function useLanguage() {
+  return useContext(LanguageContext);
+}
+
+/* Toggle rendered in the web nav and reused in the mobile-style spots that
+   need it (kept small and self-contained since it's used in a couple of
+   different layout contexts — desktop nav, mobile nav drawer). */
+function LanguageToggle({ className = "" }) {
+  const { lang, setLang } = useLanguage();
+  return (
+    <div
+      className={`inline-flex items-center rounded-full border border-[#E2E8F0] bg-[#F7F8FA] p-0.5 ${className}`}
+      role="group"
+      aria-label="Language"
+    >
+      {LANGUAGES.map((l) => (
+        <button
+          key={l.code}
+          type="button"
+          onClick={() => setLang(l.code)}
+          aria-pressed={lang === l.code}
+          className={`px-2.5 py-1 rounded-full text-xs font-bold font-mono transition-colors ${
+            lang === l.code
+              ? "bg-[#1B3A6B] text-white"
+              : "text-[#4A5568] hover:text-[#1B3A6B]"
+          }`}
+        >
+          {l.shortLabel}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 /* ============================== Main component ============================= */
-export default function App() {
+function App() {
+  const [lang, setLangState] = useState(() => {
+    try {
+      return localStorage.getItem(LANG_STORAGE_KEY) || DEFAULT_LANGUAGE;
+    } catch {
+      return DEFAULT_LANGUAGE;
+    }
+  });
+  const setLang = (l) => {
+    setLangState(l);
+    try {
+      localStorage.setItem(LANG_STORAGE_KEY, l);
+    } catch {
+      /* localStorage unavailable (private browsing, etc.) — language just won't persist */
+    }
+  };
+  const t = makeTranslator(lang);
+
   const [navOpen, setNavOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("story");
   const [activeTab, setActiveTab] = useState("federal");
@@ -312,6 +376,7 @@ export default function App() {
   ];
 
   return (
+    <LanguageContext.Provider value={{ lang, setLang, t }}>
     <div className="min-h-screen bg-[#F7F8FA] text-[#1A1A2E] antialiased">
       {/* ============================ MAIN APP (hidden when printing) ===== */}
       <div className="print:hidden">
@@ -352,6 +417,7 @@ export default function App() {
                     </button>
                   );
                 })}
+                <LanguageToggle className="ml-2" />
               </div>
 
               <button
@@ -381,6 +447,9 @@ export default function App() {
                     {l.label}
                   </button>
                 ))}
+                <div className="px-2 pt-3">
+                  <LanguageToggle />
+                </div>
               </div>
             </div>
           )}
@@ -1461,8 +1530,11 @@ export default function App() {
         </div>
       )}
     </div>
+    </LanguageContext.Provider>
   );
 }
+
+export default App;
 
 /* ------------------------------ Sub-components ---------------------------- */
 function ScoreRing({ score, color }) {
@@ -1534,6 +1606,8 @@ function DetailRow({ label, value }) {
 
 
 function YouthEducation({ scrollTo }) {
+  const { t } = useLanguage();
+
   // Layer 1: entry-point hero (expand-in-place, not a modal)
   const [expandedHero, setExpandedHero] = useState(null);
 
