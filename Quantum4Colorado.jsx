@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, createContext, useContext } from "react";
+﻿import React, { useState, useRef, useEffect, useMemo, createContext, useContext } from "react";
 import {
   Atom,
   Lock,
@@ -38,6 +38,7 @@ import {
   Handshake,
   Compass,
   Sparkles,
+  QrCode,
 } from "lucide-react";
 import {
   BarChart,
@@ -71,6 +72,7 @@ import { CAREERS } from "./data/careers.js";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS } from "./data/resources.js";
 import { QUIZ_QUESTIONS, computeQuizResult, QUIZ_RESULTS } from "./data/quiz-data.js";
 import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "./data/i18n.js";
+import qrcode from "qrcode-generator";
 
 /* =========================================================================
    Quantum4Colorado
@@ -258,6 +260,12 @@ const UI = {
       es: "Compartir esta evaluación con su equipo de TI",
     },
     linkCopied: { en: "Link copied!", es: "¡Enlace copiado!" },
+    showQr: { en: "Show QR code", es: "Mostrar código QR" },
+    hideQr: { en: "Hide QR code", es: "Ocultar código QR" },
+    qrCaption: {
+      en: "Scan to open these exact results on another device",
+      es: "Escanee para abrir estos mismos resultados en otro dispositivo",
+    },
     learnMore: { en: "Learn more from the source", es: "Más información de la fuente" },
   },
   report: {
@@ -490,7 +498,34 @@ function App() {
   const [answers, setAnswers] = useState({});
   const [results, setResults] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [showQr, setShowQr] = useState(false);
   const TierIcon = results ? ICON_REGISTRY[results.tier.icon] : null;
+
+  /* Reconstruct a shared assessment result from a `?r=` link (see
+     handleShare/QR code below) — same pure calculateResults() the normal
+     flow uses, just fed decoded answers instead of live form state. */
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const encoded = new URLSearchParams(window.location.search).get("r");
+    if (!encoded) return;
+    try {
+      const decoded = JSON.parse(encoded);
+      if (decoded && typeof decoded === "object" && decoded.q1) {
+        setAnswers(decoded);
+        setResults(calculateResults(decoded));
+        setTimeout(
+          () =>
+            assessmentRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            }),
+          100
+        );
+      }
+    } catch (e) {
+      // malformed share link — fall through to the normal empty assessment
+    }
+  }, []);
 
   // accordion state (rep ecosystem)
   const [openAccordion, setOpenAccordion] = useState(0);
@@ -580,18 +615,40 @@ function App() {
     setAnswers({});
     setResults(null);
     setStep(0);
+    setShowQr(false);
+    if (typeof window !== "undefined" && window.location.search) {
+      window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+    }
     assessmentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handlePrint = () => window.print();
 
-  const handleShare = async () => {
-    const link =
-      (typeof window !== "undefined"
-        ? `${window.location.origin}${window.location.pathname}`
-        : "") + "#assessment";
+  /* Encodes the answers behind the current results into the URL, so the
+     link (and its QR code) reopens to these same results via the decode
+     effect above, instead of just linking back to an empty assessment. */
+  const shareLink =
+    results && typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}?r=${encodeURIComponent(
+          JSON.stringify(answers)
+        )}#assessment`
+      : "";
+
+  const qrDataUrl = useMemo(() => {
+    if (!shareLink) return null;
     try {
-      await navigator.clipboard.writeText(link);
+      const qr = qrcode(0, "M");
+      qr.addData(shareLink);
+      qr.make();
+      return qr.createDataURL(6, 8);
+    } catch (e) {
+      return null;
+    }
+  }, [shareLink]);
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(shareLink);
       setCopied(true);
       setTimeout(() => setCopied(false), 2200);
     } catch (e) {
@@ -1237,7 +1294,29 @@ function App() {
                     <Share2 className="w-4 h-4" />
                     {copied ? t(UI.assessment.linkCopied) : t(UI.assessment.shareTeam)}
                   </button>
+                  <button
+                    onClick={() => setShowQr((v) => !v)}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#1B3A6B]/40 text-[#1A1A2E] font-semibold px-6 py-3 transition-colors"
+                  >
+                    <QrCode className="w-4 h-4" />
+                    {showQr ? t(UI.assessment.hideQr) : t(UI.assessment.showQr)}
+                  </button>
                 </div>
+
+                {showQr && qrDataUrl && (
+                  <div className="mt-4 flex flex-col items-center gap-2 rounded-2xl border border-[#E2E8F0] bg-white p-6">
+                    <img
+                      src={qrDataUrl}
+                      alt={t(UI.assessment.showQr)}
+                      width={168}
+                      height={168}
+                      className="rounded-lg"
+                    />
+                    <p className="text-xs text-[#4A5568] text-center max-w-xs">
+                      {t(UI.assessment.qrCaption)}
+                    </p>
+                  </div>
+                )}
 
                 {/* resources */}
                 <div className="mt-10 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] p-7">
