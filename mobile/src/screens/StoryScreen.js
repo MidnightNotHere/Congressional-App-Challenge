@@ -6,43 +6,79 @@ import QuantumLine from "../components/QuantumLine";
 import Icon from "../components/Icon";
 import { colors, mono, radius, space, withAlpha } from "../theme";
 import { HERO_STATS, EXPLAINER_CARDS, ECOSYSTEM_TABS, STRENGTHS, GAPS } from "../data";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const W = Dimensions.get("window").width;
 
+const UI = {
+  heroEyebrow: { en: "A CIVIC RESOURCE FOR COLORADO · CO-06", es: "UN RECURSO CÍVICO PARA COLORADO · CO-06" },
+  heroTitle: {
+    en: "Colorado is at the center of the quantum revolution.",
+    es: "Colorado está en el centro de la revolución cuántica.",
+  },
+  heroSub: {
+    en: "From NIST Boulder to JILA to the startups reshaping cryptography — here's what's happening in our state, and why it matters to every Coloradan.",
+    es: "Desde NIST Boulder hasta JILA y las startups que están transformando la criptografía — esto es lo que está sucediendo en nuestro estado, y por qué le importa a cada habitante de Colorado.",
+  },
+  assessCta: { en: "Assess your organization", es: "Evalúe su organización" },
+  forRepsCta: { en: "For representatives", es: "Para representantes" },
+  explainerLabel: { en: "THE 60-SECOND EXPLANATION", es: "LA EXPLICACIÓN DE 60 SEGUNDOS" },
+  explainerHeading: {
+    en: "What is quantum computing — and why should you care?",
+    es: "¿Qué es la computación cuántica — y por qué debería importarle?",
+  },
+  mapLabel: { en: "THE MAP", es: "EL MAPA" },
+  mapHeading: { en: "Colorado's Quantum Infrastructure", es: "La Infraestructura Cuántica de Colorado" },
+  mapIntro: {
+    en: "Every major quantum research program, federal facility, and quantum-adjacent organization operating in Colorado.",
+    es: "Todos los programas principales de investigación cuántica, instalaciones federales y organizaciones relacionadas con la computación cuántica que operan en Colorado.",
+  },
+  significanceLabel: { en: "Significance:", es: "Importancia:" },
+  stakesLabel: { en: "THE STAKES", es: "LO QUE ESTÁ EN JUEGO" },
+  stakesHeading: {
+    en: "Why Colorado's Lead Matters — And Could Be Lost",
+    es: "Por Qué el Liderazgo de Colorado Importa — Y Podría Perderse",
+  },
+  strengthsHeading: { en: "Colorado's strengths", es: "Las fortalezas de Colorado" },
+  gapHeading: { en: "The investment gap", es: "La brecha de inversión" },
+  ctaAssessTitle: { en: "Is your organization ready?", es: "¿Está lista su organización?" },
+  ctaAssessSub: { en: "Take the 3-minute readiness assessment", es: "Realice la evaluación de preparación de 3 minutos" },
+  ctaRepsTitle: { en: "For representatives", es: "Para representantes" },
+  ctaRepsSub: { en: "Ecosystem data & policy recommendations", es: "Datos del ecosistema y recomendaciones de políticas" },
+};
+
 export default function StoryScreen({ navigation }) {
+  const { t } = useLanguage();
   const [tab, setTab] = useState("federal");
-  const active = ECOSYSTEM_TABS.find((t) => t.id === tab) || ECOSYSTEM_TABS[0];
+  const active = ECOSYSTEM_TABS.find((rt) => rt.id === tab) || ECOSYSTEM_TABS[0];
 
   return (
     <Screen>
       {/* ---------------- Hero ---------------- */}
       <LinearGradient colors={[colors.primary, colors.primaryDark]} style={styles.hero}>
         <QuantumLine width={W - 40} />
-        <Text style={styles.heroEyebrow}>A CIVIC RESOURCE FOR COLORADO · CO-06</Text>
-        <Text style={styles.heroTitle}>Colorado is at the center of the quantum revolution.</Text>
-        <Text style={styles.heroSub}>
-          From NIST Boulder to JILA to the startups reshaping cryptography — here's what's happening
-          in our state, and why it matters to every Coloradan.
-        </Text>
+        <Text style={styles.heroEyebrow}>{t(UI.heroEyebrow)}</Text>
+        <Text style={styles.heroTitle}>{t(UI.heroTitle)}</Text>
+        <Text style={styles.heroSub}>{t(UI.heroSub)}</Text>
 
         <View style={{ gap: 12, marginTop: 20 }}>
-          {HERO_STATS.map((s) => (
-            <View key={s.label} style={styles.statCard}>
+          {HERO_STATS.map((s, i) => (
+            <View key={i} style={styles.statCard}>
               <Text style={styles.statValue}>{s.value}</Text>
-              <Text style={styles.statLabel}>{s.label}</Text>
+              <Text style={styles.statLabel}>{t(s.label)}</Text>
             </View>
           ))}
         </View>
 
         <View style={{ gap: 10, marginTop: 20 }}>
           <Button
-            label="Assess your organization"
+            label={t(UI.assessCta)}
             variant="gold"
             iconRight="ArrowRight"
             onPress={() => navigation.navigate("Assessment")}
           />
           <Button
-            label="For representatives"
+            label={t(UI.forRepsCta)}
             variant="ghost"
             onPress={() => navigation.navigate("Reps")}
           />
@@ -51,16 +87,16 @@ export default function StoryScreen({ navigation }) {
 
       {/* ---------------- Explainer ---------------- */}
       <View style={styles.section}>
-        <Eyebrow>THE 60-SECOND EXPLANATION</Eyebrow>
-        <H2>What is quantum computing — and why should you care?</H2>
+        <Eyebrow>{t(UI.explainerLabel)}</Eyebrow>
+        <H2>{t(UI.explainerHeading)}</H2>
         <View style={{ gap: 14, marginTop: 18 }}>
-          {EXPLAINER_CARDS.map((c) => (
-            <Card key={c.title}>
+          {EXPLAINER_CARDS.map((c, i) => (
+            <Card key={i}>
               <View style={styles.iconBadge}>
                 <Icon name={c.icon} size={22} color={colors.primary} />
               </View>
-              <Text style={styles.cardTitle}>{c.title}</Text>
-              <Body style={{ marginTop: 8 }}>{c.body}</Body>
+              <Text style={styles.cardTitle}>{t(c.title)}</Text>
+              <Body style={{ marginTop: 8 }}>{t(c.body)}</Body>
             </Card>
           ))}
         </View>
@@ -68,12 +104,9 @@ export default function StoryScreen({ navigation }) {
 
       {/* ---------------- Ecosystem ---------------- */}
       <View style={[styles.section, styles.sectionWhite]}>
-        <Eyebrow>THE MAP</Eyebrow>
-        <H2>Colorado's Quantum Infrastructure</H2>
-        <Body style={{ marginTop: 8 }}>
-          Every major quantum research program, federal facility, and quantum-adjacent organization
-          operating in Colorado.
-        </Body>
+        <Eyebrow>{t(UI.mapLabel)}</Eyebrow>
+        <H2>{t(UI.mapHeading)}</H2>
+        <Body style={{ marginTop: 8 }}>{t(UI.mapIntro)}</Body>
 
         <ScrollView
           horizontal
@@ -81,16 +114,16 @@ export default function StoryScreen({ navigation }) {
           style={{ marginTop: 16, marginHorizontal: -20 }}
           contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }}
         >
-          {ECOSYSTEM_TABS.map((t) => {
-            const on = t.id === tab;
+          {ECOSYSTEM_TABS.map((et) => {
+            const on = et.id === tab;
             return (
               <Pressable
-                key={t.id}
-                onPress={() => setTab(t.id)}
+                key={et.id}
+                onPress={() => setTab(et.id)}
                 style={[styles.tabPill, on ? { backgroundColor: colors.primary, borderColor: colors.primary } : null]}
               >
-                <Icon name={t.icon} size={15} color={on ? "#fff" : colors.textSecondary} />
-                <Text style={[styles.tabText, on && { color: "#fff" }]}>{t.label}</Text>
+                <Icon name={et.icon} size={15} color={on ? "#fff" : colors.textSecondary} />
+                <Text style={[styles.tabText, on && { color: "#fff" }]}>{t(et.label)}</Text>
               </Pressable>
             );
           })}
@@ -102,21 +135,21 @@ export default function StoryScreen({ navigation }) {
               <View style={styles.orgHead}>
                 <Text style={styles.orgName}>{org.name}</Text>
                 <View style={[styles.catBadge, { backgroundColor: active.color }]}>
-                  <Text style={styles.catBadgeText}>{active.label}</Text>
+                  <Text style={styles.catBadgeText}>{t(active.label)}</Text>
                 </View>
               </View>
               <View style={styles.locRow}>
                 <Icon name="MapPin" size={13} color={colors.accent} />
-                <Text style={styles.locText}>{org.location}</Text>
+                <Text style={styles.locText}>{t(org.location)}</Text>
               </View>
-              <Body style={{ marginTop: 8 }}>{org.role}</Body>
+              <Body style={{ marginTop: 8 }}>{t(org.role)}</Body>
               <View style={styles.sigRow}>
                 <Icon name="TrendingUp" size={15} color={colors.secondary} />
                 <Text style={styles.sigText}>
                   <Text style={{ fontWeight: "700", color: colors.textPrimary }}>
-                    Significance:{" "}
+                    {t(UI.significanceLabel)}{" "}
                   </Text>
-                  {org.significance}
+                  {t(org.significance)}
                 </Text>
               </View>
             </Card>
@@ -126,17 +159,17 @@ export default function StoryScreen({ navigation }) {
 
       {/* ---------------- National position ---------------- */}
       <View style={styles.section}>
-        <Eyebrow>THE STAKES</Eyebrow>
-        <H2>Why Colorado's Lead Matters — And Could Be Lost</H2>
+        <Eyebrow>{t(UI.stakesLabel)}</Eyebrow>
+        <H2>{t(UI.stakesHeading)}</H2>
 
         <Card tint={colors.greenTint} style={{ marginTop: 18, borderColor: withAlpha(colors.secondary, 0.35) }}>
           <View style={styles.panelHead}>
             <Icon name="CheckCircle2" size={18} color={colors.secondary} />
-            <Text style={[styles.panelTitle, { color: colors.secondary }]}>Colorado's strengths</Text>
+            <Text style={[styles.panelTitle, { color: colors.secondary }]}>{t(UI.strengthsHeading)}</Text>
           </View>
           <View style={{ marginTop: 14 }}>
-            {STRENGTHS.map((s) => (
-              <Bullet key={s} color={colors.secondary}>{s}</Bullet>
+            {STRENGTHS.map((s, i) => (
+              <Bullet key={i} color={colors.secondary}>{t(s)}</Bullet>
             ))}
           </View>
         </Card>
@@ -144,11 +177,11 @@ export default function StoryScreen({ navigation }) {
         <Card tint={colors.goldTint} style={{ marginTop: 14, borderColor: withAlpha(colors.accent, 0.4) }}>
           <View style={styles.panelHead}>
             <Icon name="AlertTriangle" size={18} color={colors.accentDark} />
-            <Text style={[styles.panelTitle, { color: colors.accentDark }]}>The investment gap</Text>
+            <Text style={[styles.panelTitle, { color: colors.accentDark }]}>{t(UI.gapHeading)}</Text>
           </View>
           <View style={{ marginTop: 14 }}>
-            {GAPS.map((g) => (
-              <Bullet key={g} color={colors.accent}>{g}</Bullet>
+            {GAPS.map((g, i) => (
+              <Bullet key={i} color={colors.accent}>{t(g)}</Bullet>
             ))}
           </View>
         </Card>
@@ -157,16 +190,16 @@ export default function StoryScreen({ navigation }) {
         <View style={styles.ctaWrap}>
           <Pressable style={styles.ctaRow} onPress={() => navigation.navigate("Assessment")}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.ctaTitle}>Is your organization ready?</Text>
-              <Text style={styles.ctaSub}>Take the 3-minute readiness assessment</Text>
+              <Text style={styles.ctaTitle}>{t(UI.ctaAssessTitle)}</Text>
+              <Text style={styles.ctaSub}>{t(UI.ctaAssessSub)}</Text>
             </View>
             <Icon name="ArrowRight" size={20} color={colors.accent} />
           </Pressable>
           <View style={styles.ctaDivider} />
           <Pressable style={styles.ctaRow} onPress={() => navigation.navigate("Reps")}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.ctaTitle}>For representatives</Text>
-              <Text style={styles.ctaSub}>Ecosystem data & policy recommendations</Text>
+              <Text style={styles.ctaTitle}>{t(UI.ctaRepsTitle)}</Text>
+              <Text style={styles.ctaSub}>{t(UI.ctaRepsSub)}</Text>
             </View>
             <Icon name="ArrowRight" size={20} color={colors.accent} />
           </Pressable>

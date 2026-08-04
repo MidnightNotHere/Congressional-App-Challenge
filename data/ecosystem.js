@@ -8,182 +8,247 @@
    "lucide-react-native" (mobile) — each platform resolves the string
    through its own local icon registry (see Quantum4Colorado.jsx's
    ICON_REGISTRY and mobile/src/components/Icon.js).
+
+   Bilingual (Phase 4): HERO_STATS, EXPLAINER_CARDS, ECOSYSTEM_TABS,
+   STRENGTHS, and GAPS are fully { en, es } — the Story-section content,
+   3rd priority per the Phase 4 plan. DETAILED_ECOSYSTEM and SOURCES
+   belong to the Representatives section (lowest priority, "if time
+   allows") and are still English-only; pick() passes plain strings
+   through unchanged so nothing breaks in the meantime. Organization
+   names and "City, CO" locations are proper nouns and stay untranslated
+   in both languages.
    ========================================================================= */
 
 export const HERO_STATS = [
-  { value: "$800M+", label: "Federal quantum investment in Colorado" },
+  {
+    value: "$800M+",
+    label: {
+      en: "Federal quantum investment in Colorado",
+      es: "Inversión federal en computación cuántica en Colorado",
+    },
+  },
   {
     value: "140+",
-    label: "Quantum researchers across CU Boulder and Colorado institutions",
+    label: {
+      en: "Quantum researchers across CU Boulder and Colorado institutions",
+      es: "Investigadores cuánticos en CU Boulder e instituciones de Colorado",
+    },
   },
   {
     value: "#1",
-    label: "Colorado's ranking in quantum workforce development infrastructure",
+    label: {
+      en: "Colorado's ranking in quantum workforce development infrastructure",
+      es: "Clasificación de Colorado en infraestructura de desarrollo de la fuerza laboral cuántica",
+    },
   },
 ];
 
 export const EXPLAINER_CARDS = [
   {
     icon: "Lock",
-    title: "The Problem With Today's Computers",
-    body:
-      "Today's computers solve problems one step at a time. Quantum computers can explore millions of possibilities simultaneously — like checking every path through a maze at once instead of trying them one by one.",
+    title: { en: "The Problem With Today's Computers", es: "El Problema con las Computadoras de Hoy" },
+    body: {
+      en: "Today's computers solve problems one step at a time. Quantum computers can explore millions of possibilities simultaneously — like checking every path through a maze at once instead of trying them one by one.",
+      es: "Las computadoras actuales resuelven problemas un paso a la vez. Las computadoras cuánticas pueden explorar millones de posibilidades simultáneamente — como revisar cada camino de un laberinto a la vez en lugar de probarlos uno por uno.",
+    },
   },
   {
     icon: "Shield",
-    title: "Why It Changes Everything",
-    body:
-      "Quantum computers will eventually be able to break the encryption protecting your bank account, medical records, and government systems. They will also create unbreakable new encryption — the race to get there first is already underway.",
+    title: { en: "Why It Changes Everything", es: "Por Qué Lo Cambia Todo" },
+    body: {
+      en: "Quantum computers will eventually be able to break the encryption protecting your bank account, medical records, and government systems. They will also create unbreakable new encryption — the race to get there first is already underway.",
+      es: "Las computadoras cuánticas eventualmente podrán romper el cifrado que protege su cuenta bancaria, sus historiales médicos y los sistemas gubernamentales. También crearán un nuevo cifrado irrompible — la carrera por llegar primero ya está en marcha.",
+    },
   },
   {
     icon: "MapPin",
-    title: "Why Colorado Is Leading",
-    body:
-      "Colorado hosts NIST Boulder — the federal agency setting the world's post-quantum security standards — plus JILA, one of the planet's premier quantum physics institutes. No other state has this combination of federal and academic quantum infrastructure.",
+    title: { en: "Why Colorado Is Leading", es: "Por Qué Colorado Está Liderando" },
+    body: {
+      en: "Colorado hosts NIST Boulder — the federal agency setting the world's post-quantum security standards — plus JILA, one of the planet's premier quantum physics institutes. No other state has this combination of federal and academic quantum infrastructure.",
+      es: "Colorado alberga a NIST Boulder — la agencia federal que establece los estándares mundiales de seguridad poscuántica — además de JILA, uno de los institutos de física cuántica más prestigiosos del planeta. Ningún otro estado tiene esta combinación de infraestructura cuántica federal y académica.",
+    },
   },
 ];
+
+const STATEWIDE = { en: "Statewide", es: "A nivel estatal" };
 
 /* Section 1's tabbed ecosystem map. `shortLabel` is used where mobile's
    horizontal tab-pill scroller doesn't have room for the full label. */
 export const ECOSYSTEM_TABS = [
   {
     id: "federal",
-    label: "Federal Facilities",
-    shortLabel: "Federal",
+    label: { en: "Federal Facilities", es: "Instalaciones Federales" },
+    shortLabel: { en: "Federal", es: "Federal" },
     icon: "Landmark",
     color: "#1B3A6B",
     orgs: [
       {
         name: "NIST Boulder Laboratories",
         location: "Boulder, CO",
-        role: "Sets US post-quantum cryptography standards.",
-        significance:
-          "PQC standards finalized here in 2024 are the foundation of national quantum security policy.",
+        role: { en: "Sets US post-quantum cryptography standards.", es: "Establece los estándares de criptografía poscuántica de EE. UU." },
+        significance: {
+          en: "PQC standards finalized here in 2024 are the foundation of national quantum security policy.",
+          es: "Los estándares de PQC finalizados aquí en 2024 son la base de la política nacional de seguridad cuántica.",
+        },
         source: "https://csrc.nist.gov/projects/post-quantum-cryptography",
       },
       {
         name: "National Renewable Energy Laboratory (NREL)",
         location: "Golden, CO",
-        role: "Quantum computing applications for energy systems.",
-        significance:
-          "Connects Colorado's quantum capacity to the future of the national power grid.",
+        role: { en: "Quantum computing applications for energy systems.", es: "Aplicaciones de computación cuántica para sistemas de energía." },
+        significance: {
+          en: "Connects Colorado's quantum capacity to the future of the national power grid.",
+          es: "Conecta la capacidad cuántica de Colorado con el futuro de la red eléctrica nacional.",
+        },
         source: "https://www.nrel.gov",
       },
       {
         name: "Rocky Mountain Regional Cyber Center",
         location: "Colorado",
-        role: "Supporting federal quantum security coordination.",
-        significance:
-          "Regional hub linking Colorado institutions to federal cybersecurity efforts.",
+        role: { en: "Supporting federal quantum security coordination.", es: "Apoya la coordinación federal de seguridad cuántica." },
+        significance: {
+          en: "Regional hub linking Colorado institutions to federal cybersecurity efforts.",
+          es: "Centro regional que vincula a las instituciones de Colorado con los esfuerzos federales de ciberseguridad.",
+        },
       },
     ],
   },
   {
     id: "university",
-    label: "University Research",
-    shortLabel: "University",
+    label: { en: "University Research", es: "Investigación Universitaria" },
+    shortLabel: { en: "University", es: "Universidad" },
     icon: "GraduationCap",
     color: "#2E7D52",
     orgs: [
       {
         name: "JILA at CU Boulder",
         location: "Boulder, CO",
-        role:
-          "World-class quantum physics research institute, a joint CU Boulder / NIST program. 140+ researchers.",
-        significance:
-          "Consistently ranked among the top quantum physics institutes in the world.",
+        role: {
+          en: "World-class quantum physics research institute, a joint CU Boulder / NIST program. 140+ researchers.",
+          es: "Instituto de investigación en física cuántica de clase mundial, un programa conjunto de CU Boulder y NIST. Más de 140 investigadores.",
+        },
+        significance: {
+          en: "Consistently ranked among the top quantum physics institutes in the world.",
+          es: "Clasificado constantemente entre los mejores institutos de física cuántica del mundo.",
+        },
         source: "https://jila.colorado.edu",
       },
       {
         name: "CU Boulder Quantum Initiative",
         location: "Boulder, CO",
-        role:
-          "Undergraduate and graduate quantum research programs, with multiple active quantum computing labs.",
-        significance:
-          "The talent pipeline feeding national labs and Colorado's quantum companies.",
+        role: {
+          en: "Undergraduate and graduate quantum research programs, with multiple active quantum computing labs.",
+          es: "Programas de investigación cuántica de pregrado y posgrado, con múltiples laboratorios activos de computación cuántica.",
+        },
+        significance: {
+          en: "The talent pipeline feeding national labs and Colorado's quantum companies.",
+          es: "La cantera de talento que alimenta a los laboratorios nacionales y a las empresas cuánticas de Colorado.",
+        },
         source: "https://www.colorado.edu/physics",
       },
       {
         name: "Colorado School of Mines",
         location: "Golden, CO",
-        role: "Quantum materials research programs.",
-        significance:
-          "Builds the foundational materials science that quantum hardware depends on.",
+        role: { en: "Quantum materials research programs.", es: "Programas de investigación de materiales cuánticos." },
+        significance: {
+          en: "Builds the foundational materials science that quantum hardware depends on.",
+          es: "Desarrolla la ciencia de materiales fundamental de la que depende el hardware cuántico.",
+        },
         source: "https://www.mines.edu",
       },
       {
         name: "Colorado State University",
         location: "Fort Collins, CO",
-        role: "Quantum sensing and photonics research.",
-        significance:
-          "Extends Colorado's quantum strength beyond the Front Range corridor.",
+        role: { en: "Quantum sensing and photonics research.", es: "Investigación en detección cuántica y fotónica." },
+        significance: {
+          en: "Extends Colorado's quantum strength beyond the Front Range corridor.",
+          es: "Extiende la fortaleza cuántica de Colorado más allá del corredor de Front Range.",
+        },
         source: "https://www.colostate.edu",
       },
     ],
   },
   {
     id: "industry",
-    label: "Industry",
-    shortLabel: "Industry",
+    label: { en: "Industry", es: "Industria" },
+    shortLabel: { en: "Industry", es: "Industria" },
     icon: "Cpu",
     color: "#C4872A",
     orgs: [
       {
         name: "Quantinuum",
         location: "Broomfield, CO",
-        role:
-          "Quantum computing hardware and software — one of the world's leading quantum computing companies, headquartered in Colorado.",
-        significance:
-          "A globally significant quantum company chose Colorado as its home base.",
+        role: {
+          en: "Quantum computing hardware and software — one of the world's leading quantum computing companies, headquartered in Colorado.",
+          es: "Hardware y software de computación cuántica — una de las empresas de computación cuántica líderes del mundo, con sede en Colorado.",
+        },
+        significance: {
+          en: "A globally significant quantum company chose Colorado as its home base.",
+          es: "Una empresa cuántica de importancia mundial eligió a Colorado como su sede.",
+        },
         source: "https://www.quantinuum.com",
       },
       {
         name: "Ball Aerospace",
         location: "Broomfield, CO",
-        role: "Quantum sensing applications for defense and space.",
-        significance:
-          "Applies quantum technology to Colorado's large aerospace economy.",
+        role: { en: "Quantum sensing applications for defense and space.", es: "Aplicaciones de detección cuántica para defensa y el espacio." },
+        significance: {
+          en: "Applies quantum technology to Colorado's large aerospace economy.",
+          es: "Aplica tecnología cuántica a la gran economía aeroespacial de Colorado.",
+        },
       },
       {
         name: "Lockheed Martin",
         location: "Littleton, CO",
-        role: "Quantum computing research for defense applications.",
-        significance:
-          "Anchors quantum work within one of Colorado's largest employers.",
+        role: { en: "Quantum computing research for defense applications.", es: "Investigación en computación cuántica para aplicaciones de defensa." },
+        significance: {
+          en: "Anchors quantum work within one of Colorado's largest employers.",
+          es: "Ancla el trabajo cuántico dentro de uno de los mayores empleadores de Colorado.",
+        },
       },
       {
         name: "Raytheon Technologies",
         location: "Aurora, CO",
-        role: "Quantum cryptography applications for defense systems.",
-        significance:
-          "Brings quantum-secure communications research to the CO-06 region.",
+        role: { en: "Quantum cryptography applications for defense systems.", es: "Aplicaciones de criptografía cuántica para sistemas de defensa." },
+        significance: {
+          en: "Brings quantum-secure communications research to the CO-06 region.",
+          es: "Trae investigación en comunicaciones seguras cuánticas a la región CO-06.",
+        },
       },
     ],
   },
   {
     id: "policy",
-    label: "Policy & Economic Development",
-    shortLabel: "Policy",
+    label: { en: "Policy & Economic Development", es: "Política y Desarrollo Económico" },
+    shortLabel: { en: "Policy", es: "Política" },
     icon: "Building2",
     color: "#6B46C1",
     orgs: [
       {
         name: "Colorado Quantum Network (CQN)",
-        location: "Statewide",
-        role:
-          "Consortium of Colorado quantum researchers and industry partners advocating for state quantum investment.",
-        significance:
-          "The closest thing Colorado has to a coordinated quantum strategy today.",
+        location: STATEWIDE,
+        role: {
+          en: "Consortium of Colorado quantum researchers and industry partners advocating for state quantum investment.",
+          es: "Consorcio de investigadores cuánticos y socios de la industria de Colorado que abogan por la inversión estatal en tecnología cuántica.",
+        },
+        significance: {
+          en: "The closest thing Colorado has to a coordinated quantum strategy today.",
+          es: "Lo más parecido que tiene Colorado hoy a una estrategia cuántica coordinada.",
+        },
         source: "https://coloradoquantum.org",
       },
       {
         name:
           "Colorado Office of Economic Development & International Trade (OEDIT)",
         location: "Denver, CO",
-        role:
-          "Advanced Industries program covering the quantum technology sector.",
-        significance:
-          "The state agency best positioned to lead a formal quantum initiative.",
+        role: {
+          en: "Advanced Industries program covering the quantum technology sector.",
+          es: "Programa de Industrias Avanzadas que cubre el sector de tecnología cuántica.",
+        },
+        significance: {
+          en: "The state agency best positioned to lead a formal quantum initiative.",
+          es: "La agencia estatal mejor posicionada para liderar una iniciativa cuántica formal.",
+        },
         source: "https://oedit.colorado.gov",
       },
     ],
@@ -191,17 +256,41 @@ export const ECOSYSTEM_TABS = [
 ];
 
 export const STRENGTHS = [
-  "NIST Boulder: the only state with the federal PQC standard-setting body.",
-  "JILA: a top-5 quantum physics institute globally.",
-  "Quantinuum headquarters: one of three leading quantum computing companies globally.",
-  "CU Boulder quantum workforce pipeline: feeds national labs and industry.",
+  {
+    en: "NIST Boulder: the only state with the federal PQC standard-setting body.",
+    es: "NIST Boulder: el único estado con el organismo federal que establece los estándares de PQC.",
+  },
+  {
+    en: "JILA: a top-5 quantum physics institute globally.",
+    es: "JILA: uno de los 5 mejores institutos de física cuántica del mundo.",
+  },
+  {
+    en: "Quantinuum headquarters: one of three leading quantum computing companies globally.",
+    es: "Sede de Quantinuum: una de las tres empresas líderes en computación cuántica a nivel mundial.",
+  },
+  {
+    en: "CU Boulder quantum workforce pipeline: feeds national labs and industry.",
+    es: "Cantera de talento cuántico de CU Boulder: alimenta a laboratorios nacionales y a la industria.",
+  },
 ];
 
 export const GAPS = [
-  "Illinois passed the Illinois Quantum Act in 2023 with dedicated state funding.",
-  "New York committed $200M to a quantum campus at IBM's Hudson Valley site.",
-  "Colorado has world-class federal and university infrastructure but no coordinated state quantum investment strategy.",
-  "Without state-level coordination, Colorado risks losing talent and companies to states with explicit quantum economic development programs.",
+  {
+    en: "Illinois passed the Illinois Quantum Act in 2023 with dedicated state funding.",
+    es: "Illinois aprobó la Ley Cuántica de Illinois en 2023 con financiamiento estatal dedicado.",
+  },
+  {
+    en: "New York committed $200M to a quantum campus at IBM's Hudson Valley site.",
+    es: "Nueva York comprometió $200 millones para un campus cuántico en el sitio de IBM en Hudson Valley.",
+  },
+  {
+    en: "Colorado has world-class federal and university infrastructure but no coordinated state quantum investment strategy.",
+    es: "Colorado cuenta con infraestructura federal y universitaria de clase mundial, pero no tiene una estrategia estatal coordinada de inversión cuántica.",
+  },
+  {
+    en: "Without state-level coordination, Colorado risks losing talent and companies to states with explicit quantum economic development programs.",
+    es: "Sin coordinación a nivel estatal, Colorado corre el riesgo de perder talento y empresas ante estados con programas explícitos de desarrollo económico cuántico.",
+  },
 ];
 
 /* Section 3's expanded, legislative-facing ecosystem report (accordion).

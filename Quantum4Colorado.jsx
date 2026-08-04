@@ -350,6 +350,54 @@ const UI = {
     },
     retakeQuiz: { en: "Retake quiz", es: "Repetir cuestionario" },
   },
+  story: {
+    heroEyebrow: { en: "A Civic Resource for Colorado · CO-06", es: "Un Recurso Cívico para Colorado · CO-06" },
+    heroTitle: {
+      en: "Colorado is at the center of the quantum revolution.",
+      es: "Colorado está en el centro de la revolución cuántica.",
+    },
+    heroSubtitle: {
+      en: "From NIST Boulder to JILA to the startups reshaping cryptography — here's what's happening in our state, and why it matters to every Coloradan.",
+      es: "Desde NIST Boulder hasta JILA y las startups que están transformando la criptografía — esto es lo que está sucediendo en nuestro estado, y por qué le importa a cada habitante de Colorado.",
+    },
+    assessCta: { en: "Assess your organization", es: "Evalúe su organización" },
+    forRepsCta: { en: "For representatives", es: "Para representantes" },
+    explainerLabel: { en: "The 60-Second Explanation", es: "La Explicación de 60 Segundos" },
+    explainerHeading: {
+      en: "What is quantum computing — and why should you care?",
+      es: "¿Qué es la computación cuántica — y por qué debería importarle?",
+    },
+    mapLabel: { en: "The Map", es: "El Mapa" },
+    mapHeading: { en: "Colorado's Quantum Infrastructure", es: "La Infraestructura Cuántica de Colorado" },
+    mapIntro: {
+      en: "Every major quantum research program, federal facility, and quantum-adjacent organization operating in Colorado.",
+      es: "Todos los programas principales de investigación cuántica, instalaciones federales y organizaciones relacionadas con la computación cuántica que operan en Colorado.",
+    },
+    significanceLabel: { en: "Significance to Colorado:", es: "Importancia para Colorado:" },
+    stakesLabel: { en: "The Stakes", es: "Lo Que Está en Juego" },
+    stakesHeading: {
+      en: "Why Colorado's Lead Matters — And Could Be Lost",
+      es: "Por Qué el Liderazgo de Colorado Importa — Y Podría Perderse",
+    },
+    strengthsHeading: { en: "Colorado's strengths", es: "Las fortalezas de Colorado" },
+    gapHeading: { en: "The investment gap", es: "La brecha de inversión" },
+    ctaAssessTitle: {
+      en: "Is your organization ready for the quantum shift?",
+      es: "¿Está su organización lista para el cambio cuántico?",
+    },
+    ctaAssessSub: {
+      en: "Take the 3-minute readiness assessment",
+      es: "Realice la evaluación de preparación de 3 minutos",
+    },
+    ctaRepsTitle: {
+      en: "View detailed reports for representatives",
+      es: "Ver informes detallados para representantes",
+    },
+    ctaRepsSub: {
+      en: "Ecosystem data and policy recommendations",
+      es: "Datos del ecosistema y recomendaciones de políticas",
+    },
+  },
 };
 
 /* ============================== Main component ============================= */
@@ -599,28 +647,26 @@ function App() {
             </div>
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-20">
               <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#C4872A] mb-5">
-                A Civic Resource for Colorado &middot; CO-06
+                {t(UI.story.heroEyebrow)}
               </p>
               <h1 className="font-black tracking-tight text-3xl sm:text-5xl lg:text-6xl leading-[1.05] max-w-4xl">
-                Colorado is at the center of the quantum revolution.
+                {t(UI.story.heroTitle)}
               </h1>
               <p className="mt-6 text-base sm:text-xl text-blue-100/90 max-w-3xl leading-relaxed">
-                From NIST Boulder to JILA to the startups reshaping cryptography
-                — here's what's happening in our state, and why it matters to
-                every Coloradan.
+                {t(UI.story.heroSubtitle)}
               </p>
 
               <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5">
-                {HERO_STATS.map((s) => (
+                {HERO_STATS.map((s, i) => (
                   <div
-                    key={s.label}
+                    key={i}
                     className="rounded-2xl bg-white/10 border border-white/15 backdrop-blur px-6 py-7"
                   >
                     <div className="font-mono font-black text-4xl sm:text-5xl text-[#C4872A]">
                       {s.value}
                     </div>
                     <div className="mt-3 text-sm text-blue-50/90 leading-snug">
-                      {s.label}
+                      {t(s.label)}
                     </div>
                   </div>
                 ))}
@@ -631,14 +677,14 @@ function App() {
                   onClick={() => scrollTo("assessment")}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#C4872A] hover:bg-[#b07a23] text-white font-semibold px-6 py-3 transition-colors"
                 >
-                  Assess your organization
+                  {t(UI.story.assessCta)}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => scrollTo("representatives")}
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-6 py-3 transition-colors"
                 >
-                  For representatives
+                  {t(UI.story.forRepsCta)}
                 </button>
               </div>
             </div>
@@ -647,27 +693,27 @@ function App() {
           {/* Plain-language explainer */}
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>The 60-Second Explanation</SectionLabel>
+              <SectionLabel>{t(UI.story.explainerLabel)}</SectionLabel>
               <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
-                What is quantum computing — and why should you care?
+                {t(UI.story.explainerHeading)}
               </h2>
             </div>
             <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {EXPLAINER_CARDS.map((card) => {
+              {EXPLAINER_CARDS.map((card, i) => {
                 const Icon = ICON_REGISTRY[card.icon];
                 return (
                   <div
-                    key={card.title}
+                    key={i}
                     className="rounded-2xl bg-white border border-[#E2E8F0] p-7 shadow-sm"
                   >
                     <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#1B3A6B]/10">
                       <Icon className="w-6 h-6 text-[#1B3A6B]" />
                     </span>
                     <h3 className="mt-5 font-bold text-lg text-[#1A1A2E]">
-                      {card.title}
+                      {t(card.title)}
                     </h3>
                     <p className="mt-3 text-[#4A5568] leading-relaxed">
-                      {card.body}
+                      {t(card.body)}
                     </p>
                   </div>
                 );
@@ -679,13 +725,12 @@ function App() {
           <div className="bg-white border-y border-[#E2E8F0]">
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
               <div className="max-w-3xl">
-                <SectionLabel>The Map</SectionLabel>
+                <SectionLabel>{t(UI.story.mapLabel)}</SectionLabel>
                 <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
-                  Colorado's Quantum Infrastructure
+                  {t(UI.story.mapHeading)}
                 </h2>
                 <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
-                  Every major quantum research program, federal facility, and
-                  quantum-adjacent organization operating in Colorado.
+                  {t(UI.story.mapIntro)}
                 </p>
               </div>
 
@@ -705,14 +750,14 @@ function App() {
                       }`}
                     >
                       <Icon className="w-4 h-4" />
-                      {tab.label}
+                      {t(tab.label)}
                     </button>
                   );
                 })}
               </div>
 
               {/* Cards */}
-              {ECOSYSTEM_TABS.filter((t) => t.id === activeTab).map((tab) => (
+              {ECOSYSTEM_TABS.filter((et) => et.id === activeTab).map((tab) => (
                 <div
                   key={tab.id}
                   className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5"
@@ -730,23 +775,23 @@ function App() {
                           className="shrink-0 font-mono text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-full text-white"
                           style={{ backgroundColor: tab.color }}
                         >
-                          {tab.label.split(" ")[0]}
+                          {t(tab.shortLabel)}
                         </span>
                       </div>
                       <div className="mt-1.5 flex items-center gap-1.5 text-sm text-[#4A5568]">
                         <MapPin className="w-3.5 h-3.5 text-[#C4872A]" />
-                        <span className="font-mono">{org.location}</span>
+                        <span className="font-mono">{t(org.location)}</span>
                       </div>
                       <p className="mt-3 text-[#4A5568] leading-relaxed">
-                        {org.role}
+                        {t(org.role)}
                       </p>
                       <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex gap-2">
                         <TrendingUp className="w-4 h-4 text-[#2E7D52] shrink-0 mt-0.5" />
                         <p className="text-sm text-[#1A1A2E]">
                           <span className="font-semibold">
-                            Significance to Colorado:{" "}
+                            {t(UI.story.significanceLabel)}{" "}
                           </span>
-                          {org.significance}
+                          {t(org.significance)}
                         </p>
                       </div>
                     </div>
@@ -759,9 +804,9 @@ function App() {
           {/* National position */}
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>The Stakes</SectionLabel>
+              <SectionLabel>{t(UI.story.stakesLabel)}</SectionLabel>
               <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
-                Why Colorado's Lead Matters — And Could Be Lost
+                {t(UI.story.stakesHeading)}
               </h2>
             </div>
 
@@ -770,13 +815,13 @@ function App() {
               <div className="rounded-2xl border border-[#2E7D52]/30 bg-[#EAF5EF] p-7">
                 <div className="flex items-center gap-2 text-[#2E7D52]">
                   <CheckCircle2 className="w-5 h-5" />
-                  <h3 className="font-bold text-lg">Colorado's strengths</h3>
+                  <h3 className="font-bold text-lg">{t(UI.story.strengthsHeading)}</h3>
                 </div>
                 <ul className="mt-5 space-y-4">
-                  {STRENGTHS.map((s) => (
-                    <li key={s} className="flex gap-3">
+                  {STRENGTHS.map((s, i) => (
+                    <li key={i} className="flex gap-3">
                       <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E7D52] shrink-0" />
-                      <span className="text-[#1A1A2E] leading-relaxed">{s}</span>
+                      <span className="text-[#1A1A2E] leading-relaxed">{t(s)}</span>
                     </li>
                   ))}
                 </ul>
@@ -786,13 +831,13 @@ function App() {
               <div className="rounded-2xl border border-[#C4872A]/40 bg-[#FBF3E6] p-7">
                 <div className="flex items-center gap-2 text-[#9c6a1c]">
                   <AlertTriangle className="w-5 h-5" />
-                  <h3 className="font-bold text-lg">The investment gap</h3>
+                  <h3 className="font-bold text-lg">{t(UI.story.gapHeading)}</h3>
                 </div>
                 <ul className="mt-5 space-y-4">
-                  {GAPS.map((g) => (
-                    <li key={g} className="flex gap-3">
+                  {GAPS.map((g, i) => (
+                    <li key={i} className="flex gap-3">
                       <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#C4872A] shrink-0" />
-                      <span className="text-[#1A1A2E] leading-relaxed">{g}</span>
+                      <span className="text-[#1A1A2E] leading-relaxed">{t(g)}</span>
                     </li>
                   ))}
                 </ul>
@@ -808,12 +853,12 @@ function App() {
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
-                      Is your organization ready for the quantum shift?
+                      {t(UI.story.ctaAssessTitle)}
                     </span>
                     <ArrowRight className="w-5 h-5 text-[#C4872A] group-hover:translate-x-1 transition-transform" />
                   </div>
                   <p className="mt-1 text-blue-100/80 text-sm">
-                    Take the 3-minute readiness assessment
+                    {t(UI.story.ctaAssessSub)}
                   </p>
                 </button>
                 <button
@@ -822,12 +867,12 @@ function App() {
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
-                      View detailed reports for representatives
+                      {t(UI.story.ctaRepsTitle)}
                     </span>
                     <ArrowRight className="w-5 h-5 text-[#C4872A] group-hover:translate-x-1 transition-transform" />
                   </div>
                   <p className="mt-1 text-blue-100/80 text-sm">
-                    Ecosystem data and policy recommendations
+                    {t(UI.story.ctaRepsSub)}
                   </p>
                 </button>
               </div>
