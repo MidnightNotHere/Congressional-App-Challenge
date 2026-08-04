@@ -31,6 +31,7 @@ import {
   NIST_PQC,
   CISA_PQC,
   NSA_PQC,
+  PRIORITY_LABELS,
   calculateResults,
   buildActions,
 } from "../../data/pqc-scoring.js";
@@ -62,6 +63,7 @@ export {
   NIST_PQC,
   CISA_PQC,
   NSA_PQC,
+  PRIORITY_LABELS,
   calculateResults,
   buildActions,
   INVESTMENT_CHART,
