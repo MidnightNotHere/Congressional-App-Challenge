@@ -280,6 +280,76 @@ const UI = {
       es: "Generado por Quantum4Colorado — un recurso cívico no partidista creado para el Congressional App Challenge 2026 (CO-06). Esta evaluación es informativa y no sustituye el asesoramiento profesional en ciberseguridad.",
     },
   },
+  youth: {
+    sectionLabel: { en: "Youth & Education", es: "Juventud y Educación" },
+    heading: {
+      en: "Quantum for Colorado Youth",
+      es: "La Computación Cuántica para la Juventud de Colorado",
+    },
+    intro: {
+      en: "You don't need to know any physics to start here. This is what quantum computing actually means for you — your privacy, your future job, and Colorado's place in a race that's already underway.",
+      es: "No necesita saber nada de física para empezar aquí. Esto es lo que la computación cuántica realmente significa para usted — su privacidad, su futuro empleo, y el lugar de Colorado en una carrera que ya está en marcha.",
+    },
+    showLess: { en: "Show less", es: "Mostrar menos" },
+    tellMeMore: { en: "Tell me more", es: "Contarme más" },
+    conceptsHeading: {
+      en: "Quantum Concepts You Can Actually Understand",
+      es: "Conceptos Cuánticos Que Realmente Puede Entender",
+    },
+    conceptsIntro: {
+      en: "No math. No formulas. Just the ideas, explained with things you already know.",
+      es: "Sin matemáticas. Sin fórmulas. Solo las ideas, explicadas con cosas que ya conoce.",
+    },
+    goDeeperOn: { en: "Go deeper on", es: "Profundizar en" },
+    roadmapHeading: {
+      en: "Your Roadmap: Competitions, Programs, and Careers",
+      es: "Su Hoja de Ruta: Competencias, Programas y Carreras",
+    },
+    roadmapIntro: {
+      en: "Real opportunities, organized by what you're looking for.",
+      es: "Oportunidades reales, organizadas según lo que está buscando.",
+    },
+    whatTheyBuild: { en: "What they build", es: "Qué construyen" },
+    degreePath: { en: "Degree path", es: "Ruta académica" },
+    coloradoEmployers: { en: "Colorado employers", es: "Empleadores en Colorado" },
+    crossLinkCrypto: {
+      en: "See the PQC Readiness Tool in action",
+      es: "Vea la Herramienta de Preparación PQC en acción",
+    },
+    crossLinkPolicy: {
+      en: "See Colorado quantum policy in action",
+      es: "Vea la política cuántica de Colorado en acción",
+    },
+    nextStepLabel: {
+      en: "Your Next Step From High School:",
+      es: "Su Próximo Paso Desde la Secundaria:",
+    },
+    quizHeading: { en: "Find Your Quantum Path", es: "Encuentre Su Camino Cuántico" },
+    quizSubheading: {
+      en: "Five quick questions. No wrong answers.",
+      es: "Cinco preguntas rápidas. No hay respuestas incorrectas.",
+    },
+    yourResult: { en: "Your result", es: "Su resultado" },
+    builtFor: { en: "You're built for", es: "Usted está hecho para" },
+    step: { en: "Step", es: "Paso" },
+    calloutPolicyText: {
+      en: "Quantum policy work looks a lot like the Representatives section of this very app.",
+      es: "El trabajo de políticas cuánticas se parece mucho a la sección de Representantes de esta misma aplicación.",
+    },
+    calloutPolicyLink: {
+      en: "See what quantum policy work looks like in practice",
+      es: "Vea cómo es en la práctica el trabajo de políticas cuánticas",
+    },
+    calloutCryptoText: {
+      en: "Curious what this looks like in the real world?",
+      es: "¿Tiene curiosidad de cómo se ve esto en el mundo real?",
+    },
+    calloutCryptoLink: {
+      en: "See how quantum cryptography protects real organizations",
+      es: "Vea cómo la criptografía cuántica protege a organizaciones reales",
+    },
+    retakeQuiz: { en: "Retake quiz", es: "Repetir cuestionario" },
+  },
 };
 
 /* ============================== Main component ============================= */
@@ -1708,15 +1778,12 @@ function YouthEducation({ scrollTo }) {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
         {/* header */}
         <div className="max-w-3xl">
-          <SectionLabel>Youth &amp; Education</SectionLabel>
+          <SectionLabel>{t(UI.youth.sectionLabel)}</SectionLabel>
           <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
-            Quantum for Colorado Youth
+            {t(UI.youth.heading)}
           </h2>
           <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
-            You don't need to know any physics to start here. This is what
-            quantum computing actually means for you — your privacy, your
-            future job, and Colorado's place in a race that's already
-            underway.
+            {t(UI.youth.intro)}
           </p>
         </div>
 
@@ -1727,7 +1794,7 @@ function YouthEducation({ scrollTo }) {
             const open = expandedHero === i;
             return (
               <div
-                key={card.title}
+                key={i}
                 className={`rounded-2xl border p-6 transition-colors ${
                   open
                     ? "border-[#1B3A6B] bg-[#1B3A6B]/5"
@@ -1744,13 +1811,13 @@ function YouthEducation({ scrollTo }) {
                     <Icon className="w-6 h-6 text-[#1B3A6B]" aria-hidden="true" />
                   </span>
                   <h3 className="mt-4 font-bold text-lg text-[#1A1A2E]">
-                    {card.title}
+                    {t(card.title)}
                   </h3>
                   <p className="mt-2 text-[#4A5568] leading-relaxed">
-                    {card.teaser}
+                    {t(card.teaser)}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
-                    {open ? "Show less" : "Tell me more"}
+                    {open ? t(UI.youth.showLess) : t(UI.youth.tellMeMore)}
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
                         open ? "rotate-180" : ""
@@ -1761,7 +1828,7 @@ function YouthEducation({ scrollTo }) {
                 </button>
                 {open && (
                   <p className="mt-4 pt-4 border-t border-[#E2E8F0] text-sm text-[#1A1A2E] leading-relaxed">
-                    {card.expanded}
+                    {t(card.expanded)}
                   </p>
                 )}
               </div>
@@ -1772,28 +1839,27 @@ function YouthEducation({ scrollTo }) {
         {/* -------------------------- Layer 2: concept cards ------------------------ */}
         <div className="mt-16">
           <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
-            Quantum Concepts You Can Actually Understand
+            {t(UI.youth.conceptsHeading)}
           </h3>
           <p className="mt-2 text-[#4A5568]">
-            No math. No formulas. Just the ideas, explained with things you
-            already know.
+            {t(UI.youth.conceptsIntro)}
           </p>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {CONCEPT_CARDS.map((c) => {
+            {CONCEPT_CARDS.map((c, i) => {
               const Icon = ICON_REGISTRY[c.icon];
               return (
                 <div
-                  key={c.title}
+                  key={i}
                   className="rounded-2xl bg-white border border-[#E2E8F0] p-7"
                 >
                   <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#2E7D52]/10">
                     <Icon className="w-6 h-6 text-[#2E7D52]" aria-hidden="true" />
                   </span>
                   <h4 className="mt-4 font-bold text-lg text-[#1A1A2E]">
-                    {c.title}
+                    {t(c.title)}
                   </h4>
                   <p className="mt-3 text-[#4A5568] leading-relaxed">
-                    {c.body}
+                    {t(c.body)}
                   </p>
                   <a
                     href="#"
@@ -1801,7 +1867,7 @@ function YouthEducation({ scrollTo }) {
                     rel="noopener noreferrer"
                     className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
                   >
-                    Go deeper on {c.resourceLabel}
+                    {t(UI.youth.goDeeperOn)} {c.resourceLabel}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </a>
                 </div>
@@ -1813,10 +1879,10 @@ function YouthEducation({ scrollTo }) {
         {/* -------------------------- Layer 3: resource platform --------------------- */}
         <div className="mt-16">
           <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
-            Your Roadmap: Competitions, Programs, and Careers
+            {t(UI.youth.roadmapHeading)}
           </h3>
           <p className="mt-2 text-[#4A5568]">
-            Real opportunities, organized by what you're looking for.
+            {t(UI.youth.roadmapIntro)}
           </p>
 
           <div
@@ -1841,7 +1907,7 @@ function YouthEducation({ scrollTo }) {
                   }`}
                 >
                   <Icon className="w-4 h-4" aria-hidden="true" />
-                  {tab.label}
+                  {t(tab.label)}
                 </button>
               );
             })}
@@ -1849,7 +1915,7 @@ function YouthEducation({ scrollTo }) {
 
           {/* non-career resource tabs */}
           {RESOURCE_TABS.filter(
-            (t) => t.id === activeResourceTab && t.id !== "careers"
+            (rt) => rt.id === activeResourceTab && rt.id !== "careers"
           ).map((tab) => (
             <div
               key={tab.id}
@@ -1874,7 +1940,7 @@ function YouthEducation({ scrollTo }) {
                     />
                   </div>
                   <p className="mt-2 text-sm text-[#4A5568] leading-relaxed">
-                    {item.description}
+                    {t(item.description)}
                   </p>
                 </a>
               ))}
@@ -1918,22 +1984,22 @@ function YouthEducation({ scrollTo }) {
                         />
                       </div>
                       <h4 className="mt-3 font-bold text-lg text-[#1A1A2E]">
-                        {track.label}
+                        {t(track.label)}
                       </h4>
                       <p className="mt-1 text-sm text-[#4A5568]">
-                        {track.oneLiner}
+                        {t(track.oneLiner)}
                       </p>
                     </button>
                     {open && (
                       <div className="mt-4 pt-4 border-t border-[#E2E8F0] space-y-3">
                         <DetailRow
-                          label="What they build"
-                          value={track.whatTheyBuild}
+                          label={t(UI.youth.whatTheyBuild)}
+                          value={t(track.whatTheyBuild)}
                         />
-                        <DetailRow label="Degree path" value={track.degreePath} />
+                        <DetailRow label={t(UI.youth.degreePath)} value={t(track.degreePath)} />
                         <DetailRow
-                          label="Colorado employers"
-                          value={track.coloradoEmployers}
+                          label={t(UI.youth.coloradoEmployers)}
+                          value={t(track.coloradoEmployers)}
                         />
 
                         {track.id === "crypto" && (
@@ -1942,7 +2008,7 @@ function YouthEducation({ scrollTo }) {
                             onClick={() => scrollTo && scrollTo("assessment")}
                             className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
                           >
-                            See the PQC Readiness Tool in action
+                            {t(UI.youth.crossLinkCrypto)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
                         )}
@@ -1954,16 +2020,16 @@ function YouthEducation({ scrollTo }) {
                             }
                             className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
                           >
-                            See Colorado quantum policy in action
+                            {t(UI.youth.crossLinkPolicy)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
                         )}
 
                         <p className="text-sm text-[#1A1A2E] leading-relaxed">
                           <span className="font-bold">
-                            Your Next Step From High School:{" "}
+                            {t(UI.youth.nextStepLabel)}{" "}
                           </span>
-                          {track.nextStep}
+                          {t(track.nextStep)}
                         </p>
                       </div>
                     )}
@@ -1982,10 +2048,10 @@ function YouthEducation({ scrollTo }) {
             </span>
             <div>
               <h3 className="font-black tracking-tight text-2xl">
-                Find Your Quantum Path
+                {t(UI.youth.quizHeading)}
               </h3>
               <p className="text-blue-100/80 text-sm mt-0.5">
-                Five quick questions. No wrong answers.
+                {t(UI.youth.quizSubheading)}
               </p>
             </div>
           </div>
@@ -1994,8 +2060,8 @@ function YouthEducation({ scrollTo }) {
             <div className="mt-8">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-xs tracking-wider uppercase text-blue-100/70">
-                  Question {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)} of{" "}
-                  {QUIZ_QUESTIONS.length}
+                  {t(UI.assessment.question)} {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)}{" "}
+                  {t(UI.assessment.of)} {QUIZ_QUESTIONS.length}
                 </span>
               </div>
               <div className="h-2 rounded-full bg-white/15 overflow-hidden">
@@ -2009,14 +2075,14 @@ function YouthEducation({ scrollTo }) {
 
               <div className="mt-6">
                 <p className="font-bold text-lg">
-                  {QUIZ_QUESTIONS[quizStep].prompt}
+                  {t(QUIZ_QUESTIONS[quizStep].prompt)}
                 </p>
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {QUIZ_QUESTIONS[quizStep].options.map((opt) => {
                     const selected = quizAnswers[quizStep] === opt.track;
                     return (
                       <button
-                        key={opt.label}
+                        key={opt.track}
                         type="button"
                         onClick={() => selectQuizAnswer(quizStep, opt.track)}
                         aria-pressed={selected}
@@ -2026,7 +2092,7 @@ function YouthEducation({ scrollTo }) {
                             : "border-white/20 bg-white/5 hover:border-white/40"
                         }`}
                       >
-                        {opt.label}
+                        {t(opt.label)}
                       </button>
                     );
                   })}
@@ -2038,14 +2104,14 @@ function YouthEducation({ scrollTo }) {
           {quizDone && quizResult && (
             <div className="mt-8">
               <p className="font-mono text-xs tracking-wider uppercase text-[#C4872A]">
-                Your result
+                {t(UI.youth.yourResult)}
               </p>
               <h4 className="mt-1 font-black text-2xl sm:text-3xl flex items-center gap-2">
                 <Sparkles className="w-6 h-6 text-[#C4872A]" aria-hidden="true" />
-                You're built for {quizResult.label}
+                {t(UI.youth.builtFor)} {t(quizResult.label)}
               </h4>
               <p className="mt-3 text-blue-100/90 leading-relaxed max-w-2xl">
-                {quizResult.resultBlurb}
+                {t(quizResult.resultBlurb)}
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -2055,10 +2121,10 @@ function YouthEducation({ scrollTo }) {
                     className="rounded-xl bg-white/10 border border-white/15 p-4"
                   >
                     <span className="font-mono text-xs text-[#C4872A]">
-                      Step {i + 1}
+                      {t(UI.youth.step)} {i + 1}
                     </span>
                     <p className="mt-1 text-sm text-white leading-relaxed">
-                      {step}
+                      {t(step)}
                     </p>
                   </div>
                 ))}
@@ -2067,15 +2133,14 @@ function YouthEducation({ scrollTo }) {
               {quizResult.id === "policy" && (
                 <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
-                    Quantum policy work looks a lot like the Representatives
-                    section of this very app.
+                    {t(UI.youth.calloutPolicyText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("representatives")}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
                   >
-                    See what quantum policy work looks like in practice
+                    {t(UI.youth.calloutPolicyLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
@@ -2083,14 +2148,14 @@ function YouthEducation({ scrollTo }) {
               {quizResult.id === "crypto" && (
                 <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
-                    Curious what this looks like in the real world?
+                    {t(UI.youth.calloutCryptoText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("assessment")}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
                   >
-                    See how quantum cryptography protects real organizations
+                    {t(UI.youth.calloutCryptoLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                   </button>
                 </div>
@@ -2102,7 +2167,7 @@ function YouthEducation({ scrollTo }) {
                 className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white/80 hover:text-white rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2"
               >
                 <RotateCcw className="w-4 h-4" aria-hidden="true" />
-                Retake quiz
+                {t(UI.youth.retakeQuiz)}
               </button>
             </div>
           )}

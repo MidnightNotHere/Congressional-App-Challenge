@@ -5,6 +5,7 @@ import QuantumLine from "../components/QuantumLine";
 import Icon from "../components/Icon";
 import { colors, mono, radius, space, withAlpha } from "../theme";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS, CAREER_TRACKS, QUIZ_QUESTIONS, computeQuizResult } from "../data";
+import { useLanguage } from "../i18n/LanguageContext";
 
 const W = Dimensions.get("window").width;
 
@@ -14,7 +15,82 @@ function openLink(href) {
   if (href && href !== "#") Linking.openURL(href);
 }
 
+const UI = {
+  eyebrow: { en: "YOUTH & EDUCATION", es: "JUVENTUD Y EDUCACIÓN" },
+  heading: {
+    en: "Quantum for Colorado Youth",
+    es: "La Computación Cuántica para la Juventud de Colorado",
+  },
+  intro: {
+    en: "You don't need to know any physics to start here. This is what quantum computing actually means for you — your privacy, your future job, and Colorado's place in a race that's already underway.",
+    es: "No necesita saber nada de física para empezar aquí. Esto es lo que la computación cuántica realmente significa para usted — su privacidad, su futuro empleo, y el lugar de Colorado en una carrera que ya está en marcha.",
+  },
+  showLess: { en: "Show less", es: "Mostrar menos" },
+  tellMeMore: { en: "Tell me more", es: "Contarme más" },
+  conceptsHeading: {
+    en: "Quantum Concepts You Can Actually Understand",
+    es: "Conceptos Cuánticos Que Realmente Puede Entender",
+  },
+  conceptsIntro: {
+    en: "No math. No formulas. Just the ideas, explained with things you already know.",
+    es: "Sin matemáticas. Sin fórmulas. Solo las ideas, explicadas con cosas que ya conoce.",
+  },
+  goDeeperOn: { en: "Go deeper on", es: "Profundizar en" },
+  roadmapHeading: {
+    en: "Your Roadmap: Competitions, Programs, and Careers",
+    es: "Su Hoja de Ruta: Competencias, Programas y Carreras",
+  },
+  roadmapIntro: {
+    en: "Real opportunities, organized by what you're looking for.",
+    es: "Oportunidades reales, organizadas según lo que está buscando.",
+  },
+  whatTheyBuild: { en: "What they build", es: "Qué construyen" },
+  degreePath: { en: "Degree path", es: "Ruta académica" },
+  coloradoEmployers: { en: "Colorado employers", es: "Empleadores en Colorado" },
+  crossLinkCrypto: {
+    en: "See the PQC Readiness Tool in action",
+    es: "Vea la Herramienta de Preparación PQC en acción",
+  },
+  crossLinkPolicy: {
+    en: "See Colorado quantum policy in action",
+    es: "Vea la política cuántica de Colorado en acción",
+  },
+  nextStepLabel: {
+    en: "Your Next Step From High School:",
+    es: "Su Próximo Paso Desde la Secundaria:",
+  },
+  quizHeading: { en: "Find Your Quantum Path", es: "Encuentre Su Camino Cuántico" },
+  quizSubheading: {
+    en: "Five quick questions. No wrong answers.",
+    es: "Cinco preguntas rápidas. No hay respuestas incorrectas.",
+  },
+  question: { en: "Question", es: "Pregunta" },
+  of: { en: "of", es: "de" },
+  yourResult: { en: "YOUR RESULT", es: "SU RESULTADO" },
+  builtFor: { en: "You're built for", es: "Usted está hecho para" },
+  step: { en: "Step", es: "Paso" },
+  calloutPolicyText: {
+    en: "Quantum policy work looks a lot like the Representatives section of this very app.",
+    es: "El trabajo de políticas cuánticas se parece mucho a la sección de Representantes de esta misma aplicación.",
+  },
+  calloutPolicyLink: {
+    en: "See what quantum policy work looks like in practice",
+    es: "Vea cómo es en la práctica el trabajo de políticas cuánticas",
+  },
+  calloutCryptoText: {
+    en: "Curious what this looks like in the real world?",
+    es: "¿Tiene curiosidad de cómo se ve esto en el mundo real?",
+  },
+  calloutCryptoLink: {
+    en: "See how quantum cryptography protects real organizations",
+    es: "Vea cómo la criptografía cuántica protege a organizaciones reales",
+  },
+  retakeQuiz: { en: "Retake quiz", es: "Repetir cuestionario" },
+};
+
 export default function YouthScreen({ navigation }) {
+  const { t } = useLanguage();
+
   // Layer 1: entry-point hero (expand-in-place)
   const [expandedHero, setExpandedHero] = useState(null);
 
@@ -27,7 +103,7 @@ export default function YouthScreen({ navigation }) {
   const [quizAnswers, setQuizAnswers] = useState([]);
   const [quizDone, setQuizDone] = useState(false);
 
-  const activeTab = RESOURCE_TABS.find((t) => t.id === activeResourceTab) || RESOURCE_TABS[0];
+  const activeTab = RESOURCE_TABS.find((rt) => rt.id === activeResourceTab) || RESOURCE_TABS[0];
   const quizAnsweredCount = quizAnswers.filter(Boolean).length;
   const quizResult = quizDone ? computeQuizResult(quizAnswers) : null;
 
@@ -57,13 +133,9 @@ export default function YouthScreen({ navigation }) {
       <View style={styles.section}>
         <QuantumLine width={W - 40} />
         <View style={{ marginTop: 18 }}>
-          <Eyebrow>YOUTH & EDUCATION</Eyebrow>
-          <H2>Quantum for Colorado Youth</H2>
-          <Body style={{ marginTop: 10 }}>
-            You don't need to know any physics to start here. This is what quantum computing
-            actually means for you — your privacy, your future job, and Colorado's place in a race
-            that's already underway.
-          </Body>
+          <Eyebrow>{t(UI.eyebrow)}</Eyebrow>
+          <H2>{t(UI.heading)}</H2>
+          <Body style={{ marginTop: 10 }}>{t(UI.intro)}</Body>
         </View>
 
         {/* ---------------- Layer 1: hero cards ---------------- */}
@@ -72,7 +144,7 @@ export default function YouthScreen({ navigation }) {
             const open = expandedHero === i;
             return (
               <Pressable
-                key={card.title}
+                key={i}
                 onPress={() => setExpandedHero(open ? null : i)}
                 accessibilityRole="button"
                 accessibilityState={{ expanded: open }}
@@ -81,10 +153,10 @@ export default function YouthScreen({ navigation }) {
                 <View style={styles.iconBadge}>
                   <Icon name={card.icon} size={22} color={colors.primary} />
                 </View>
-                <Text style={styles.cardTitle}>{card.title}</Text>
-                <Body style={{ marginTop: 8 }}>{card.teaser}</Body>
+                <Text style={styles.cardTitle}>{t(card.title)}</Text>
+                <Body style={{ marginTop: 8 }}>{t(card.teaser)}</Body>
                 <View style={styles.expandRow}>
-                  <Text style={styles.expandText}>{open ? "Show less" : "Tell me more"}</Text>
+                  <Text style={styles.expandText}>{open ? t(UI.showLess) : t(UI.tellMeMore)}</Text>
                   <Icon
                     name={open ? "ChevronUp" : "ChevronDown"}
                     size={16}
@@ -92,7 +164,7 @@ export default function YouthScreen({ navigation }) {
                   />
                 </View>
                 {open && (
-                  <Text style={styles.heroExpanded}>{card.expanded}</Text>
+                  <Text style={styles.heroExpanded}>{t(card.expanded)}</Text>
                 )}
               </Pressable>
             );
@@ -101,24 +173,22 @@ export default function YouthScreen({ navigation }) {
 
         {/* ---------------- Layer 2: concept cards ---------------- */}
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.h3}>Quantum Concepts You Can Actually Understand</Text>
-          <Body style={{ marginTop: 6 }}>
-            No math. No formulas. Just the ideas, explained with things you already know.
-          </Body>
+          <Text style={styles.h3}>{t(UI.conceptsHeading)}</Text>
+          <Body style={{ marginTop: 6 }}>{t(UI.conceptsIntro)}</Body>
           <View style={{ gap: 12, marginTop: 16 }}>
-            {CONCEPT_CARDS.map((c) => (
-              <Card key={c.title}>
+            {CONCEPT_CARDS.map((c, i) => (
+              <Card key={i}>
                 <View style={[styles.iconBadge, { backgroundColor: withAlpha(colors.secondary, 0.1) }]}>
                   <Icon name={c.icon} size={22} color={colors.secondary} />
                 </View>
-                <Text style={styles.cardTitle}>{c.title}</Text>
-                <Body style={{ marginTop: 8 }}>{c.body}</Body>
+                <Text style={styles.cardTitle}>{t(c.title)}</Text>
+                <Body style={{ marginTop: 8 }}>{t(c.body)}</Body>
                 <Pressable
                   onPress={() => openLink(c.href)}
                   accessibilityRole="link"
                   style={styles.goDeeper}
                 >
-                  <Text style={styles.goDeeperText}>Go deeper on {c.resourceLabel}</Text>
+                  <Text style={styles.goDeeperText}>{t(UI.goDeeperOn)} {c.resourceLabel}</Text>
                   <Icon name="ArrowRight" size={14} color={colors.accentDark} />
                 </Pressable>
               </Card>
@@ -128,8 +198,8 @@ export default function YouthScreen({ navigation }) {
 
         {/* ---------------- Layer 3: resource platform ---------------- */}
         <View style={{ marginTop: 30 }}>
-          <Text style={styles.h3}>Your Roadmap: Competitions, Programs, and Careers</Text>
-          <Body style={{ marginTop: 6 }}>Real opportunities, organized by what you're looking for.</Body>
+          <Text style={styles.h3}>{t(UI.roadmapHeading)}</Text>
+          <Body style={{ marginTop: 6 }}>{t(UI.roadmapIntro)}</Body>
 
           <ScrollView
             horizontal
@@ -148,7 +218,7 @@ export default function YouthScreen({ navigation }) {
                   style={[styles.tabPill, on && { backgroundColor: colors.primary, borderColor: colors.primary }]}
                 >
                   <Icon name={tab.icon} size={15} color={on ? "#fff" : colors.textSecondary} />
-                  <Text style={[styles.tabText, on && { color: "#fff" }]}>{tab.label}</Text>
+                  <Text style={[styles.tabText, on && { color: "#fff" }]}>{t(tab.label)}</Text>
                 </Pressable>
               );
             })}
@@ -167,7 +237,7 @@ export default function YouthScreen({ navigation }) {
                     <Text style={styles.resourceName}>{item.name}</Text>
                     <Icon name="ExternalLink" size={16} color={colors.primary} />
                   </View>
-                  <Text style={styles.resourceDesc}>{item.description}</Text>
+                  <Text style={styles.resourceDesc}>{t(item.description)}</Text>
                 </Pressable>
               ))}
             </View>
@@ -194,14 +264,14 @@ export default function YouthScreen({ navigation }) {
                           color={colors.primary}
                         />
                       </View>
-                      <Text style={styles.cardTitle}>{track.label}</Text>
-                      <Text style={styles.careerOneLiner}>{track.oneLiner}</Text>
+                      <Text style={styles.cardTitle}>{t(track.label)}</Text>
+                      <Text style={styles.careerOneLiner}>{t(track.oneLiner)}</Text>
                     </Pressable>
                     {open && (
                       <View style={styles.careerBody}>
-                        <Detail label="What they build" value={track.whatTheyBuild} />
-                        <Detail label="Degree path" value={track.degreePath} />
-                        <Detail label="Colorado employers" value={track.coloradoEmployers} />
+                        <Detail label={t(UI.whatTheyBuild)} value={t(track.whatTheyBuild)} />
+                        <Detail label={t(UI.degreePath)} value={t(track.degreePath)} />
+                        <Detail label={t(UI.coloradoEmployers)} value={t(track.coloradoEmployers)} />
 
                         {track.id === "crypto" && (
                           <Pressable
@@ -209,7 +279,7 @@ export default function YouthScreen({ navigation }) {
                             accessibilityRole="button"
                             style={styles.crossLink}
                           >
-                            <Text style={styles.crossLinkText}>See the PQC Readiness Tool in action</Text>
+                            <Text style={styles.crossLinkText}>{t(UI.crossLinkCrypto)}</Text>
                             <Icon name="ArrowRight" size={14} color={colors.primary} />
                           </Pressable>
                         )}
@@ -219,14 +289,14 @@ export default function YouthScreen({ navigation }) {
                             accessibilityRole="button"
                             style={styles.crossLink}
                           >
-                            <Text style={styles.crossLinkText}>See Colorado quantum policy in action</Text>
+                            <Text style={styles.crossLinkText}>{t(UI.crossLinkPolicy)}</Text>
                             <Icon name="ArrowRight" size={14} color={colors.primary} />
                           </Pressable>
                         )}
 
                         <Text style={styles.nextStep}>
-                          <Text style={{ fontWeight: "800" }}>Your Next Step From High School: </Text>
-                          {track.nextStep}
+                          <Text style={{ fontWeight: "800" }}>{t(UI.nextStepLabel)} </Text>
+                          {t(track.nextStep)}
                         </Text>
                       </View>
                     )}
@@ -244,8 +314,8 @@ export default function YouthScreen({ navigation }) {
               <Icon name="Compass" size={22} color={colors.accent} />
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.quizTitle}>Find Your Quantum Path</Text>
-              <Text style={styles.quizSub}>Five quick questions. No wrong answers.</Text>
+              <Text style={styles.quizTitle}>{t(UI.quizHeading)}</Text>
+              <Text style={styles.quizSub}>{t(UI.quizSubheading)}</Text>
             </View>
           </View>
 
@@ -253,7 +323,7 @@ export default function YouthScreen({ navigation }) {
             <View style={{ marginTop: 22 }}>
               <View style={styles.progressLabels}>
                 <Text style={styles.progressText}>
-                  Question {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)} of {QUIZ_QUESTIONS.length}
+                  {t(UI.question)} {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)} {t(UI.of)} {QUIZ_QUESTIONS.length}
                 </Text>
               </View>
               <View style={styles.progressTrack}>
@@ -265,20 +335,20 @@ export default function YouthScreen({ navigation }) {
                 />
               </View>
 
-              <Text style={styles.quizPrompt}>{QUIZ_QUESTIONS[quizStep].prompt}</Text>
+              <Text style={styles.quizPrompt}>{t(QUIZ_QUESTIONS[quizStep].prompt)}</Text>
               <View style={{ gap: 8, marginTop: 12 }}>
                 {QUIZ_QUESTIONS[quizStep].options.map((opt) => {
                   const selected = quizAnswers[quizStep] === opt.track;
                   return (
                     <Pressable
-                      key={opt.label}
+                      key={opt.track}
                       onPress={() => selectQuizAnswer(quizStep, opt.track)}
                       accessibilityRole="button"
                       accessibilityState={{ selected }}
                       style={[styles.quizOpt, selected && styles.quizOptSelected]}
                     >
                       <Text style={[styles.quizOptText, selected && styles.quizOptTextSelected]}>
-                        {opt.label}
+                        {t(opt.label)}
                       </Text>
                     </Pressable>
                   );
@@ -289,46 +359,44 @@ export default function YouthScreen({ navigation }) {
 
           {quizDone && quizResult && (
             <View style={{ marginTop: 22 }}>
-              <Text style={styles.resultEyebrow}>YOUR RESULT</Text>
+              <Text style={styles.resultEyebrow}>{t(UI.yourResult)}</Text>
               <View style={styles.resultHeadRow}>
                 <Icon name="Sparkles" size={22} color={colors.accent} />
-                <Text style={styles.resultTitle}>You're built for {quizResult.label}</Text>
+                <Text style={styles.resultTitle}>{t(UI.builtFor)} {t(quizResult.label)}</Text>
               </View>
-              <Text style={styles.resultBlurb}>{quizResult.resultBlurb}</Text>
+              <Text style={styles.resultBlurb}>{t(quizResult.resultBlurb)}</Text>
 
               <View style={{ gap: 10, marginTop: 16 }}>
                 {quizResult.firstSteps.map((step, i) => (
                   <View key={i} style={styles.stepCard}>
-                    <Text style={styles.stepLabel}>Step {i + 1}</Text>
-                    <Text style={styles.stepText}>{step}</Text>
+                    <Text style={styles.stepLabel}>{t(UI.step)} {i + 1}</Text>
+                    <Text style={styles.stepText}>{t(step)}</Text>
                   </View>
                 ))}
               </View>
 
               {quizResult.id === "policy" && (
                 <View style={styles.calloutBox}>
-                  <Text style={styles.calloutText}>
-                    Quantum policy work looks a lot like the Representatives section of this very app.
-                  </Text>
+                  <Text style={styles.calloutText}>{t(UI.calloutPolicyText)}</Text>
                   <Pressable
                     onPress={() => navigation.navigate("Reps")}
                     accessibilityRole="button"
                     style={styles.calloutLink}
                   >
-                    <Text style={styles.calloutLinkText}>See what quantum policy work looks like in practice</Text>
+                    <Text style={styles.calloutLinkText}>{t(UI.calloutPolicyLink)}</Text>
                     <Icon name="ArrowRight" size={14} color={colors.accent} />
                   </Pressable>
                 </View>
               )}
               {quizResult.id === "crypto" && (
                 <View style={styles.calloutBox}>
-                  <Text style={styles.calloutText}>Curious what this looks like in the real world?</Text>
+                  <Text style={styles.calloutText}>{t(UI.calloutCryptoText)}</Text>
                   <Pressable
                     onPress={() => navigation.navigate("Assessment")}
                     accessibilityRole="button"
                     style={styles.calloutLink}
                   >
-                    <Text style={styles.calloutLinkText}>See how quantum cryptography protects real organizations</Text>
+                    <Text style={styles.calloutLinkText}>{t(UI.calloutCryptoLink)}</Text>
                     <Icon name="ArrowRight" size={14} color={colors.accent} />
                   </Pressable>
                 </View>
@@ -336,7 +404,7 @@ export default function YouthScreen({ navigation }) {
 
               <Pressable onPress={retakeQuiz} accessibilityRole="button" style={styles.retakeRow}>
                 <Icon name="RotateCcw" size={16} color={withAlpha("#FFFFFF", 0.8)} />
-                <Text style={styles.retakeText}>Retake quiz</Text>
+                <Text style={styles.retakeText}>{t(UI.retakeQuiz)}</Text>
               </Pressable>
             </View>
           )}
