@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "../../../data/i18n.js";
+import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "../../data/i18n.js";
 
 const LANG_STORAGE_KEY = "q4co-lang";
 

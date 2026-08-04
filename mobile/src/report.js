@@ -1,7 +1,7 @@
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import { NIST_PQC, CISA_PQC, NSA_PQC } from "./data";
-import { pick } from "../../data/i18n.js";
+import { pick } from "../data/i18n.js";
 
 const esc = (s = "") =>
   String(s)

@@ -398,6 +398,68 @@ const UI = {
       es: "Datos del ecosistema y recomendaciones de políticas",
     },
   },
+  reps: {
+    sectionLabel: { en: "For Representatives & Policymakers", es: "Para Representantes y Legisladores" },
+    heading: { en: "Colorado Quantum Policy Hub", es: "Centro de Políticas Cuánticas de Colorado" },
+    intro: {
+      en: "Data, analysis, and resources for Colorado state legislators, congressional staff, and economic development officials.",
+      es: "Datos, análisis y recursos para legisladores estatales de Colorado, personal del Congreso, y funcionarios de desarrollo económico.",
+    },
+    caseHeading: {
+      en: "The Case for a Colorado Quantum Economic Development Initiative",
+      es: "El Argumento a Favor de una Iniciativa de Desarrollo Económico Cuántico de Colorado",
+    },
+    tableState: { en: "State", es: "Estado" },
+    tableInitiative: { en: "Initiative", es: "Iniciativa" },
+    tableInvestment: { en: "Investment", es: "Inversión" },
+    tableYear: { en: "Year", es: "Año" },
+    chartHeading: { en: "State quantum investment commitments", es: "Compromisos estatales de inversión cuántica" },
+    chartSub: { en: "Reported state funding, in $ millions", es: "Financiamiento estatal reportado, en millones de $" },
+    chartFootnote: {
+      en: "Figures reflect publicly reported state commitments. Colorado has no coordinated state quantum investment despite hosting federal and university infrastructure other states are spending hundreds of millions to approximate.",
+      es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado no cuenta con una inversión cuántica estatal coordinada, a pesar de albergar infraestructura federal y universitaria que otros estados están gastando cientos de millones en tratar de igualar.",
+    },
+    callout: {
+      en: "Colorado has the federal infrastructure — NIST Boulder, JILA — that other states are spending hundreds of millions to approximate. A state Quantum Economic Development Initiative could leverage this existing advantage into jobs, company formation, and national leadership. Illinois and New York are already moving.",
+      es: "Colorado tiene la infraestructura federal — NIST Boulder, JILA — que otros estados están gastando cientos de millones en tratar de igualar. Una Iniciativa Estatal de Desarrollo Económico Cuántico podría aprovechar esta ventaja existente para generar empleos, formación de empresas, y liderazgo nacional. Illinois y Nueva York ya se están moviendo.",
+    },
+    ecosystemHeading: {
+      en: "Detailed Colorado Quantum Ecosystem Report",
+      es: "Informe Detallado del Ecosistema Cuántico de Colorado",
+    },
+    ecosystemIntro: {
+      en: "Expand each institution for research focus, funding, employment, and its connection to Colorado's economic and security interests.",
+      es: "Expanda cada institución para ver su enfoque de investigación, financiamiento, empleo, y su conexión con los intereses económicos y de seguridad de Colorado.",
+    },
+    researchFocus: { en: "Research focus", es: "Enfoque de investigación" },
+    funding: { en: "Funding", es: "Financiamiento" },
+    employment: { en: "Employment", es: "Empleo" },
+    connectionToColorado: { en: "Connection to Colorado", es: "Conexión con Colorado" },
+    downloadReportPdf: {
+      en: "Download full Colorado Quantum Ecosystem Report (PDF)",
+      es: "Descargar el informe completo del ecosistema cuántico de Colorado (PDF)",
+    },
+    recommendationsHeading: { en: "Recommended State Actions", es: "Acciones Estatales Recomendadas" },
+    precedentLabel: { en: "Precedent:", es: "Precedente:" },
+    impactLabel: { en: "Impact:", es: "Impacto:" },
+    takeActionHeading: { en: "Take Action", es: "Tome Acción" },
+    contactCrowTitle: { en: "Contact Rep. Jason Crow's office", es: "Contacte a la oficina del Rep. Jason Crow" },
+    contactCrowSub: { en: "Share input on quantum policy", es: "Comparta su opinión sobre política cuántica" },
+    contactCQNTitle: {
+      en: "Contact the Colorado Quantum Network",
+      es: "Contacte a la Red Cuántica de Colorado",
+    },
+    contactCQNSub: {
+      en: "Connect with the statewide consortium",
+      es: "Conéctese con el consorcio estatal",
+    },
+    shareRepTitle: {
+      en: "Share this resource with your state representative",
+      es: "Comparta este recurso con su representante estatal",
+    },
+    shareRepSub: { en: "Opens a pre-filled email template", es: "Abre una plantilla de correo electrónico prellenada" },
+    composeEmail: { en: "Compose email", es: "Redactar correo" },
+  },
 };
 
 /* ============================== Main component ============================= */
@@ -1195,20 +1257,19 @@ function App() {
         <section id="representatives" ref={repsRef} className="scroll-mt-16">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>For Representatives &amp; Policymakers</SectionLabel>
+              <SectionLabel>{t(UI.reps.sectionLabel)}</SectionLabel>
               <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
-                Colorado Quantum Policy Hub
+                {t(UI.reps.heading)}
               </h2>
               <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
-                Data, analysis, and resources for Colorado state legislators,
-                congressional staff, and economic development officials.
+                {t(UI.reps.intro)}
               </p>
             </div>
 
             {/* A — Investment gap */}
             <div className="mt-12">
               <h3 className="font-bold text-xl text-[#1A1A2E]">
-                The Case for a Colorado Quantum Economic Development Initiative
+                {t(UI.reps.caseHeading)}
               </h3>
 
               <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -1217,10 +1278,10 @@ function App() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="bg-[#1B3A6B] text-white text-left">
-                        <th className="px-4 py-3 font-semibold">State</th>
-                        <th className="px-4 py-3 font-semibold">Initiative</th>
-                        <th className="px-4 py-3 font-semibold">Investment</th>
-                        <th className="px-4 py-3 font-semibold">Year</th>
+                        <th className="px-4 py-3 font-semibold">{t(UI.reps.tableState)}</th>
+                        <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInitiative)}</th>
+                        <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInvestment)}</th>
+                        <th className="px-4 py-3 font-semibold">{t(UI.reps.tableYear)}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -1235,13 +1296,13 @@ function App() {
                             {row.state}
                           </td>
                           <td className="px-4 py-3 text-[#4A5568]">
-                            {row.initiative}
+                            {t(row.initiative)}
                           </td>
                           <td className="px-4 py-3 font-mono text-[#4A5568]">
-                            {row.investment}
+                            {t(row.investment)}
                           </td>
                           <td className="px-4 py-3 font-mono text-[#4A5568]">
-                            {row.year}
+                            {t(row.year)}
                           </td>
                         </tr>
                       ))}
@@ -1252,10 +1313,10 @@ function App() {
                 {/* chart */}
                 <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
                   <p className="font-semibold text-[#1A1A2E]">
-                    State quantum investment commitments
+                    {t(UI.reps.chartHeading)}
                   </p>
                   <p className="font-mono text-xs text-[#4A5568] mb-3">
-                    Reported state funding, in $ millions
+                    {t(UI.reps.chartSub)}
                   </p>
                   <div style={{ width: "100%", height: 240 }}>
                     <ResponsiveContainer>
@@ -1304,10 +1365,7 @@ function App() {
                     </ResponsiveContainer>
                   </div>
                   <p className="mt-2 text-xs text-[#4A5568] leading-snug">
-                    Figures reflect publicly reported state commitments. Colorado
-                    has no coordinated state quantum investment despite hosting
-                    federal and university infrastructure other states are
-                    spending hundreds of millions to approximate.
+                    {t(UI.reps.chartFootnote)}
                   </p>
                 </div>
               </div>
@@ -1315,12 +1373,7 @@ function App() {
               {/* callout */}
               <div className="mt-6 rounded-2xl bg-[#C4872A] text-white p-7">
                 <p className="text-lg leading-relaxed">
-                  Colorado has the federal infrastructure — NIST Boulder, JILA —
-                  that other states are spending hundreds of millions to
-                  approximate. A state Quantum Economic Development Initiative
-                  could leverage this existing advantage into jobs, company
-                  formation, and national leadership. Illinois and New York are
-                  already moving.
+                  {t(UI.reps.callout)}
                 </p>
               </div>
             </div>
@@ -1328,11 +1381,10 @@ function App() {
             {/* B — Detailed ecosystem accordion */}
             <div className="mt-16">
               <h3 className="font-bold text-xl text-[#1A1A2E]">
-                Detailed Colorado Quantum Ecosystem Report
+                {t(UI.reps.ecosystemHeading)}
               </h3>
               <p className="mt-2 text-[#4A5568]">
-                Expand each institution for research focus, funding, employment,
-                and its connection to Colorado's economic and security interests.
+                {t(UI.reps.ecosystemIntro)}
               </p>
 
               <div className="mt-6 rounded-2xl border border-[#E2E8F0] bg-white divide-y divide-[#E2E8F0] overflow-hidden">
@@ -1350,7 +1402,7 @@ function App() {
                             {inst.name}
                           </span>
                           <span className="ml-2 font-mono text-xs text-[#4A5568]">
-                            {inst.location}
+                            {t(inst.location)}
                           </span>
                         </span>
                         <ChevronDown
@@ -1361,15 +1413,15 @@ function App() {
                       </button>
                       {open && (
                         <div className="px-5 pb-5 grid gap-3 sm:grid-cols-2">
-                          <DetailRow label="Research focus" value={inst.focus} />
-                          <DetailRow label="Funding" value={inst.funding} />
+                          <DetailRow label={t(UI.reps.researchFocus)} value={t(inst.focus)} />
+                          <DetailRow label={t(UI.reps.funding)} value={t(inst.funding)} />
                           <DetailRow
-                            label="Employment"
-                            value={inst.employment}
+                            label={t(UI.reps.employment)}
+                            value={t(inst.employment)}
                           />
                           <DetailRow
-                            label="Connection to Colorado"
-                            value={inst.connection}
+                            label={t(UI.reps.connectionToColorado)}
+                            value={t(inst.connection)}
                           />
                         </div>
                       )}
@@ -1383,19 +1435,19 @@ function App() {
                 className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#1B3A6B] hover:bg-[#16304f] text-white font-semibold px-6 py-3 transition-colors"
               >
                 <FileText className="w-4 h-4" />
-                Download full Colorado Quantum Ecosystem Report (PDF)
+                {t(UI.reps.downloadReportPdf)}
               </button>
             </div>
 
             {/* C — Recommendations */}
             <div className="mt-16">
               <h3 className="font-bold text-xl text-[#1A1A2E]">
-                Recommended State Actions
+                {t(UI.reps.recommendationsHeading)}
               </h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {RECOMMENDATIONS.map((rec, i) => (
                   <div
-                    key={rec.title}
+                    key={i}
                     className="rounded-2xl border border-[#E2E8F0] bg-white p-7"
                   >
                     <div className="flex items-center gap-3">
@@ -1403,24 +1455,24 @@ function App() {
                         {i + 1}
                       </span>
                       <h4 className="font-bold text-[#1A1A2E] leading-snug">
-                        {rec.title}
+                        {t(rec.title)}
                       </h4>
                     </div>
                     <p className="mt-4 text-[#4A5568] leading-relaxed">
-                      {rec.rationale}
+                      {t(rec.rationale)}
                     </p>
                     <div className="mt-4 grid gap-2">
                       <div className="flex gap-2 text-sm">
                         <span className="font-semibold text-[#1B3A6B] shrink-0">
-                          Precedent:
+                          {t(UI.reps.precedentLabel)}
                         </span>
-                        <span className="text-[#4A5568]">{rec.precedent}</span>
+                        <span className="text-[#4A5568]">{t(rec.precedent)}</span>
                       </div>
                       <div className="flex gap-2 text-sm">
                         <span className="font-semibold text-[#2E7D52] shrink-0">
-                          Impact:
+                          {t(UI.reps.impactLabel)}
                         </span>
-                        <span className="text-[#4A5568]">{rec.impact}</span>
+                        <span className="text-[#4A5568]">{t(rec.impact)}</span>
                       </div>
                     </div>
                   </div>
@@ -1430,7 +1482,7 @@ function App() {
 
             {/* D — Contact & engagement */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#1A1A2E]">Take Action</h3>
+              <h3 className="font-bold text-xl text-[#1A1A2E]">{t(UI.reps.takeActionHeading)}</h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a
                   href="https://crow.house.gov"
@@ -1440,10 +1492,10 @@ function App() {
                 >
                   <Landmark className="w-6 h-6 text-[#1B3A6B]" />
                   <h4 className="mt-3 font-bold text-[#1A1A2E]">
-                    Contact Rep. Jason Crow's office
+                    {t(UI.reps.contactCrowTitle)}
                   </h4>
                   <p className="mt-1 text-sm text-[#4A5568]">
-                    Share input on quantum policy
+                    {t(UI.reps.contactCrowSub)}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
                     crow.house.gov <ExternalLink className="w-3.5 h-3.5" />
@@ -1458,10 +1510,10 @@ function App() {
                 >
                   <Users className="w-6 h-6 text-[#2E7D52]" />
                   <h4 className="mt-3 font-bold text-[#1A1A2E]">
-                    Contact the Colorado Quantum Network
+                    {t(UI.reps.contactCQNTitle)}
                   </h4>
                   <p className="mt-1 text-sm text-[#4A5568]">
-                    Connect with the statewide consortium
+                    {t(UI.reps.contactCQNSub)}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
                     coloradoquantum.org <ExternalLink className="w-3.5 h-3.5" />
@@ -1474,13 +1526,13 @@ function App() {
                 >
                   <Mail className="w-6 h-6 text-[#9c6a1c]" />
                   <h4 className="mt-3 font-bold text-[#1A1A2E]">
-                    Share this resource with your state representative
+                    {t(UI.reps.shareRepTitle)}
                   </h4>
                   <p className="mt-1 text-sm text-[#4A5568]">
-                    Opens a pre-filled email template
+                    {t(UI.reps.shareRepSub)}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#9c6a1c]">
-                    Compose email <ArrowRight className="w-3.5 h-3.5" />
+                    {t(UI.reps.composeEmail)} <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </button>
               </div>
@@ -1548,20 +1600,20 @@ function App() {
                   claim in this app traces back to one of these sources.
                 </p>
                 <div className="mt-4 rounded-2xl border border-[#E2E8F0] bg-white divide-y divide-[#E2E8F0] overflow-hidden">
-                  {SOURCES.map((src) => {
+                  {SOURCES.map((src, i) => {
                     const content = (
                       <>
                         <p className="font-semibold text-sm text-[#1A1A2E]">
-                          {src.organization}
+                          {t(src.organization)}
                         </p>
                         <p className="mt-1 text-xs text-[#4A5568] leading-relaxed">
-                          {src.supports}
+                          {t(src.supports)}
                         </p>
                       </>
                     );
                     return src.url ? (
                       <a
-                        key={src.organization}
+                        key={i}
                         href={src.url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1574,7 +1626,7 @@ function App() {
                         />
                       </a>
                     ) : (
-                      <div key={src.organization} className="p-4">
+                      <div key={i} className="p-4">
                         {content}
                       </div>
                     );

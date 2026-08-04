@@ -10,6 +10,40 @@ import {
   DETAILED_ECOSYSTEM,
   RECOMMENDATIONS,
 } from "../data";
+import { useLanguage } from "../i18n/LanguageContext";
+
+const UI = {
+  eyebrow: { en: "FOR REPRESENTATIVES & POLICYMAKERS", es: "PARA REPRESENTANTES Y RESPONSABLES DE POLÍTICAS" },
+  heading: { en: "Colorado Quantum Policy Hub", es: "Centro de Política Cuántica de Colorado" },
+  intro: {
+    en: "Data, analysis, and resources for Colorado state legislators, congressional staff, and economic development officials.",
+    es: "Datos, análisis y recursos para legisladores estatales de Colorado, personal del Congreso y funcionarios de desarrollo económico.",
+  },
+  caseHeading: { en: "The Case for a Colorado Quantum Initiative", es: "El Argumento para una Iniciativa Cuántica de Colorado" },
+  chartTitle: { en: "State quantum investment commitments", es: "Compromisos estatales de inversión cuántica" },
+  chartSub: { en: "Reported state funding, in $ millions", es: "Financiamiento estatal reportado, en millones de $" },
+  chartNote: {
+    en: "Figures reflect publicly reported state commitments. Colorado has no coordinated state quantum investment despite hosting federal and university infrastructure other states are spending hundreds of millions to approximate.",
+    es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado no tiene inversión cuántica estatal coordinada a pesar de albergar infraestructura federal y universitaria que otros estados gastan cientos de millones en intentar igualar.",
+  },
+  calloutText: {
+    en: "Colorado has the federal infrastructure — NIST Boulder, JILA — that other states are spending hundreds of millions to approximate. A state Quantum Economic Development Initiative could leverage this existing advantage into jobs, company formation, and national leadership. Illinois and New York are already moving.",
+    es: "Colorado cuenta con la infraestructura federal — NIST Boulder, JILA — que otros estados gastan cientos de millones en intentar igualar. Una Iniciativa Estatal de Desarrollo Económico Cuántico podría aprovechar esta ventaja existente para generar empleos, formación de empresas y liderazgo nacional. Illinois y Nueva York ya están avanzando.",
+  },
+  detailHeading: { en: "Detailed Ecosystem Report", es: "Informe Detallado del Ecosistema" },
+  researchFocus: { en: "Research focus", es: "Enfoque de investigación" },
+  funding: { en: "Funding", es: "Financiamiento" },
+  employment: { en: "Employment", es: "Empleo" },
+  connection: { en: "Connection to Colorado", es: "Conexión con Colorado" },
+  recommendationsHeading: { en: "Recommended State Actions", es: "Acciones Estatales Recomendadas" },
+  precedentLabel: { en: "Precedent: ", es: "Precedente: " },
+  impactLabel: { en: "Impact: ", es: "Impacto: " },
+  takeActionHeading: { en: "Take Action", es: "Tome Acción" },
+  contactCrowTitle: { en: "Contact Rep. Jason Crow's office", es: "Contacte a la oficina del Rep. Jason Crow" },
+  contactCQNTitle: { en: "Contact the Colorado Quantum Network", es: "Contacte a la Red Cuántica de Colorado" },
+  shareRepTitle: { en: "Share this resource with your representative", es: "Comparta este recurso con su representante" },
+  shareRepSub: { en: "Opens a pre-filled email template", es: "Abre una plantilla de correo electrónico prellenada" },
+};
 
 function emailTemplate() {
   const subject = encodeURIComponent(
@@ -23,76 +57,65 @@ function emailTemplate() {
 
 export default function RepsScreen() {
   const [open, setOpen] = useState(0);
+  const { t } = useLanguage();
 
   return (
     <Screen>
       <View style={styles.section}>
-        <Eyebrow>FOR REPRESENTATIVES & POLICYMAKERS</Eyebrow>
-        <H2>Colorado Quantum Policy Hub</H2>
-        <Body style={{ marginTop: 10 }}>
-          Data, analysis, and resources for Colorado state legislators, congressional staff, and
-          economic development officials.
-        </Body>
+        <Eyebrow>{t(UI.eyebrow)}</Eyebrow>
+        <H2>{t(UI.heading)}</H2>
+        <Body style={{ marginTop: 10 }}>{t(UI.intro)}</Body>
 
         {/* A — Investment gap */}
-        <Text style={styles.h3}>The Case for a Colorado Quantum Initiative</Text>
+        <Text style={styles.h3}>{t(UI.caseHeading)}</Text>
         <View style={{ gap: 8, marginTop: 12 }}>
-          {INVESTMENT_TABLE.map((r) => (
-            <View key={r.state} style={[styles.tableRow, r.highlight && styles.tableRowHi]}>
+          {INVESTMENT_TABLE.map((r, i) => (
+            <View key={i} style={[styles.tableRow, r.highlight && styles.tableRowHi]}>
               <View style={styles.tableTop}>
                 <Text style={styles.tableState}>{r.state}</Text>
-                <Text style={styles.tableYear}>{r.year}</Text>
+                <Text style={styles.tableYear}>{t(r.year)}</Text>
               </View>
-              <Text style={styles.tableInit}>{r.initiative}</Text>
-              <Text style={styles.tableInvest}>{r.investment}</Text>
+              <Text style={styles.tableInit}>{t(r.initiative)}</Text>
+              <Text style={styles.tableInvest}>{t(r.investment)}</Text>
             </View>
           ))}
         </View>
 
         {/* chart */}
         <Card style={{ marginTop: 16 }}>
-          <Text style={styles.chartTitle}>State quantum investment commitments</Text>
-          <Text style={styles.chartSub}>Reported state funding, in $ millions</Text>
+          <Text style={styles.chartTitle}>{t(UI.chartTitle)}</Text>
+          <Text style={styles.chartSub}>{t(UI.chartSub)}</Text>
           <View style={{ marginTop: 12 }}>
             <BarChart data={INVESTMENT_CHART} />
           </View>
-          <Text style={styles.chartNote}>
-            Figures reflect publicly reported state commitments. Colorado has no coordinated state
-            quantum investment despite hosting federal and university infrastructure other states are
-            spending hundreds of millions to approximate.
-          </Text>
+          <Text style={styles.chartNote}>{t(UI.chartNote)}</Text>
         </Card>
 
         {/* callout */}
         <View style={styles.callout}>
-          <Text style={styles.calloutText}>
-            Colorado has the federal infrastructure — NIST Boulder, JILA — that other states are
-            spending hundreds of millions to approximate. A state Quantum Economic Development
-            Initiative could leverage this existing advantage into jobs, company formation, and
-            national leadership. Illinois and New York are already moving.
-          </Text>
+          <Text style={styles.calloutText}>{t(UI.calloutText)}</Text>
         </View>
 
         {/* B — Detailed ecosystem accordion */}
-        <Text style={styles.h3}>Detailed Ecosystem Report</Text>
+        <Text style={styles.h3}>{t(UI.detailHeading)}</Text>
         <View style={styles.accordion}>
           {DETAILED_ECOSYSTEM.map((inst, i) => {
             const isOpen = open === i;
             return (
-              <View key={inst.name} style={i > 0 && styles.accDivider}>
+              <View key={i} style={i > 0 && styles.accDivider}>
                 <Pressable style={styles.accHead} onPress={() => setOpen(isOpen ? -1 : i)}>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.accName}>{inst.name}</Text>
-                    <Text style={styles.accLoc}>{inst.location}</Text>
+                    <Text style={styles.accLoc}>{t(inst.location)}</Text>
                   </View>
                   <Icon name={isOpen ? "ChevronUp" : "ChevronDown"} size={20} color={colors.primary} />
                 </Pressable>
                 {isOpen && (
                   <View style={styles.accBody}>
-                    <Detail label="Research focus" value={inst.focus} />
-                    <Detail label="Funding" value={inst.funding} />
-                    <Detail label="Employment" value={inst.employment} />
-                    <Detail label="Connection to Colorado" value={inst.connection} />
+                    <Detail label={t(UI.researchFocus)} value={t(inst.focus)} />
+                    <Detail label={t(UI.funding)} value={t(inst.funding)} />
+                    <Detail label={t(UI.employment)} value={t(inst.employment)} />
+                    <Detail label={t(UI.connection)} value={t(inst.connection)} />
                   </View>
                 )}
               </View>
@@ -101,25 +124,25 @@ export default function RepsScreen() {
         </View>
 
         {/* C — Recommendations */}
-        <Text style={styles.h3}>Recommended State Actions</Text>
+        <Text style={styles.h3}>{t(UI.recommendationsHeading)}</Text>
         <View style={{ gap: 12, marginTop: 12 }}>
           {RECOMMENDATIONS.map((rec, i) => (
-            <Card key={rec.title}>
+            <Card key={i}>
               <View style={styles.recHead}>
                 <View style={styles.recNum}>
                   <Text style={styles.recNumText}>{i + 1}</Text>
                 </View>
-                <Text style={styles.recTitle}>{rec.title}</Text>
+                <Text style={styles.recTitle}>{t(rec.title)}</Text>
               </View>
-              <Body style={{ marginTop: 12 }}>{rec.rationale}</Body>
+              <Body style={{ marginTop: 12 }}>{t(rec.rationale)}</Body>
               <View style={{ marginTop: 12, gap: 6 }}>
                 <Text style={styles.metaLine}>
-                  <Text style={[styles.metaKey, { color: colors.primary }]}>Precedent: </Text>
-                  {rec.precedent}
+                  <Text style={[styles.metaKey, { color: colors.primary }]}>{t(UI.precedentLabel)}</Text>
+                  {t(rec.precedent)}
                 </Text>
                 <Text style={styles.metaLine}>
-                  <Text style={[styles.metaKey, { color: colors.secondary }]}>Impact: </Text>
-                  {rec.impact}
+                  <Text style={[styles.metaKey, { color: colors.secondary }]}>{t(UI.impactLabel)}</Text>
+                  {t(rec.impact)}
                 </Text>
               </View>
             </Card>
@@ -127,27 +150,27 @@ export default function RepsScreen() {
         </View>
 
         {/* D — Take action */}
-        <Text style={styles.h3}>Take Action</Text>
+        <Text style={styles.h3}>{t(UI.takeActionHeading)}</Text>
         <View style={{ gap: 12, marginTop: 12 }}>
           <ContactCard
             icon="Landmark"
             iconColor={colors.primary}
-            title="Contact Rep. Jason Crow's office"
+            title={t(UI.contactCrowTitle)}
             sub="crow.house.gov"
             onPress={() => Linking.openURL("https://crow.house.gov")}
           />
           <ContactCard
             icon="Users"
             iconColor={colors.secondary}
-            title="Contact the Colorado Quantum Network"
+            title={t(UI.contactCQNTitle)}
             sub="coloradoquantum.org"
             onPress={() => Linking.openURL("https://coloradoquantum.org")}
           />
           <ContactCard
             icon="Mail"
             iconColor={colors.accentDark}
-            title="Share this resource with your representative"
-            sub="Opens a pre-filled email template"
+            title={t(UI.shareRepTitle)}
+            sub={t(UI.shareRepSub)}
             tint={colors.goldTint}
             onPress={emailTemplate}
           />

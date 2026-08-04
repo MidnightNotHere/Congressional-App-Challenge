@@ -23,7 +23,7 @@ import {
   GAPS,
   DETAILED_ECOSYSTEM,
   SOURCES,
-} from "../../data/ecosystem.js";
+} from "../data/ecosystem.js";
 import {
   QUESTIONS,
   ORG_LABELS,
@@ -34,23 +34,23 @@ import {
   PRIORITY_LABELS,
   calculateResults,
   buildActions,
-} from "../../data/pqc-scoring.js";
+} from "../data/pqc-scoring.js";
 import {
   INVESTMENT_CHART,
   INVESTMENT_TABLE,
   RECOMMENDATIONS,
-} from "../../data/policy-recommendations.js";
-import { CAREERS } from "../../data/careers.js";
+} from "../data/policy-recommendations.js";
+import { CAREERS } from "../data/careers.js";
 import {
   HERO_CARDS,
   CONCEPT_CARDS,
   RESOURCE_TABS as SHARED_RESOURCE_TABS,
-} from "../../data/resources.js";
+} from "../data/resources.js";
 import {
   QUIZ_QUESTIONS,
   QUIZ_RESULTS,
   computeQuizResult as computeQuizResultId,
-} from "../../data/quiz-data.js";
+} from "../data/quiz-data.js";
 
 export {
   HERO_STATS,

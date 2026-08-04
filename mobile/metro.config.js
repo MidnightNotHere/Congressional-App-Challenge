@@ -4,14 +4,19 @@ const path = require("path");
 
 const projectRoot = __dirname;
 // The shared /data directory lives one level up, at the repo root — outside
-// Metro's default projectRoot. Metro only resolves/watches files inside
-// watchFolders, so the repo root has to be added explicitly for
-// `import ... from "../../data/ecosystem.js"` to work.
+// Metro's default projectRoot. Metro's file-map crawler on this repo
+// (Windows, path containing spaces, OneDrive-synced) does not reliably
+// discover files reached only via `watchFolders` pointed at an ancestor
+// directory — `../../data/x.js` imports resolve inconsistently even with
+// the parent added to watchFolders. `mobile/data` is a directory junction
+// (see below) to the real /data folder, so it stays inside projectRoot and
+// Metro crawls it normally; `unstable_enableSymlinks` makes Metro follow
+// the junction to the real files on disk.
 const workspaceRoot = path.resolve(projectRoot, "..");
 
 const config = getDefaultConfig(projectRoot);
 
-config.watchFolders = [workspaceRoot];
+config.resolver.unstable_enableSymlinks = true;
 
 // Prefer mobile/'s own node_modules first, then fall back to the repo
 // root's — mirrors the standard Expo monorepo setup even though this repo

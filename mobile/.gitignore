@@ -3,6 +3,11 @@
 # dependencies
 node_modules/
 
+# local junction/symlink to ../data — see scripts/link-data.js.
+# Recreated automatically on `npm install`; never committed since it would
+# otherwise duplicate the shared /data layer's content into the git tree.
+/data
+
 # Expo
 .expo/
 dist/

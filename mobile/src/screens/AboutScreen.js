@@ -5,8 +5,10 @@ import Icon from "../components/Icon";
 import QuantumLine from "../components/QuantumLine";
 import { colors, mono, radius, withAlpha } from "../theme";
 import { SOURCES } from "../data";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function AboutScreen() {
+  const { t } = useLanguage();
   return (
     <Screen>
       <View style={styles.section}>
@@ -35,22 +37,22 @@ export default function AboutScreen() {
             const row = (
               <>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.sourceOrg}>{s.organization}</Text>
-                  <Text style={styles.sourceSupports}>{s.supports}</Text>
+                  <Text style={styles.sourceOrg}>{t(s.organization)}</Text>
+                  <Text style={styles.sourceSupports}>{t(s.supports)}</Text>
                 </View>
                 {s.url && <Icon name="ExternalLink" size={16} color={colors.primary} />}
               </>
             );
             return s.url ? (
               <Pressable
-                key={s.organization}
+                key={i}
                 onPress={() => Linking.openURL(s.url)}
                 style={[styles.sourceRow, i > 0 && styles.sourceDivider]}
               >
                 {row}
               </Pressable>
             ) : (
-              <View key={s.organization} style={[styles.sourceRow, i > 0 && styles.sourceDivider]}>
+              <View key={i} style={[styles.sourceRow, i > 0 && styles.sourceDivider]}>
                 {row}
               </View>
             );
