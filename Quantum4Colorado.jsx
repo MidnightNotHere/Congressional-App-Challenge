@@ -609,11 +609,23 @@ function App() {
   };
 
   const navLinks = [
-    { key: "story", label: "Colorado's Quantum Story" },
-    { key: "assessment", label: "Is Your Org Ready?" },
-    { key: "representatives", label: "For Representatives" },
-    { key: "youth", label: "Youth and Education" },
-    { key: "about", label: "About" },
+    {
+      key: "story",
+      label: { en: "Colorado's Quantum Story", es: "La Historia Cuántica de Colorado" },
+    },
+    {
+      key: "assessment",
+      label: { en: "Is Your Org Ready?", es: "¿Está Lista su Organización?" },
+    },
+    {
+      key: "representatives",
+      label: { en: "For Representatives", es: "Para Representantes" },
+    },
+    {
+      key: "youth",
+      label: { en: "Youth and Education", es: "Juventud y Educación" },
+    },
+    { key: "about", label: { en: "About", es: "Acerca de" } },
   ];
 
   return (
@@ -651,7 +663,7 @@ function App() {
                           : "text-[#4A5568] hover:text-[#1B3A6B]"
                       }`}
                     >
-                      {l.label}
+                      {t(l.label)}
                       {active && (
                         <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-[#C4872A]" />
                       )}
@@ -685,7 +697,7 @@ function App() {
                         : "text-[#4A5568]"
                     }`}
                   >
-                    {l.label}
+                    {t(l.label)}
                   </button>
                 ))}
                 <div className="px-2 pt-3">
