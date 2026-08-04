@@ -568,6 +568,12 @@ function App() {
         }),
       80
     );
+    // Anonymous usage stat only — no PII, never blocks the UI on failure.
+    fetch("/api/track-assessment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orgType: answers.q1, tier: r.tier.name.en }),
+    }).catch(() => {});
   };
 
   const restart = () => {

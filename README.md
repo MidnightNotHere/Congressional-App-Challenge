@@ -54,6 +54,20 @@ postcss.config.js
 package.json
 ```
 
+## Anonymous usage stats (Phase 5)
+
+Completing the PQC Readiness Tool fires a fire-and-forget POST to `/api/track-assessment`, which increments a few Redis counters (total completions, plus breakdowns by organization type and risk tier — no PII, no per-response data). `/api/stats` returns the aggregate as JSON. Both live in `/api` as Vercel serverless functions and use [`@upstash/redis`](https://github.com/upstash/redis-js) (Vercel KV was deprecated and migrated to Upstash Redis under Vercel's Marketplace integrations).
+
+To make this work on a deployed project:
+
+1. In the Vercel dashboard, open the project → **Storage** → **Create Database** → **Redis** (Upstash), or add it from the [Marketplace](https://vercel.com/marketplace?category=storage&search=redis").
+2. Connect it to this project. Vercel auto-injects `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` as environment variables — no manual config needed.
+3. Redeploy.
+
+For local testing of the API routes specifically (not needed for normal frontend dev — `npm run dev` doesn't run `/api`), use the [Vercel CLI](https://vercel.com/docs/cli): `vercel env pull .env.local` after step 2, then `vercel dev` instead of `npm run dev`.
+
+If the Redis integration isn't set up yet, the tracking call fails silently and the assessment tool works exactly the same — this is purely supplementary telemetry, never a dependency for the core app.
+
 ## Data & sources
 
 All data is hardcoded from public sources (NIST, CISA, NSA, CU Boulder / JILA public records, Colorado OEDIT, the Colorado Quantum Network, and public company information). Statistics are approximate and reflect the most recent publicly available reporting. Quantum-threat timelines are inherently uncertain; the app frames preparation as prudent rather than predicting a specific date.
