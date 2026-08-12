@@ -61,7 +61,7 @@ export const INVESTMENT_TABLE = [
     state: "Colorado",
     initiative: { en: "No coordinated state initiative", es: "Sin iniciativa estatal coordinada" },
     investment: { en: "Federal infrastructure only", es: "Solo infraestructura federal" },
-    year: "—",
+    year: { en: "None", es: "Ninguna" },
     highlight: true,
   },
 ];
@@ -73,8 +73,8 @@ export const RECOMMENDATIONS = [
       es: "Establecer una Iniciativa de Desarrollo Económico Cuántico de Colorado",
     },
     rationale: {
-      en: "Coordinate Colorado's existing federal infrastructure (NIST, JILA, NREL) with state economic development funding to attract quantum companies and retain talent. The pieces already exist — what is missing is a coordinating strategy and dedicated state investment.",
-      es: "Coordinar la infraestructura federal existente de Colorado (NIST, JILA, NREL) con financiamiento estatal de desarrollo económico para atraer empresas cuánticas y retener talento. Las piezas ya existen — lo que falta es una estrategia de coordinación y una inversión estatal dedicada.",
+      en: "Pair Colorado's existing federal infrastructure (NIST, JILA, NREL) with state economic development funding to attract quantum companies and keep talent here. The pieces already exist. What is missing is a strategy to connect them and the state money to back it.",
+      es: "Combinar la infraestructura federal que Colorado ya tiene (NIST, JILA, NREL) con financiamiento estatal de desarrollo económico para atraer empresas cuánticas y retener talento. Las piezas ya existen. Lo que falta es una estrategia que las conecte y el dinero estatal que la respalde.",
     },
     precedent: {
       en: "Modeled on the Illinois Quantum Act (2023).",
@@ -117,8 +117,8 @@ export const RECOMMENDATIONS = [
       es: "Canteras de talento financiadas por el estado y vinculadas a empleadores de industrias avanzadas en otros estados.",
     },
     impact: {
-      en: "A homegrown talent supply that keeps quantum graduates — and the companies that hire them — in Colorado.",
-      es: "Una fuente local de talento que mantiene a los graduados en computación cuántica — y a las empresas que los contratan — en Colorado.",
+      en: "A homegrown talent supply that keeps quantum graduates in Colorado, along with the companies that hire them.",
+      es: "Una fuente local de talento que mantiene en Colorado a los graduados en computación cuántica, junto con las empresas que los contratan.",
     },
   },
   {

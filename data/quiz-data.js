@@ -142,13 +142,13 @@ export const TRACK_TALLY_ORDER = [
 export const QUIZ_RESULTS = {
   hardware: {
     resultBlurb: {
-      en: "You lit up at \"figuring out how things physically work\" and \"building hardware that doesn't exist yet\" — that's a hardware engineer's instinct. This path is for people who want to touch the actual machine, not just the code running on it, and Colorado happens to have some of the best hardware labs on the planet.",
-      es: "Se le iluminó el rostro con \"descubrir cómo funcionan físicamente las cosas\" y \"construir hardware que todavía no existe\" — ese es el instinto de un ingeniero de hardware. Este camino es para personas que quieren tocar la máquina real, no solo el código que se ejecuta en ella, y resulta que Colorado tiene algunos de los mejores laboratorios de hardware del planeta.",
+      en: "You lit up at figuring out how things physically work and building hardware that does not exist yet. That is a hardware engineer's instinct. This path is for people who want to touch the machine itself, not just the code running on it. Colorado happens to have some of the best hardware labs anywhere.",
+      es: "Se le iluminó el rostro con descubrir cómo funcionan físicamente las cosas y construir hardware que todavía no existe. Ese es el instinto de un ingeniero de hardware. Este camino es para quienes quieren tocar la máquina misma, no solo el código que corre en ella. Y resulta que Colorado tiene algunos de los mejores laboratorios de hardware del mundo.",
     },
     firstSteps: [
       {
-        en: "Apply for a JILA summer research opportunity at CU Boulder — real lab time with real quantum physicists.",
-        es: "Solicite una oportunidad de investigación de verano en JILA en CU Boulder — tiempo real de laboratorio con físicos cuánticos reales.",
+        en: "Apply for a JILA summer research opportunity at CU Boulder. That is real lab time with real quantum physicists.",
+        es: "Solicite una oportunidad de investigación de verano en JILA, en CU Boulder. Es tiempo real de laboratorio con físicos cuánticos de verdad.",
       },
       {
         en: "Enter Science Olympiad's quantum mechanics event category to test what you already know.",
@@ -162,8 +162,8 @@ export const QUIZ_RESULTS = {
   },
   software: {
     resultBlurb: {
-      en: "\"Writing code\" and \"writing software that solves hard problems\" stood out in your answers — that's a software developer's mindset. This path is for people who want to build the programs that make quantum hardware actually useful, and you can start writing real quantum code for free, today.",
-      es: "\"Escribir código\" y \"escribir software que resuelve problemas difíciles\" se destacaron en sus respuestas — esa es la mentalidad de un desarrollador de software. Este camino es para personas que quieren crear los programas que hacen que el hardware cuántico sea realmente útil, y puede comenzar a escribir código cuántico real de forma gratuita, hoy mismo.",
+      en: "Writing code and solving hard problems with software stood out in your answers. That is a software developer's mindset. This path is for people who build the programs that make quantum hardware useful. Best part: you can start writing real quantum code for free, today.",
+      es: "Escribir código y resolver problemas difíciles con software se destacaron en sus respuestas. Esa es la mentalidad de un desarrollador de software. Este camino es para quienes crean los programas que hacen útil al hardware cuántico. Y lo mejor: puede empezar a escribir código cuántico real gratis, hoy mismo.",
     },
     firstSteps: [
       {
@@ -171,8 +171,8 @@ export const QUIZ_RESULTS = {
         es: "Cree una cuenta gratuita en IBM Quantum Learning y ejecute su primer programa en hardware cuántico real.",
       },
       {
-        en: "Work through the Qubit by Qubit Intro Course — the most beginner-friendly quantum coding curriculum built for high schoolers.",
-        es: "Complete el curso introductorio de Qubit by Qubit — el plan de estudios de programación cuántica más accesible para principiantes, diseñado para estudiantes de secundaria.",
+        en: "Work through the Qubit by Qubit intro course. It is the most beginner-friendly quantum coding curriculum built for high schoolers.",
+        es: "Complete el curso introductorio de Qubit by Qubit. Es el plan de estudios de programación cuántica más accesible para principiantes, hecho para estudiantes de secundaria.",
       },
       {
         en: "Apply to a Qubit by Qubit summer program to go deeper with structured mentorship.",
@@ -182,13 +182,13 @@ export const QUIZ_RESULTS = {
   },
   policy: {
     resultBlurb: {
-      en: "\"Explaining complex ideas to others\" and \"influencing government policy\" point toward policy work — turning technical complexity into decisions people can actually act on. You're already closer to this path than you think: building Quantum4Colorado's Representatives section is quantum policy work.",
-      es: "\"Explicar ideas complejas a otras personas\" e \"influir en las políticas gubernamentales\" apuntan hacia el trabajo de políticas públicas — convertir la complejidad técnica en decisiones sobre las que la gente realmente puede actuar. Ya está más cerca de este camino de lo que piensa: construir la sección de Representantes de Quantum4Colorado es trabajo de políticas cuánticas.",
+      en: "Explaining complex ideas and influencing government policy both point toward policy work. The job is turning technical complexity into decisions people can act on. You are closer to this path than you think. Building the Representatives section of an app like this one is quantum policy work.",
+      es: "Explicar ideas complejas e influir en las políticas del gobierno apuntan hacia el trabajo de políticas públicas. El trabajo consiste en convertir la complejidad técnica en decisiones sobre las que la gente pueda actuar. Está más cerca de este camino de lo que piensa. Construir la sección de Representantes de una aplicación como esta es trabajo de políticas cuánticas.",
     },
     firstSteps: [
       {
-        en: "Read the Representatives section of this app — it's a working example of quantum policy analysis.",
-        es: "Lea la sección de Representantes de esta aplicación — es un ejemplo funcional de análisis de políticas cuánticas.",
+        en: "Read the Representatives section of this app. It is a working example of quantum policy analysis.",
+        es: "Lea la sección de Representantes de esta aplicación. Es un ejemplo funcional de análisis de políticas cuánticas.",
       },
       {
         en: "Enter the Congressional App Challenge yourself; civic tech is a direct pathway into policy work.",
@@ -202,8 +202,8 @@ export const QUIZ_RESULTS = {
   },
   crypto: {
     resultBlurb: {
-      en: "\"Understanding why systems fail\" and \"protecting systems from attack\" are a cryptography specialist's core instincts. This path sits right at the center of the quantum threat this whole app is about — and you can see exactly what this work looks like in the readiness tool in the Readiness tab.",
-      es: "\"Entender por qué fallan los sistemas\" y \"proteger sistemas de ataques\" son los instintos centrales de un especialista en criptografía. Este camino está justo en el centro de la amenaza cuántica de la que trata toda esta aplicación — y puede ver exactamente cómo es este trabajo en la herramienta de evaluación en la pestaña de Preparación.",
+      en: "Understanding why systems fail and protecting them from attack are a cryptography specialist's core instincts. This path sits at the center of the quantum threat this whole app is about. Want to see the work up close? Open the readiness tool in the Readiness tab.",
+      es: "Entender por qué fallan los sistemas y protegerlos de ataques son los instintos centrales de un especialista en criptografía. Este camino está en el centro de la amenaza cuántica de la que trata toda esta aplicación. ¿Quiere ver el trabajo de cerca? Abra la herramienta de evaluación en la pestaña de Preparación.",
     },
     firstSteps: [
       {
@@ -215,15 +215,15 @@ export const QUIZ_RESULTS = {
         es: "Pruebe una competencia de ciberseguridad \"captura la bandera\" para principiantes y ponga a prueba sus instintos.",
       },
       {
-        en: "Read NIST's post-quantum cryptography standards overview — the actual rules this job is built around.",
-        es: "Lea el resumen de los estándares de criptografía poscuántica del NIST — las reglas reales sobre las que se construye este trabajo.",
+        en: "Read NIST's post-quantum cryptography standards overview. These are the actual rules this job is built around.",
+        es: "Lea el resumen de los estándares de criptografía poscuántica del NIST. Son las reglas reales sobre las que se construye este trabajo.",
       },
     ],
   },
   researcher: {
     resultBlurb: {
-      en: "\"I love unsolved problems\" and a pull toward math and physics point to research — the path for people who want to discover something no one has proven yet. You happen to live in a state with one of the best quantum physics institutes on Earth.",
-      es: "\"Me encantan los problemas sin resolver\" y una inclinación hacia las matemáticas y la física apuntan hacia la investigación — el camino para las personas que quieren descubrir algo que nadie ha demostrado todavía. Resulta que vive en un estado con uno de los mejores institutos de física cuántica del planeta.",
+      en: "A love of unsolved problems, plus a pull toward math and physics, points to research. This is the path for people who want to discover something nobody has proven yet. You happen to live in a state with one of the best quantum physics institutes on Earth.",
+      es: "Amar los problemas sin resolver, junto con una inclinación hacia las matemáticas y la física, apunta hacia la investigación. Es el camino para quienes quieren descubrir algo que nadie ha demostrado todavía. Y usted vive en un estado con uno de los mejores institutos de física cuántica del planeta.",
     },
     firstSteps: [
       {
@@ -242,8 +242,8 @@ export const QUIZ_RESULTS = {
   },
   business: {
     resultBlurb: {
-      en: "\"Strategy and big-picture thinking\" and the pull toward the \"intersection of business and technology\" point toward business development — the role that turns brilliant research into a company people can actually work at. Colorado's quantum industry needs this as much as it needs engineers.",
-      es: "\"Estrategia y visión de conjunto\" y la inclinación hacia la \"intersección de los negocios y la tecnología\" apuntan hacia el desarrollo de negocios — el rol que convierte una investigación brillante en una empresa donde la gente realmente puede trabajar. La industria cuántica de Colorado necesita esto tanto como necesita ingenieros.",
+      en: "Strategy, big-picture thinking, and a pull toward where business meets technology all point toward business development. This is the role that turns brilliant research into a company people can actually work at. Colorado's quantum industry needs this as much as it needs engineers.",
+      es: "La estrategia, la visión de conjunto y la inclinación hacia donde se cruzan los negocios y la tecnología apuntan al desarrollo de negocios. Es el rol que convierte una investigación brillante en una empresa donde la gente realmente puede trabajar. La industria cuántica de Colorado necesita esto tanto como necesita ingenieros.",
     },
     firstSteps: [
       {

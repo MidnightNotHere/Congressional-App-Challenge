@@ -27,8 +27,8 @@ const UI = {
     es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado no tiene inversión cuántica estatal coordinada a pesar de albergar infraestructura federal y universitaria que otros estados gastan cientos de millones en intentar igualar.",
   },
   calloutText: {
-    en: "Colorado has the federal infrastructure — NIST Boulder, JILA — that other states are spending hundreds of millions to approximate. A state Quantum Economic Development Initiative could leverage this existing advantage into jobs, company formation, and national leadership. Illinois and New York are already moving.",
-    es: "Colorado cuenta con la infraestructura federal — NIST Boulder, JILA — que otros estados gastan cientos de millones en intentar igualar. Una Iniciativa Estatal de Desarrollo Económico Cuántico podría aprovechar esta ventaja existente para generar empleos, formación de empresas y liderazgo nacional. Illinois y Nueva York ya están avanzando.",
+    en: "Other states are spending hundreds of millions to build what Colorado already has in NIST Boulder and JILA. A state Quantum Economic Development Initiative could turn that head start into jobs, new companies, and national leadership. Illinois and New York are already moving.",
+    es: "Otros estados gastan cientos de millones para construir lo que Colorado ya tiene en NIST Boulder y JILA. Una Iniciativa Estatal de Desarrollo Económico Cuántico podría convertir esa ventaja en empleos, nuevas empresas y liderazgo nacional. Illinois y Nueva York ya se están moviendo.",
   },
   detailHeading: { en: "Detailed Ecosystem Report", es: "Informe Detallado del Ecosistema" },
   researchFocus: { en: "Research focus", es: "Enfoque de investigación" },
@@ -47,7 +47,7 @@ const UI = {
 
 function emailTemplate() {
   const subject = encodeURIComponent(
-    "Colorado Quantum Economic Development — Resource for Your Office"
+    "Colorado Quantum Economic Development: Resource for Your Office"
   );
   const body = encodeURIComponent(
     "I wanted to share a Colorado-specific quantum computing resource that may be relevant to your office's work on technology and economic development. Quantum4Colorado provides an overview of Colorado's quantum infrastructure, a constituent-facing readiness tool, and policy recommendations for state action."

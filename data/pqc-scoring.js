@@ -165,21 +165,21 @@ export const QUESTIONS = [
       {
         id: "modern",
         label: {
-          en: "Modern — we regularly update systems and software (within last 2 years)",
+          en: "Modern: we update systems and software regularly, within the last 2 years",
           es: "Moderna: actualizamos sistemas y software con regularidad (en los últimos 2 años)",
         },
       },
       {
         id: "mixed",
         label: {
-          en: "Mixed — some modern systems, some older legacy systems",
+          en: "Mixed: some modern systems, some older ones",
           es: "Mixta: algunos sistemas modernos, otros sistemas heredados más antiguos",
         },
       },
       {
         id: "older",
         label: {
-          en: "Older — many systems are 5+ years old and infrequently updated",
+          en: "Older: many systems are 5+ years old and rarely updated",
           es: "Antigua: muchos sistemas tienen más de 5 años y se actualizan con poca frecuencia",
         },
       },
@@ -252,20 +252,20 @@ export const QUESTIONS = [
       {
         id: "extensive",
         label: {
-          en: "Yes, extensively — many external integrations and data sharing",
+          en: "Yes, a lot: many outside integrations and shared data",
           es: "Sí, extensamente: muchas integraciones externas y uso compartido de datos",
         },
       },
       {
         id: "some",
         label: {
-          en: "Yes, some — a few key vendors or cloud services",
+          en: "Yes, some: a few key vendors or cloud services",
           es: "Sí, algo: algunos proveedores clave o servicios en la nube",
         },
       },
       {
         id: "minimal",
-        label: { en: "Minimal — mostly internal systems", es: "Mínimo: mayormente sistemas internos" },
+        label: { en: "Minimal: mostly internal systems", es: "Mínimo: mayormente sistemas internos" },
       },
       { id: "unsure-vendor", label: { en: "Not sure", es: "No estoy seguro" } },
     ],
@@ -281,21 +281,21 @@ export const QUESTIONS = [
       {
         id: "very-familiar",
         label: {
-          en: "Very familiar — we're already working on PQC migration planning",
+          en: "Very familiar: we are already planning our PQC migration",
           es: "Muy familiarizado: ya estamos planificando la migración a PQC",
         },
       },
       {
         id: "somewhat",
         label: {
-          en: "Somewhat familiar — I've heard about it but haven't acted",
+          en: "Somewhat familiar: I have heard about it but have not acted",
           es: "Algo familiarizado: he oído hablar de esto, pero no he actuado",
         },
       },
       {
         id: "learning",
         label: {
-          en: "Just learning — this assessment is my first exposure",
+          en: "Just learning: this assessment is my first look at it",
           es: "Recién aprendiendo: esta evaluación es mi primer contacto con el tema",
         },
       },
@@ -328,8 +328,8 @@ export const TIERS = [
     bg: "#D6F5E3",
     icon: "CheckCircle2",
     blurb: {
-      en: "Your immediate risk is low — this is the ideal time to build a plan before migration becomes urgent.",
-      es: "Su riesgo inmediato es bajo: este es el momento ideal para elaborar un plan antes de que la migración se vuelva urgente.",
+      en: "Your immediate risk is low. That makes this the best time to build a plan, before the work becomes urgent.",
+      es: "Su riesgo inmediato es bajo. Por eso este es el mejor momento para armar un plan, antes de que el trabajo se vuelva urgente.",
     },
   },
   {
@@ -364,8 +364,8 @@ export const TIERS = [
     bg: "#FFDAD6",
     icon: "ShieldAlert",
     blurb: {
-      en: "Your risk is critical and likely carries regulatory implications — immediate action is warranted.",
-      es: "Su riesgo es crítico y probablemente conlleve implicaciones regulatorias: se justifica una acción inmediata.",
+      en: "Your risk is critical, and it probably carries legal or regulatory consequences. Act now.",
+      es: "Su riesgo es crítico y probablemente conlleve consecuencias legales o regulatorias. Actúe ahora.",
     },
   },
 ];
@@ -416,36 +416,36 @@ export function calculateResults(answers) {
   if (data.includes("health")) {
     score += 20;
     factors.push({
-      en: "You handle personal health information protected under HIPAA, which will require specific PQC compliance steps as federal guidance emerges.",
-      es: "Usted maneja información médica personal protegida bajo HIPAA, lo cual requerirá pasos específicos de cumplimiento de PQC a medida que surja la guía federal.",
+      en: "You handle personal health information, which HIPAA protects. As federal guidance lands, that will come with its own PQC compliance steps.",
+      es: "Usted maneja información médica personal, protegida por HIPAA. A medida que llegue la guía federal, eso traerá sus propios pasos de cumplimiento de PQC.",
     });
   }
   if (data.includes("financial")) {
     score += 15;
     factors.push({
-      en: "You handle personal financial data, a primary target for “harvest now, decrypt later” attacks where data stolen today is stored to be decrypted by future quantum computers.",
-      es: "Usted maneja datos financieros personales, un objetivo principal de los ataques de “cosechar ahora, descifrar después”, donde los datos robados hoy se almacenan para ser descifrados por futuras computadoras cuánticas.",
+      en: "You handle personal financial data. That makes you a prime target for “harvest now, decrypt later” attacks, where thieves steal data today and store it until a quantum computer can open it.",
+      es: "Usted maneja datos financieros personales. Eso lo convierte en un objetivo claro de los ataques de “cosechar ahora, descifrar después”, donde los ladrones roban datos hoy y los guardan hasta que una computadora cuántica pueda abrirlos.",
     });
   }
   if (data.includes("government")) {
     score += 10;
     factors.push({
-      en: "You handle government or classified information, which is subject to federal quantum-safe migration mandates.",
-      es: "Usted maneja información gubernamental o clasificada, la cual está sujeta a mandatos federales de migración a estándares seguros contra la computación cuántica.",
+      en: "You handle government or classified information. Federal quantum-safe migration rules apply to it.",
+      es: "Usted maneja información gubernamental o clasificada. Le aplican las reglas federales de migración segura frente a la computación cuántica.",
     });
   }
   if (data.includes("ip")) {
     score += 8;
     factors.push({
-      en: "You hold intellectual property and trade secrets with long-term value, making them attractive targets for harvest-now, decrypt-later attacks.",
-      es: "Usted posee propiedad intelectual y secretos comerciales de valor a largo plazo, lo que los convierte en objetivos atractivos para los ataques de cosechar ahora, descifrar después.",
+      en: "Your intellectual property and trade secrets hold their value for years. That is exactly what makes them worth stealing now and decrypting later.",
+      es: "Su propiedad intelectual y sus secretos comerciales conservan su valor por años. Justamente por eso vale la pena robarlos ahora y descifrarlos después.",
     });
   }
   if (data.includes("pii")) {
     score += 6;
     factors.push({
-      en: "You handle personally identifying information (SSNs, ID numbers) that retains its value for years, increasing your long-term exposure.",
-      es: "Usted maneja información de identificación personal (números de seguro social, números de identificación) que conserva su valor durante años, lo que aumenta su exposición a largo plazo.",
+      en: "You handle personal identifiers like Social Security and ID numbers. These stay useful to an attacker for years, which raises your long-term exposure.",
+      es: "Usted maneja identificadores personales como números de seguro social y de identificación. Le siguen sirviendo a un atacante durante años, lo que aumenta su exposición a largo plazo.",
     });
   }
   if (data.includes("student")) {
@@ -460,14 +460,14 @@ export function calculateResults(answers) {
   if (orgType === "defense") {
     score += 25;
     factors.push({
-      en: "As a defense contractor, you are subject to CMMC and emerging NSA quantum-resistant requirements.",
-      es: "Como contratista de defensa, usted está sujeto a CMMC y a los requisitos emergentes de resistencia cuántica de la NSA.",
+      en: "As a defense contractor, you fall under CMMC and the NSA quantum-resistant requirements now taking shape.",
+      es: "Como contratista de defensa, le aplican CMMC y los requisitos de resistencia cuántica de la NSA que se están definiendo ahora.",
     });
   } else if (orgType === "state-agency" || orgType === "municipal") {
     score += 20;
     factors.push({
-      en: "As a government organization, your systems fall within the scope of federal and state quantum-safe migration efforts.",
-      es: "Como organización gubernamental, sus sistemas están dentro del alcance de los esfuerzos federales y estatales de migración a estándares seguros contra la computación cuántica.",
+      en: "Your systems are government systems, so federal and state quantum-safe migration efforts cover them.",
+      es: "Sus sistemas son sistemas de gobierno, así que los esfuerzos federales y estatales de migración segura frente a la computación cuántica los abarcan.",
     });
   } else if (orgType === "healthcare") {
     score += 5;
@@ -488,8 +488,8 @@ export function calculateResults(answers) {
   if (answers.q3 === "dont-know" || answers.q3 === "no-encryption") {
     score += 20;
     factors.push({
-      en: "Your organization lacks clear visibility into its current encryption standards — the essential first step before any migration can begin.",
-      es: "Su organización carece de una visibilidad clara de sus estándares de cifrado actuales, el primer paso esencial antes de que pueda comenzar cualquier migración.",
+      en: "You do not yet have a clear picture of the encryption you use today. Getting that picture is the first step before any migration can start.",
+      es: "Todavía no tiene un panorama claro del cifrado que usa hoy. Conseguir ese panorama es el primer paso antes de comenzar cualquier migración.",
     });
   } else if (answers.q3 === "unsure-standard") {
     score += 8;
@@ -510,8 +510,8 @@ export function calculateResults(answers) {
   if (answers.q7 === "extensive") {
     score += 10;
     factors.push({
-      en: "You share data extensively with external vendors and cloud services — each one is a separate migration dependency you do not fully control.",
-      es: "Usted comparte datos extensamente con proveedores externos y servicios en la nube; cada uno representa una dependencia de migración separada que no controla por completo.",
+      en: "You share a lot of data with outside vendors and cloud services. Each one has to migrate too, and you do not control their timeline.",
+      es: "Comparte muchos datos con proveedores externos y servicios en la nube. Cada uno también tiene que migrar, y usted no controla su calendario.",
     });
   } else if (answers.q7 === "some") {
     score += 4;

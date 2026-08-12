@@ -21,10 +21,10 @@ export default function AboutScreen() {
         </Block>
 
         <Block title="Why we built it">
-          Colorado sits at the center of the quantum computing revolution — NIST Boulder, JILA, and
-          Quantinuum make this state uniquely positioned nationally. We built this app because most
-          Coloradans don't know that, and because the organizations and representatives who need to
-          act on it deserve a clear, accessible resource to start from.
+          Colorado sits at the center of the quantum computing revolution. NIST Boulder, JILA, and
+          Quantinuum put this state in a position no other one holds. We built this app because most
+          Coloradans have no idea, and because the organizations and representatives who need to act
+          on it deserve a clear place to start.
         </Block>
 
         <Text style={styles.blockTitle}>Where This Data Comes From</Text>

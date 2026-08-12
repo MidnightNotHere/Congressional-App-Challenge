@@ -14,11 +14,11 @@ export const CAREERS = [
     label: { en: "Quantum Hardware Engineer", es: "Ingeniero de Hardware Cuántico" },
     icon: "Cpu",
     oneLiner: {
-      en: "Builds the physical machines — the actual quantum computers themselves.",
+      en: "Builds the physical machines: the actual quantum computers.",
       es: "Construye las máquinas físicas: las computadoras cuánticas en sí.",
     },
     whatTheyBuild: {
-      en: "The physical quantum computers themselves — superconducting circuits, trapped-ion systems, and the ultra-cold refrigeration and control electronics that keep qubits stable long enough to compute with.",
+      en: "The quantum computers themselves. That means superconducting circuits, trapped-ion systems, and the ultra-cold refrigeration and control electronics that hold qubits stable long enough to compute with.",
       es: "Las computadoras cuánticas físicas en sí: circuitos superconductores, sistemas de iones atrapados, y la refrigeración ultra fría y la electrónica de control que mantienen los qubits estables el tiempo suficiente para calcular con ellos.",
     },
     degreePath: {
@@ -30,8 +30,8 @@ export const CAREERS = [
       es: "Quantinuum, Lockheed Martin, Ball Aerospace, y los laboratorios JILA de CU Boulder.",
     },
     nextStep: {
-      en: "Take the highest-level physics and calculus your school offers, and get your hands on something — a robotics club, an Arduino kit, or a physics research project all count.",
-      es: "Tome los cursos de física y cálculo de mayor nivel que ofrezca su escuela, y ponga manos a la obra en algo — un club de robótica, un kit de Arduino o un proyecto de investigación en física cuentan.",
+      en: "Take the highest-level physics and calculus your school offers. Then get your hands on something real. A robotics club, an Arduino kit, or a physics research project all count.",
+      es: "Tome los cursos de física y cálculo de mayor nivel que ofrezca su escuela. Después ponga manos a la obra en algo real. Un club de robótica, un kit de Arduino o un proyecto de investigación en física cuentan.",
     },
   },
   {
@@ -55,8 +55,8 @@ export const CAREERS = [
       es: "Los equipos de software de Quantinuum, la Iniciativa Cuántica de CU Boulder, y la red de socios de IBM Quantum.",
     },
     nextStep: {
-      en: "Start learning Python now — it's the language almost every quantum software framework, including IBM's Qiskit, is built on.",
-      es: "Comience a aprender Python ahora — es el lenguaje sobre el que se construye casi todo framework de software cuántico, incluido Qiskit de IBM.",
+      en: "Start learning Python now. Almost every quantum software framework is built on it, including IBM's Qiskit.",
+      es: "Comience a aprender Python ahora. Casi todo framework de software cuántico se construye sobre él, incluido Qiskit de IBM.",
     },
   },
   {
@@ -68,12 +68,12 @@ export const CAREERS = [
       es: "Da forma a las reglas y al financiamiento que determinan cómo se utiliza la tecnología cuántica.",
     },
     whatTheyBuild: {
-      en: "The rules, funding strategies, and international agreements that determine how quantum technology gets regulated, funded, shared, or restricted across borders. This app itself — the ecosystem data, the policy recommendations, the representative-facing tools — is an example of what this work looks like.",
-      es: "Las reglas, estrategias de financiamiento y acuerdos internacionales que determinan cómo se regula, financia, comparte o restringe la tecnología cuántica entre países. Esta misma aplicación — los datos del ecosistema, las recomendaciones de políticas, las herramientas dirigidas a representantes — es un ejemplo de cómo se ve este trabajo.",
+      en: "The rules, funding strategies, and international agreements that decide how quantum technology gets regulated, funded, shared, or restricted across borders. This app is an example of the work. So are the ecosystem data, the policy recommendations, and the tools built for representatives.",
+      es: "Las reglas, estrategias de financiamiento y acuerdos internacionales que deciden cómo se regula, financia, comparte o restringe la tecnología cuántica entre países. Esta misma aplicación es un ejemplo de ese trabajo. También lo son los datos del ecosistema, las recomendaciones de políticas y las herramientas dirigidas a representantes.",
     },
     degreePath: {
-      en: "A bachelor's in political science, public policy, or international relations — often paired with a technical minor or a policy-focused master's degree later.",
-      es: "Una licenciatura en ciencias políticas, políticas públicas o relaciones internacionales — a menudo combinada con una especialización técnica secundaria o una maestría enfocada en políticas públicas más adelante.",
+      en: "A bachelor's in political science, public policy, or international relations. Many people pair it with a technical minor, or add a policy master's later.",
+      es: "Una licenciatura en ciencias políticas, políticas públicas o relaciones internacionales. Muchas personas la combinan con una especialización técnica, o agregan después una maestría en políticas públicas.",
     },
     coloradoEmployers: {
       en: "Colorado OEDIT, the Colorado Quantum Network, congressional offices including Rep. Jason Crow's, and NIST Boulder's policy divisions.",
@@ -93,8 +93,8 @@ export const CAREERS = [
       es: "Protege los datos de organizaciones reales contra las amenazas de la era cuántica.",
     },
     whatTheyBuild: {
-      en: "The encryption systems that protect data against quantum attacks — implementing and testing the new NIST post-quantum cryptography standards inside real hospitals, schools, businesses, and governments.",
-      es: "Los sistemas de cifrado que protegen los datos contra ataques cuánticos — implementando y probando los nuevos estándares de criptografía poscuántica del NIST dentro de hospitales, escuelas, empresas y gobiernos reales.",
+      en: "The encryption systems that protect data from quantum attacks. The job is implementing and testing the new NIST post-quantum standards inside real hospitals, schools, businesses, and governments.",
+      es: "Los sistemas de cifrado que protegen los datos de ataques cuánticos. El trabajo consiste en implementar y probar los nuevos estándares poscuánticos del NIST dentro de hospitales, escuelas, empresas y gobiernos reales.",
     },
     degreePath: {
       en: "A bachelor's in computer science, mathematics, or cybersecurity, often followed by a security certification or a master's degree.",
@@ -118,7 +118,7 @@ export const CAREERS = [
       es: "Descubre la física que hace posible la tecnología cuántica del futuro.",
     },
     whatTheyBuild: {
-      en: "New scientific knowledge — discovering the physics that makes future quantum computers, sensors, and communication systems possible in the first place.",
+      en: "New scientific knowledge. Researchers discover the physics that makes future quantum computers, sensors, and communication systems possible in the first place.",
       es: "Nuevo conocimiento científico: descubrir la física que hace posible, en primer lugar, las futuras computadoras, sensores y sistemas de comunicación cuánticos.",
     },
     degreePath: {
@@ -130,8 +130,8 @@ export const CAREERS = [
       es: "JILA, NIST Boulder, la Iniciativa Cuántica de CU Boulder, y laboratorios nacionales como NREL.",
     },
     nextStep: {
-      en: "Email a CU Boulder or JILA professor whose research interests you and ask if they take high school interns — many genuinely do.",
-      es: "Envíe un correo electrónico a un profesor de CU Boulder o JILA cuya investigación le interese y pregunte si aceptan pasantes de secundaria — muchos realmente lo hacen.",
+      en: "Email a CU Boulder or JILA professor whose research interests you and ask if they take high school interns. Many genuinely do.",
+      es: "Envíe un correo a un profesor de CU Boulder o JILA cuya investigación le interese y pregunte si acepta pasantes de secundaria. Muchos realmente lo hacen.",
     },
   },
   {
@@ -143,8 +143,8 @@ export const CAREERS = [
       es: "Convierte la investigación cuántica en empresas, alianzas y empleos.",
     },
     whatTheyBuild: {
-      en: "The partnerships, funding deals, and go-to-market strategy that turn quantum research into actual companies, products, and jobs — the connective tissue between the lab and the market.",
-      es: "Las alianzas, acuerdos de financiamiento y estrategias de comercialización que convierten la investigación cuántica en empresas, productos y empleos reales — el tejido conector entre el laboratorio y el mercado.",
+      en: "The partnerships, funding deals, and go-to-market strategy that turn quantum research into real companies, products, and jobs. This is the connective tissue between the lab and the market.",
+      es: "Las alianzas, los acuerdos de financiamiento y las estrategias de comercialización que convierten la investigación cuántica en empresas, productos y empleos reales. Es el tejido conector entre el laboratorio y el mercado.",
     },
     degreePath: {
       en: "A bachelor's in business, economics, or a technical field, often paired with an MBA later. Technical fluency helps but isn't required.",

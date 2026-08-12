@@ -48,24 +48,24 @@ export const EXPLAINER_CARDS = [
     icon: "Lock",
     title: { en: "The Problem With Today's Computers", es: "El Problema con las Computadoras de Hoy" },
     body: {
-      en: "Today's computers solve problems one step at a time. Quantum computers can explore millions of possibilities simultaneously — like checking every path through a maze at once instead of trying them one by one.",
-      es: "Las computadoras actuales resuelven problemas un paso a la vez. Las computadoras cuánticas pueden explorar millones de posibilidades simultáneamente — como revisar cada camino de un laberinto a la vez en lugar de probarlos uno por uno.",
+      en: "Today's computers solve problems one step at a time. Quantum computers work differently. They can explore millions of possibilities at once, like checking every path through a maze at the same time instead of walking them one by one.",
+      es: "Las computadoras actuales resuelven problemas un paso a la vez. Las computadoras cuánticas funcionan de otra manera. Pueden explorar millones de posibilidades a la vez, como recorrer todos los caminos de un laberinto al mismo tiempo en lugar de probarlos uno por uno.",
     },
   },
   {
     icon: "Shield",
     title: { en: "Why It Changes Everything", es: "Por Qué Lo Cambia Todo" },
     body: {
-      en: "Quantum computers will eventually be able to break the encryption protecting your bank account, medical records, and government systems. They will also create unbreakable new encryption — the race to get there first is already underway.",
-      es: "Las computadoras cuánticas eventualmente podrán romper el cifrado que protege su cuenta bancaria, sus historiales médicos y los sistemas gubernamentales. También crearán un nuevo cifrado irrompible — la carrera por llegar primero ya está en marcha.",
+      en: "Eventually, quantum computers will be able to break the encryption that protects your bank account, your medical records, and government systems. The same technology can also build encryption nobody can break. The race to get there first has already started.",
+      es: "Con el tiempo, las computadoras cuánticas podrán romper el cifrado que protege su cuenta bancaria, sus historiales médicos y los sistemas del gobierno. Esa misma tecnología también puede crear un cifrado que nadie pueda romper. La carrera por llegar primero ya comenzó.",
     },
   },
   {
     icon: "MapPin",
     title: { en: "Why Colorado Is Leading", es: "Por Qué Colorado Está Liderando" },
     body: {
-      en: "Colorado hosts NIST Boulder — the federal agency setting the world's post-quantum security standards — plus JILA, one of the planet's premier quantum physics institutes. No other state has this combination of federal and academic quantum infrastructure.",
-      es: "Colorado alberga a NIST Boulder — la agencia federal que establece los estándares mundiales de seguridad poscuántica — además de JILA, uno de los institutos de física cuántica más prestigiosos del planeta. Ningún otro estado tiene esta combinación de infraestructura cuántica federal y académica.",
+      en: "NIST Boulder sits in Colorado. It is the federal agency that writes the world's post-quantum security standards. So does JILA, one of the top quantum physics institutes anywhere. No other state has both.",
+      es: "NIST Boulder está en Colorado. Es la agencia federal que redacta los estándares mundiales de seguridad poscuántica. JILA también está aquí, y es uno de los mejores institutos de física cuántica del mundo. Ningún otro estado tiene los dos.",
     },
   },
 ];
@@ -179,8 +179,8 @@ export const ECOSYSTEM_TABS = [
         name: "Quantinuum",
         location: "Broomfield, CO",
         role: {
-          en: "Quantum computing hardware and software — one of the world's leading quantum computing companies, headquartered in Colorado.",
-          es: "Hardware y software de computación cuántica — una de las empresas de computación cuántica líderes del mundo, con sede en Colorado.",
+          en: "Quantum computing hardware and software. One of the world's leading quantum companies, headquartered in Colorado.",
+          es: "Hardware y software de computación cuántica. Una de las empresas cuánticas líderes del mundo, con sede en Colorado.",
         },
         significance: {
           en: "A globally significant quantum company chose Colorado as its home base.",
@@ -284,12 +284,12 @@ export const GAPS = [
     es: "Nueva York comprometió $200 millones para un campus cuántico en el sitio de IBM en Hudson Valley.",
   },
   {
-    en: "Colorado has world-class federal and university infrastructure but no coordinated state quantum investment strategy.",
-    es: "Colorado cuenta con infraestructura federal y universitaria de clase mundial, pero no tiene una estrategia estatal coordinada de inversión cuántica.",
+    en: "Colorado has world-class federal and university facilities, but no state plan to invest in them.",
+    es: "Colorado tiene instalaciones federales y universitarias de primer nivel, pero ningún plan estatal para invertir en ellas.",
   },
   {
-    en: "Without state-level coordination, Colorado risks losing talent and companies to states with explicit quantum economic development programs.",
-    es: "Sin coordinación a nivel estatal, Colorado corre el riesgo de perder talento y empresas ante estados con programas explícitos de desarrollo económico cuántico.",
+    en: "Other states already run quantum economic development programs. Without one, Colorado risks losing its talent and its companies to them.",
+    es: "Otros estados ya tienen programas de desarrollo económico cuántico. Sin uno, Colorado corre el riesgo de perder su talento y sus empresas ante ellos.",
   },
 ];
 
@@ -558,8 +558,8 @@ export const SOURCES = [
       es: "Información pública disponible de las empresas",
     },
     supports: {
-      en: "Industry entries without a single dedicated source page — Ball Aerospace, Lockheed Martin, and Raytheon Technologies' quantum-relevant work.",
-      es: "Entradas de industria sin una página de origen dedicada única — el trabajo relevante en computación cuántica de Ball Aerospace, Lockheed Martin y Raytheon Technologies.",
+      en: "Industry entries without one dedicated source page: the quantum-relevant work at Ball Aerospace, Lockheed Martin, and Raytheon Technologies.",
+      es: "Entradas de industria sin una sola página de origen dedicada: el trabajo cuántico de Ball Aerospace, Lockheed Martin y Raytheon Technologies.",
     },
     url: null,
   },

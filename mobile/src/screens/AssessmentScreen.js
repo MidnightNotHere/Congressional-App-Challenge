@@ -35,8 +35,8 @@ const UI = {
     es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Toda organización que maneje datos confidenciales necesita comprender su exposición y comenzar a migrar. Esta evaluación gratuita toma 3 minutos.",
   },
   explainer: {
-    en: "Current encryption protects your data the way a combination lock protects a safe. A quantum computer would be like a machine that tries every combination simultaneously — in seconds. NIST's new PQC standards are the solution. Here's where your organization stands.",
-    es: "El cifrado actual protege sus datos de la misma manera en que una cerradura de combinación protege una caja fuerte. Una computadora cuántica sería como una máquina que prueba todas las combinaciones simultáneamente, en segundos. Los nuevos estándares de PQC del NIST son la solución. Esto es dónde se encuentra su organización.",
+    en: "Current encryption protects your data the way a combination lock protects a safe. A quantum computer is like a machine that tries every combination at once, in seconds. NIST's new PQC standards are the fix. Here is where your organization stands.",
+    es: "El cifrado actual protege sus datos como una cerradura de combinación protege una caja fuerte. Una computadora cuántica es como una máquina que prueba todas las combinaciones a la vez, en segundos. Los nuevos estándares de PQC del NIST son la solución. Esto es lo que le toca a su organización.",
   },
   question: { en: "Question", es: "Pregunta" },
   of: { en: "of", es: "de" },
