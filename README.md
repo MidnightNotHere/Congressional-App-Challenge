@@ -85,7 +85,7 @@ To enable this on a deployed project: in the Vercel dashboard, add a **Redis** d
 
 ## Bilingual support
 
-Every section works in English and Spanish. Toggle with the **EN / ES** control in the web nav or the mobile header; the choice persists (`localStorage` on web, `AsyncStorage` on mobile).
+Every section works in English and Spanish now. Toggle with the **EN / ES** control in the web nav or the mobile header; the choice persists (`localStorage` on web, `AsyncStorage` on mobile).
 
 ## Data & sources
 
