@@ -56,7 +56,7 @@ npm run build
 npm run preview
 ```
 
-### Mobile app
+### Mobile App
 
 ```bash
 cd mobile
