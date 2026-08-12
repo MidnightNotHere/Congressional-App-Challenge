@@ -6,7 +6,17 @@ export default {
     "./src/**/*.{js,jsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        display: ['"Unbounded"', "sans-serif"],
+        sans: ['"Archivo"', "sans-serif"],
+        mono: ['"Martian Mono"', "monospace"],
+      },
+      boxShadow: {
+        hard: "6px 6px 0 0 #0A0A0A",
+        "hard-sm": "3px 3px 0 0 #0A0A0A",
+      },
+    },
   },
   plugins: [],
 };

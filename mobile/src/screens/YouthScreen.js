@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable, StyleSheet, Linking, Dimensions } fr
 import { Screen, Eyebrow, H2, Body, Card } from "../components/ui";
 import QuantumLine from "../components/QuantumLine";
 import Icon from "../components/Icon";
-import { colors, mono, radius, space, withAlpha } from "../theme";
+import { colors, mono, radius, space, withAlpha, fonts } from "../theme";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS, CAREER_TRACKS, QUIZ_QUESTIONS, computeQuizResult } from "../data";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -295,7 +295,7 @@ export default function YouthScreen({ navigation }) {
                         )}
 
                         <Text style={styles.nextStep}>
-                          <Text style={{ fontWeight: "800" }}>{t(UI.nextStepLabel)} </Text>
+                          <Text style={{ fontFamily: fonts.bodyBlack }}>{t(UI.nextStepLabel)} </Text>
                           {t(track.nextStep)}
                         </Text>
                       </View>
@@ -425,7 +425,7 @@ function Detail({ label, value }) {
 
 const styles = StyleSheet.create({
   section: { paddingHorizontal: 20, paddingVertical: 24 },
-  h3: { fontSize: 19, fontWeight: "800", color: colors.textPrimary },
+  h3: { fontSize: 19, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
 
   iconBadge: {
     width: 44,
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  cardTitle: { fontSize: 16, fontWeight: "800", color: colors.textPrimary, marginTop: 12 },
+  cardTitle: { fontSize: 16, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 12 },
 
   heroCard: {
     backgroundColor: colors.surface,
@@ -446,7 +446,7 @@ const styles = StyleSheet.create({
   },
   heroCardOpen: { borderColor: colors.primary, backgroundColor: withAlpha(colors.primary, 0.04) },
   expandRow: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 10 },
-  expandText: { fontSize: 13, fontWeight: "700", color: colors.primary },
+  expandText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.primary },
   heroExpanded: {
     marginTop: 12,
     paddingTop: 12,
@@ -458,7 +458,7 @@ const styles = StyleSheet.create({
   },
 
   goDeeper: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 12 },
-  goDeeperText: { fontSize: 13, fontWeight: "700", color: colors.accentDark },
+  goDeeperText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.accentDark },
 
   tabPill: {
     flexDirection: "row",
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.surface,
   },
-  tabText: { fontSize: 13, fontWeight: "700", color: colors.textSecondary },
+  tabText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.textSecondary },
 
   resourceCard: {
     backgroundColor: colors.bg,
@@ -481,7 +481,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   resourceHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 10 },
-  resourceName: { flex: 1, fontSize: 15, fontWeight: "800", color: colors.textPrimary, lineHeight: 20 },
+  resourceName: { flex: 1, fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary, lineHeight: 20 },
   resourceDesc: { marginTop: 8, fontSize: 13, color: colors.textSecondary, lineHeight: 19 },
 
   careerCard: {
@@ -502,11 +502,11 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     textTransform: "uppercase",
     color: colors.accent,
-    fontWeight: "700",
+    fontFamily: fonts.bodyBold,
   },
   detailValue: { fontSize: 13, color: colors.textPrimary, lineHeight: 19, marginTop: 4 },
   crossLink: { flexDirection: "row", alignItems: "center", gap: 5 },
-  crossLinkText: { fontSize: 13, fontWeight: "700", color: colors.primary },
+  crossLinkText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.primary },
   nextStep: { fontSize: 13, color: colors.textPrimary, lineHeight: 20 },
 
   quizBox: {
@@ -524,7 +524,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  quizTitle: { color: "#fff", fontSize: 20, fontWeight: "900", letterSpacing: -0.4 },
+  quizTitle: { color: "#fff", fontSize: 20, fontFamily: fonts.bodyBlack, letterSpacing: -0.4 },
   quizSub: { color: withAlpha("#DCE7F5", 0.8), fontSize: 12, marginTop: 2 },
 
   progressLabels: { flexDirection: "row", justifyContent: "space-between", marginBottom: 6 },
@@ -532,7 +532,7 @@ const styles = StyleSheet.create({
   progressTrack: { height: 8, borderRadius: 999, backgroundColor: withAlpha("#FFFFFF", 0.15), overflow: "hidden" },
   progressFill: { height: 8, borderRadius: 999, backgroundColor: colors.accent },
 
-  quizPrompt: { color: "#fff", fontSize: 16, fontWeight: "800", marginTop: 18, lineHeight: 22 },
+  quizPrompt: { color: "#fff", fontSize: 16, fontFamily: fonts.bodyBlack, marginTop: 18, lineHeight: 22 },
   quizOpt: {
     padding: 14,
     borderRadius: radius.md,
@@ -542,11 +542,11 @@ const styles = StyleSheet.create({
   },
   quizOptSelected: { borderColor: colors.accent, backgroundColor: withAlpha("#FFFFFF", 0.1) },
   quizOptText: { fontSize: 14, color: withAlpha("#FFFFFF", 0.9), lineHeight: 20 },
-  quizOptTextSelected: { fontWeight: "800", color: "#fff" },
+  quizOptTextSelected: { fontFamily: fonts.bodyBlack, color: "#fff" },
 
-  resultEyebrow: { fontFamily: mono, fontSize: 11, letterSpacing: 1.2, color: colors.accent, fontWeight: "700" },
+  resultEyebrow: { fontFamily: mono, fontSize: 11, letterSpacing: 1.2, color: colors.accent, fontFamily: fonts.bodyBold },
   resultHeadRow: { flexDirection: "row", alignItems: "center", gap: 8, marginTop: 4 },
-  resultTitle: { flex: 1, color: "#fff", fontSize: 22, fontWeight: "900", letterSpacing: -0.4, lineHeight: 27 },
+  resultTitle: { flex: 1, color: "#fff", fontSize: 22, fontFamily: fonts.bodyBlack, letterSpacing: -0.4, lineHeight: 27 },
   resultBlurb: { marginTop: 12, color: withAlpha("#DCE7F5", 0.9), fontSize: 14, lineHeight: 21 },
 
   stepCard: {
@@ -556,7 +556,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     padding: 14,
   },
-  stepLabel: { fontFamily: mono, fontSize: 11, color: colors.accent, fontWeight: "700" },
+  stepLabel: { fontFamily: mono, fontSize: 11, color: colors.accent, fontFamily: fonts.bodyBold },
   stepText: { marginTop: 4, color: "#fff", fontSize: 13, lineHeight: 19 },
 
   calloutBox: {
@@ -569,8 +569,8 @@ const styles = StyleSheet.create({
   },
   calloutText: { color: "#fff", fontSize: 13, lineHeight: 19, marginBottom: 8 },
   calloutLink: { flexDirection: "row", alignItems: "center", gap: 5 },
-  calloutLinkText: { fontSize: 13, fontWeight: "700", color: colors.accent },
+  calloutLinkText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.accent },
 
   retakeRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 18 },
-  retakeText: { fontSize: 13, fontWeight: "700", color: withAlpha("#FFFFFF", 0.8) },
+  retakeText: { fontSize: 13, fontFamily: fonts.bodyBold, color: withAlpha("#FFFFFF", 0.8) },
 });

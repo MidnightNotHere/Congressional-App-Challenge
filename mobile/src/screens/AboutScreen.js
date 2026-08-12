@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet, Linking } from "react-native";
 import { Screen, Eyebrow, H2, Body } from "../components/ui";
 import Icon from "../components/Icon";
 import QuantumLine from "../components/QuantumLine";
-import { colors, mono, radius, withAlpha } from "../theme";
+import { colors, mono, radius, withAlpha, fonts } from "../theme";
 import { SOURCES } from "../data";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -95,7 +95,7 @@ function Block({ title, children }) {
 
 const styles = StyleSheet.create({
   section: { paddingHorizontal: 20, paddingVertical: 28 },
-  blockTitle: { fontSize: 17, fontWeight: "800", color: colors.textPrimary, marginTop: 24 },
+  blockTitle: { fontSize: 17, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 24 },
   sourceList: {
     marginTop: 14,
     backgroundColor: colors.surface,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   sourceRow: { flexDirection: "row", alignItems: "flex-start", gap: 10, padding: 14 },
   sourceDivider: { borderTopWidth: 1, borderTopColor: colors.border },
-  sourceOrg: { fontSize: 14, fontWeight: "700", color: colors.textPrimary },
+  sourceOrg: { fontSize: 14, fontFamily: fonts.bodyBold, color: colors.textPrimary },
   sourceSupports: { fontSize: 12, color: colors.textSecondary, lineHeight: 18, marginTop: 3 },
   disclaimer: { fontSize: 12, color: colors.textMuted, lineHeight: 18, marginTop: 12 },
   mail: {
@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: "flex-start",
   },
-  mailText: { fontSize: 15, fontWeight: "800", color: colors.primary },
+  mailText: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.primary },
   foot: { fontSize: 12, color: colors.textSecondary, textAlign: "center", marginTop: 10, lineHeight: 18 },
 });

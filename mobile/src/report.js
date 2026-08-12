@@ -2,6 +2,7 @@ import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import { NIST_PQC, CISA_PQC, NSA_PQC } from "./data";
 import { pick } from "../data/i18n.js";
+import { readableOn } from "./theme";
 
 const esc = (s = "") =>
   String(s)
@@ -40,8 +41,8 @@ function buildHtml(results, lang) {
       (a) => `
       <li style="margin-bottom:12px">
         <div><strong>[${esc(t(a.priority))}] ${esc(t(a.title))}</strong></div>
-        <div style="color:#4A5568">${esc(t(a.description))}</div>
-        ${a.resource ? `<div style="color:#1B3A6B">${esc(t(a.resource.label))}: ${esc(a.resource.url)}</div>` : ""}
+        <div style="color:#2B2B2B">${esc(t(a.description))}</div>
+        ${a.resource ? `<div style="color:#1A1AE5">${esc(t(a.resource.label))}: ${esc(a.resource.url)}</div>` : ""}
       </li>`
     )
     .join("");
@@ -49,14 +50,14 @@ function buildHtml(results, lang) {
   return `<!doctype html><html><head><meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: -apple-system, Roboto, Helvetica, Arial, sans-serif; color:#1A1A2E; padding:28px; }
-    h1 { color:#1B3A6B; font-size:22px; margin:0; }
-    h2 { font-size:16px; border-bottom:1px solid #E2E8F0; padding-bottom:4px; margin:22px 0 8px; }
-    .head { border-bottom:2px solid #1B3A6B; padding-bottom:12px; margin-bottom:18px; }
-    .muted { color:#4A5568; font-size:13px; }
-    .tier { display:inline-block; padding:4px 12px; border-radius:999px; color:#fff; background:${results.tier.color}; font-weight:700; font-size:13px; }
+    body { font-family: 'Archivo', -apple-system, Helvetica, Arial, sans-serif; color:#0A0A0A; padding:28px; }
+    h1 { color:#1A1AE5; font-size:22px; margin:0; }
+    h2 { font-size:16px; border-bottom:1px solid #0A0A0A; padding-bottom:4px; margin:22px 0 8px; }
+    .head { border-bottom:2px solid #1A1AE5; padding-bottom:12px; margin-bottom:18px; }
+    .muted { color:#2B2B2B; font-size:13px; }
+    .tier { display:inline-block; padding:4px 12px; border:2px solid #0A0A0A; color:${readableOn(results.tier.color)}; background:${results.tier.color}; font-weight:800; font-size:13px; }
     ul { padding-left:18px; } li { margin-bottom:6px; font-size:13px; }
-    .foot { border-top:1px solid #E2E8F0; margin-top:22px; padding-top:10px; color:#4A5568; font-size:11px; }
+    .foot { border-top:1px solid #0A0A0A; margin-top:22px; padding-top:10px; color:#2B2B2B; font-size:11px; }
   </style></head><body>
     <div class="head">
       <h1>${esc(ui("title"))}</h1>

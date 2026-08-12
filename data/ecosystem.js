@@ -80,7 +80,7 @@ export const ECOSYSTEM_TABS = [
     label: { en: "Federal Facilities", es: "Instalaciones Federales" },
     shortLabel: { en: "Federal", es: "Federal" },
     icon: "Landmark",
-    color: "#1B3A6B",
+    color: "#1A1AE5",
     orgs: [
       {
         name: "NIST Boulder Laboratories",
@@ -118,7 +118,7 @@ export const ECOSYSTEM_TABS = [
     label: { en: "University Research", es: "Investigación Universitaria" },
     shortLabel: { en: "University", es: "Universidad" },
     icon: "GraduationCap",
-    color: "#2E7D52",
+    color: "#00A94F",
     orgs: [
       {
         name: "JILA at CU Boulder",
@@ -173,7 +173,7 @@ export const ECOSYSTEM_TABS = [
     label: { en: "Industry", es: "Industria" },
     shortLabel: { en: "Industry", es: "Industria" },
     icon: "Cpu",
-    color: "#C4872A",
+    color: "#FFB800",
     orgs: [
       {
         name: "Quantinuum",
@@ -222,7 +222,7 @@ export const ECOSYSTEM_TABS = [
     label: { en: "Policy & Economic Development", es: "Política y Desarrollo Económico" },
     shortLabel: { en: "Policy", es: "Política" },
     icon: "Building2",
-    color: "#6B46C1",
+    color: "#7B00E0",
     orgs: [
       {
         name: "Colorado Quantum Network (CQN)",

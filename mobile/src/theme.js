@@ -1,40 +1,51 @@
-import { Platform } from "react-native";
-
-/* Quantum4Colorado — shared design tokens (native port of the web palette). */
+/* Quantum4Colorado — shared design tokens (native port of the web palette).
+   Bold/high-contrast brutalist palette: electric ultramarine, saturated
+   amber, true black borders on warm bone. Kept in lockstep with the hex
+   values in Quantum4Colorado.jsx and the shared /data color fields. */
 export const colors = {
-  primary: "#1B3A6B", // Colorado sky blue
-  primaryDark: "#0E1E3A", // deep navy (hero gradient end)
-  secondary: "#2E7D52", // Rocky Mountain forest green
-  accent: "#C4872A", // sandstone gold
-  accentDark: "#9c6a1c",
-  danger: "#B03A2E", // deep red
-  orange: "#DD6B20", // significant-exposure tier
-  bg: "#F7F8FA",
+  primary: "#1A1AE5", // electric ultramarine
+  primaryDark: "#05003D", // deep ink (hero gradient end)
+  secondary: "#00A94F", // vivid green
+  accent: "#FFB800", // saturated amber
+  accentDark: "#C42B00", // deep accent for text on light surfaces
+  danger: "#D50000", // strong red
+  orange: "#FF6A00", // significant-exposure tier
+  bg: "#F2EFE4", // warm bone
   surface: "#FFFFFF",
-  textPrimary: "#1A1A2E",
-  textSecondary: "#4A5568",
-  textMuted: "#718096",
-  border: "#E2E8F0",
-  borderLight: "#EDF1F6",
-  // soft tints
-  blueTint: "#EAF1FB",
-  greenTint: "#EAF5EF",
-  goldTint: "#FBF3E6",
-  orangeTint: "#FDEEE2",
-  redTint: "#FBEAE8",
+  textPrimary: "#0A0A0A",
+  textSecondary: "#2B2B2B",
+  textMuted: "#555555",
+  border: "#0A0A0A", // black borders are the brutalist signature
+  borderLight: "#0A0A0A",
+  // tints (stronger than the previous washes so they still read as color)
+  blueTint: "#DCDCFF",
+  greenTint: "#D6F5E3",
+  goldTint: "#FFF0C2",
+  orangeTint: "#FFE3CC",
+  redTint: "#FFDAD6",
 };
 
-export const mono = Platform.select({
-  ios: "Menlo",
-  android: "monospace",
-  default: "monospace",
-});
+/* Type stack — mirrors the web app (Unbounded display / Archivo body /
+   Martian Mono technical accents). Loaded in App.js via useFonts; these
+   names must match the keys passed to it. */
+export const fonts = {
+  display: "Unbounded_800ExtraBold",
+  displayBlack: "Unbounded_900Black",
+  body: "Archivo_500Medium",
+  bodyBold: "Archivo_700Bold",
+  bodyBlack: "Archivo_800ExtraBold",
+  mono: "MartianMono_500Medium",
+  monoBold: "MartianMono_700Bold",
+};
 
+export const mono = fonts.mono;
+
+/* Brutalist: hard edges. Kept as a token so the pill toggle can opt back in. */
 export const radius = {
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
+  sm: 0,
+  md: 0,
+  lg: 0,
+  xl: 0,
   pill: 999,
 };
 
@@ -47,23 +58,29 @@ export const space = {
   xxl: 32,
 };
 
-/* Cross-platform elevation helper */
+/* Hard offset shadow (no blur, full opacity) — the native equivalent of the
+   web app's `shadow-hard` utility. */
 export function shadow(level = 1) {
   if (level === 0) return {};
-  const map = {
-    1: { h: 1, r: 3, o: 0.06, e: 2 },
-    2: { h: 3, r: 8, o: 0.08, e: 4 },
-    3: { h: 8, r: 18, o: 0.12, e: 8 },
-  };
-  const s = map[level] || map[1];
+  const offset = { 1: 3, 2: 5, 3: 7 }[level] || 3;
   return {
-    shadowColor: "#0E1E3A",
-    shadowoffset: undefined,
-    shadowOffset: { width: 0, height: s.h },
-    shadowOpacity: s.o,
-    shadowRadius: s.r,
-    elevation: s.e,
+    shadowColor: "#0A0A0A",
+    shadowOffset: { width: offset, height: offset },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: level * 3,
   };
+}
+
+/* Picks black or white text for a given background so the bold palette's
+   light colors (amber especially) stay readable on dynamically-colored
+   chips. Web has the same helper in Quantum4Colorado.jsx. */
+export function readableOn(hex) {
+  const c = hex.replace("#", "");
+  const r = parseInt(c.slice(0, 2), 16);
+  const g = parseInt(c.slice(2, 4), 16);
+  const b = parseInt(c.slice(4, 6), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? "#0A0A0A" : "#FFFFFF";
 }
 
 /* Add an alpha channel to a #RRGGBB hex value. */

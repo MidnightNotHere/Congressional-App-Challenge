@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { BrandBar, Eyebrow, H2, Body, Card, Button } from "../components/ui";
 import Icon from "../components/Icon";
 import ScoreRing from "../components/ScoreRing";
-import { colors, mono, radius, space, withAlpha, shadow } from "../theme";
+import { colors, mono, radius, space, withAlpha, shadow, fonts } from "../theme";
 import { QUESTIONS, calculateResults, NIST_PQC, CISA_PQC, NSA_PQC, PRIORITY_LABELS } from "../data";
 import { generateReport } from "../report";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -337,8 +337,8 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     padding: 18,
   },
-  qNum: { fontFamily: mono, fontSize: 11, color: colors.accent, fontWeight: "700" },
-  qPrompt: { fontSize: 16, fontWeight: "800", color: colors.textPrimary, marginTop: 4, lineHeight: 22 },
+  qNum: { fontFamily: mono, fontSize: 11, color: colors.accent, fontFamily: fonts.bodyBold },
+  qPrompt: { fontSize: 16, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 4, lineHeight: 22 },
   opt: {
     flexDirection: "row",
     alignItems: "flex-start",
@@ -361,24 +361,24 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   optText: { flex: 1, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
-  optTextSelected: { color: colors.textPrimary, fontWeight: "700" },
+  optTextSelected: { color: colors.textPrimary, fontFamily: fonts.bodyBold },
 
   resultsHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  resultsTitle: { fontSize: 22, fontWeight: "900", color: colors.textPrimary, letterSpacing: -0.5 },
+  resultsTitle: { fontSize: 22, fontFamily: fonts.bodyBlack, color: colors.textPrimary, letterSpacing: -0.5 },
   retake: { flexDirection: "row", alignItems: "center", gap: 5 },
-  retakeText: { fontSize: 14, fontWeight: "700", color: colors.textSecondary },
+  retakeText: { fontSize: 14, fontFamily: fonts.bodyBold, color: colors.textSecondary },
   tierRow: { flexDirection: "row", alignItems: "center", gap: 8, marginTop: 16 },
-  tierName: { fontSize: 18, fontWeight: "800" },
+  tierName: { fontSize: 18, fontFamily: fonts.bodyBlack },
   interpret: { fontSize: 14, color: colors.textPrimary, lineHeight: 21, textAlign: "center", marginTop: 10 },
-  panelH: { fontSize: 17, fontWeight: "800", color: colors.textPrimary },
+  panelH: { fontSize: 17, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
   factorRow: { flexDirection: "row", gap: 10, alignItems: "flex-start" },
   factorText: { flex: 1, fontSize: 14, color: colors.textSecondary, lineHeight: 20 },
   prioBadge: { alignSelf: "flex-start", borderRadius: 999, paddingHorizontal: 10, paddingVertical: 3 },
-  prioText: { color: "#fff", fontFamily: mono, fontSize: 10, fontWeight: "700", letterSpacing: 0.5, textTransform: "uppercase" },
-  actionTitle: { fontSize: 15, fontWeight: "800", color: colors.textPrimary, marginTop: 6, lineHeight: 20 },
+  prioText: { color: "#fff", fontFamily: mono, fontSize: 10, fontFamily: fonts.bodyBold, letterSpacing: 0.5, textTransform: "uppercase" },
+  actionTitle: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 6, lineHeight: 20 },
   actionDesc: { fontSize: 14, color: colors.textSecondary, lineHeight: 20, marginTop: 4 },
   resLink: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 6 },
-  resLinkText: { fontSize: 13, fontWeight: "700", color: colors.primary },
+  resLinkText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.primary },
   sourceRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -389,5 +389,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     padding: 14,
   },
-  sourceText: { flex: 1, fontSize: 14, fontWeight: "700", color: colors.textPrimary },
+  sourceText: { flex: 1, fontSize: 14, fontFamily: fonts.bodyBold, color: colors.textPrimary },
 });

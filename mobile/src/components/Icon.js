@@ -84,7 +84,7 @@ const REGISTRY = {
   Sparkles,
 };
 
-export default function Icon({ name, size = 20, color = "#1A1A2E", strokeWidth = 2 }) {
+export default function Icon({ name, size = 20, color = "#0A0A0A", strokeWidth = 2 }) {
   const Cmp = REGISTRY[name];
   if (!Cmp) return null;
   return <Cmp size={size} color={color} strokeWidth={strokeWidth} />;

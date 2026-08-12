@@ -2,12 +2,13 @@ import React from "react";
 import { View, Text, Pressable, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "./Icon";
-import { colors, mono, radius, space, shadow, withAlpha } from "../theme";
+import { colors, fonts, mono, radius, space, shadow, withAlpha } from "../theme";
 import { useLanguage, LANGUAGES } from "../i18n/LanguageContext";
 
-/* Gold uppercase eyebrow label above section headings. */
-export function Eyebrow({ children, color = colors.accent }) {
-  return <Text style={[styles.eyebrow, { color }]}>{children}</Text>;
+/* Amber chip label above section headings (brutalist: solid fill + hard
+   black border rather than bare colored text). */
+export function Eyebrow({ children, style }) {
+  return <Text style={[styles.eyebrow, style]}>{children}</Text>;
 }
 
 /* Large section heading. */
@@ -70,7 +71,7 @@ export function Button({ label, onPress, variant = "primary", icon, iconRight, s
 
 const VARIANTS = {
   primary: { bg: colors.primary, fg: "#fff" },
-  gold: { bg: colors.accent, fg: "#fff" },
+  gold: { bg: colors.accent, fg: colors.textPrimary },
   outline: { bg: colors.surface, fg: colors.textPrimary, border: colors.border },
   ghost: { bg: withAlpha("#FFFFFF", 0.12), fg: "#fff", border: withAlpha("#FFFFFF", 0.25) },
 };
@@ -126,19 +127,26 @@ export function Screen({ children, contentStyle }) {
 
 export const styles = StyleSheet.create({
   eyebrow: {
-    fontFamily: mono,
-    fontSize: 11,
-    letterSpacing: 1.5,
+    alignSelf: "flex-start",
+    fontFamily: fonts.monoBold,
+    fontSize: 9,
+    letterSpacing: 1.2,
     textTransform: "uppercase",
-    marginBottom: space.sm,
-    fontWeight: "700",
+    marginBottom: space.md,
+    color: colors.textPrimary,
+    backgroundColor: colors.accent,
+    borderWidth: 2,
+    borderColor: colors.border,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    overflow: "hidden",
   },
-  h2: { fontSize: 26, fontWeight: "900", color: colors.textPrimary, letterSpacing: -0.5, lineHeight: 32 },
-  body: { fontSize: 15, color: colors.textSecondary, lineHeight: 23 },
+  h2: { fontSize: 25, fontFamily: fonts.display, color: colors.textPrimary, letterSpacing: -0.8, lineHeight: 32 },
+  body: { fontSize: 15, fontFamily: fonts.body, color: colors.textSecondary, lineHeight: 23 },
   card: {
     backgroundColor: colors.surface,
     borderRadius: radius.lg,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.border,
     padding: space.xl,
   },
@@ -148,10 +156,10 @@ export const styles = StyleSheet.create({
     paddingVertical: 3,
     borderRadius: radius.pill,
   },
-  pillText: { fontFamily: mono, fontSize: 10, letterSpacing: 0.5, textTransform: "uppercase", fontWeight: "700" },
+  pillText: { fontFamily: fonts.monoBold, fontSize: 9, letterSpacing: 0.5, textTransform: "uppercase" },
   bulletRow: { flexDirection: "row", gap: 10, marginBottom: 12, alignItems: "flex-start" },
   dot: { width: 7, height: 7, borderRadius: 4, marginTop: 8 },
-  bulletText: { flex: 1, fontSize: 15, color: colors.textPrimary, lineHeight: 22 },
+  bulletText: { flex: 1, fontSize: 15, fontFamily: fonts.body, color: colors.textPrimary, lineHeight: 22 },
   btn: {
     flexDirection: "row",
     alignItems: "center",
@@ -160,9 +168,9 @@ export const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: radius.md,
-    borderWidth: 1,
+    borderWidth: 2,
   },
-  btnText: { fontSize: 15, fontWeight: "700" },
+  btnText: { fontSize: 14, fontFamily: fonts.bodyBlack, textTransform: "uppercase", letterSpacing: 0.3 },
   brandBar: {
     flexDirection: "row",
     alignItems: "center",
@@ -170,29 +178,30 @@ export const styles = StyleSheet.create({
     paddingHorizontal: space.xl,
     paddingVertical: 12,
     backgroundColor: colors.surface,
-    borderBottomWidth: 1,
+    borderBottomWidth: 3,
     borderBottomColor: colors.border,
   },
   logoMark: {
     width: 32,
     height: 32,
-    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: colors.border,
     backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },
-  brandText: { fontSize: 17, fontWeight: "900", color: colors.primary, letterSpacing: -0.3 },
+  brandText: { fontSize: 15, fontFamily: fonts.display, color: colors.primary, letterSpacing: -0.5 },
   langToggle: {
     flexDirection: "row",
     backgroundColor: colors.bg,
     borderRadius: radius.pill,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.border,
     padding: 2,
   },
   langPill: { paddingHorizontal: 9, paddingVertical: 4, borderRadius: radius.pill },
   langPillActive: { backgroundColor: colors.primary },
-  langPillText: { fontFamily: mono, fontSize: 11, fontWeight: "800", color: colors.textSecondary },
+  langPillText: { fontFamily: fonts.monoBold, fontSize: 10, color: colors.textSecondary },
   langPillTextActive: { color: "#fff" },
   safe: { flex: 1, backgroundColor: colors.bg },
   scroll: { flex: 1, backgroundColor: colors.bg },

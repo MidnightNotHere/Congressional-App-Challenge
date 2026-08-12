@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Screen, Eyebrow, H2, Body, Card, Button, Bullet } from "../components/ui";
 import QuantumLine from "../components/QuantumLine";
 import Icon from "../components/Icon";
-import { colors, mono, radius, space, withAlpha } from "../theme";
+import { colors, mono, radius, space, withAlpha, fonts } from "../theme";
 import { HERO_STATS, EXPLAINER_CARDS, ECOSYSTEM_TABS, STRENGTHS, GAPS } from "../data";
 import { useLanguage } from "../i18n/LanguageContext";
 
@@ -146,7 +146,7 @@ export default function StoryScreen({ navigation }) {
               <View style={styles.sigRow}>
                 <Icon name="TrendingUp" size={15} color={colors.secondary} />
                 <Text style={styles.sigText}>
-                  <Text style={{ fontWeight: "700", color: colors.textPrimary }}>
+                  <Text style={{ fontFamily: fonts.bodyBold, color: colors.textPrimary }}>
                     {t(UI.significanceLabel)}{" "}
                   </Text>
                   {t(org.significance)}
@@ -217,9 +217,9 @@ const styles = StyleSheet.create({
     fontSize: 11,
     letterSpacing: 1.3,
     marginTop: 14,
-    fontWeight: "700",
+    fontFamily: fonts.bodyBold,
   },
-  heroTitle: { color: "#fff", fontSize: 32, fontWeight: "900", letterSpacing: -0.8, lineHeight: 37, marginTop: 12 },
+  heroTitle: { color: "#fff", fontSize: 32, fontFamily: fonts.bodyBlack, letterSpacing: -0.8, lineHeight: 37, marginTop: 12 },
   heroSub: { color: withAlpha("#DCE7F5", 0.95), fontSize: 15, lineHeight: 23, marginTop: 14 },
   statCard: {
     backgroundColor: withAlpha("#FFFFFF", 0.1),
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     padding: 18,
   },
-  statValue: { fontFamily: mono, color: colors.accent, fontSize: 34, fontWeight: "900" },
+  statValue: { fontFamily: mono, color: colors.accent, fontSize: 34, fontFamily: fonts.bodyBlack },
   statLabel: { color: withAlpha("#FFFFFF", 0.9), fontSize: 13, marginTop: 6, lineHeight: 18 },
 
   section: { paddingHorizontal: 20, paddingVertical: 32 },
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  cardTitle: { fontSize: 17, fontWeight: "800", color: colors.textPrimary, marginTop: 14 },
+  cardTitle: { fontSize: 17, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 14 },
 
   tabPill: {
     flexDirection: "row",
@@ -254,11 +254,11 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     backgroundColor: colors.surface,
   },
-  tabText: { fontSize: 13, fontWeight: "700", color: colors.textSecondary },
+  tabText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.textSecondary },
   orgHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 10 },
-  orgName: { flex: 1, fontSize: 16, fontWeight: "800", color: colors.textPrimary, lineHeight: 21 },
+  orgName: { flex: 1, fontSize: 16, fontFamily: fonts.bodyBlack, color: colors.textPrimary, lineHeight: 21 },
   catBadge: { borderRadius: radius.pill, paddingHorizontal: 8, paddingVertical: 3 },
-  catBadgeText: { color: "#fff", fontFamily: mono, fontSize: 9, letterSpacing: 0.5, textTransform: "uppercase", fontWeight: "700" },
+  catBadgeText: { color: "#fff", fontFamily: mono, fontSize: 9, letterSpacing: 0.5, textTransform: "uppercase", fontFamily: fonts.bodyBold },
   locRow: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 6 },
   locText: { fontFamily: mono, fontSize: 12, color: colors.textSecondary },
   sigRow: {
@@ -272,11 +272,11 @@ const styles = StyleSheet.create({
   sigText: { flex: 1, fontSize: 13, color: colors.textSecondary, lineHeight: 19 },
 
   panelHead: { flexDirection: "row", alignItems: "center", gap: 8 },
-  panelTitle: { fontSize: 17, fontWeight: "800" },
+  panelTitle: { fontSize: 17, fontFamily: fonts.bodyBlack },
 
   ctaWrap: { backgroundColor: colors.primary, borderRadius: radius.lg, padding: 8, marginTop: 20 },
   ctaRow: { flexDirection: "row", alignItems: "center", gap: 10, padding: 14 },
-  ctaTitle: { color: "#fff", fontSize: 16, fontWeight: "800" },
+  ctaTitle: { color: "#fff", fontSize: 16, fontFamily: fonts.bodyBlack },
   ctaSub: { color: withAlpha("#DCE7F5", 0.85), fontSize: 13, marginTop: 2 },
   ctaDivider: { height: 1, backgroundColor: withAlpha("#FFFFFF", 0.12), marginHorizontal: 14 },
 });

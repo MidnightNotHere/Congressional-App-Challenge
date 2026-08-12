@@ -73,6 +73,7 @@ import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS } from "./data/resources.js";
 import { QUIZ_QUESTIONS, computeQuizResult, QUIZ_RESULTS } from "./data/quiz-data.js";
 import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "./data/i18n.js";
 import qrcode from "qrcode-generator";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 
 /* =========================================================================
    Quantum4Colorado
@@ -119,15 +120,15 @@ const ICON_REGISTRY = {
 
 /* ----------------------------- Brand palette ----------------------------- */
 const C = {
-  primary: "#1B3A6B", // Colorado sky blue
-  secondary: "#2E7D52", // Rocky Mountain forest green
-  accent: "#C4872A", // sandstone gold
-  danger: "#B03A2E", // deep red
-  bg: "#F7F8FA",
+  primary: "#1A1AE5", // Colorado sky blue
+  secondary: "#00A94F", // Rocky Mountain forest green
+  accent: "#FFB800", // sandstone gold
+  danger: "#D50000", // deep red
+  bg: "#F2EFE4",
   surface: "#FFFFFF",
-  textPrimary: "#1A1A2E",
-  textSecondary: "#4A5568",
-  border: "#E2E8F0",
+  textPrimary: "#0A0A0A",
+  textSecondary: "#2B2B2B",
+  border: "#0A0A0A",
 };
 
 /* ------------------------- Signature design element ----------------------- */
@@ -163,16 +164,40 @@ function QuantumLine({ className = "", nodes = [80, 300, 520, 740, 960, 1140] })
 /* ------------------------------- Static data ----------------------------- */
 /* Content now lives in /data — see imports above. */
 
+/* Picks black or white text for a given background so the bold palette's
+   light colors (amber especially) stay readable on dynamically-colored
+   chips. Mobile has the same helper in its theme module. */
+function readableOn(hex) {
+  const c = hex.replace("#", "");
+  const r = parseInt(c.slice(0, 2), 16);
+  const g = parseInt(c.slice(2, 4), 16);
+  const b = parseInt(c.slice(4, 6), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? "#0A0A0A" : "#FFFFFF";
+}
+
+/* Section key <-> URL path. Each of the five sections is a real route so
+   they're independently linkable and the app isn't one endless scroll. */
+const PATH_BY_KEY = {
+  story: "/",
+  assessment: "/assessment",
+  representatives: "/representatives",
+  youth: "/youth",
+  about: "/about",
+};
+const KEY_BY_PATH = Object.fromEntries(
+  Object.entries(PATH_BY_KEY).map(([k, v]) => [v, k])
+);
+
 /* ------------------------------ Small atoms ------------------------------ */
 const PRIORITY_CLASS = {
-  Immediate: "bg-[#B03A2E] text-white",
-  "Within 6 Months": "bg-[#C4872A] text-white",
-  "Within 1 Year": "bg-[#1B3A6B] text-white",
+  Immediate: "bg-[#D50000] text-white",
+  "Within 6 Months": "bg-[#FFB800] text-[#0A0A0A]",
+  "Within 1 Year": "bg-[#1A1AE5] text-white",
 };
 
 function SectionLabel({ children }) {
   return (
-    <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#C4872A] mb-3">
+    <p className="inline-block font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-[#FFB800] text-[#0A0A0A] border-2 border-[#0A0A0A] px-2.5 py-1 mb-4">
       {children}
     </p>
   );
@@ -201,7 +226,7 @@ function LanguageToggle({ className = "" }) {
   const { lang, setLang } = useLanguage();
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-[#E2E8F0] bg-[#F7F8FA] p-0.5 ${className}`}
+      className={`inline-flex items-center rounded-full border-2 border-[#0A0A0A] bg-[#F2EFE4] p-0.5 ${className}`}
       role="group"
       aria-label="Language"
     >
@@ -213,8 +238,8 @@ function LanguageToggle({ className = "" }) {
           aria-pressed={lang === l.code}
           className={`px-2.5 py-1 rounded-full text-xs font-bold font-mono transition-colors ${
             lang === l.code
-              ? "bg-[#1B3A6B] text-white"
-              : "text-[#4A5568] hover:text-[#1B3A6B]"
+              ? "bg-[#1A1AE5] text-white"
+              : "text-[#2B2B2B] hover:text-[#1A1AE5]"
           }`}
         >
           {l.shortLabel}
@@ -490,8 +515,9 @@ function App() {
   const t = makeTranslator(lang);
 
   const [navOpen, setNavOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("story");
   const [activeTab, setActiveTab] = useState("federal");
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // assessment state
   const [step, setStep] = useState(0); // current visible question index 0..7
@@ -513,14 +539,12 @@ function App() {
       if (decoded && typeof decoded === "object" && decoded.q1) {
         setAnswers(decoded);
         setResults(calculateResults(decoded));
-        setTimeout(
-          () =>
-            assessmentRef.current?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            }),
-          100
-        );
+        // A shared link can land on any path; the results live on /assessment.
+        if (window.location.pathname !== PATH_BY_KEY.assessment) {
+          navigate(PATH_BY_KEY.assessment + window.location.search, {
+            replace: true,
+          });
+        }
       }
     } catch (e) {
       // malformed share link — fall through to the normal empty assessment
@@ -530,39 +554,21 @@ function App() {
   // accordion state (rep ecosystem)
   const [openAccordion, setOpenAccordion] = useState(0);
 
-  const storyRef = useRef(null);
-  const assessmentRef = useRef(null);
-  const repsRef = useRef(null);
-  const youthRef = useRef(null);
-  const aboutRef = useRef(null);
   const resultsRef = useRef(null);
 
-  const refMap = {
-    story: storyRef,
-    assessment: assessmentRef,
-    representatives: repsRef,
-    youth: youthRef,
-    about: aboutRef,
-  };
-
-  /* active section tracking */
+  /* Each section is its own route now, so a fresh page always starts at
+     the top rather than inheriting the previous page's scroll offset. */
   useEffect(() => {
-    const refs = [storyRef, assessmentRef, repsRef, youthRef, aboutRef];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    refs.forEach((r) => r.current && observer.observe(r.current));
-    return () => observer.disconnect();
-  }, []);
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
+  const activeSection = KEY_BY_PATH[location.pathname] || "story";
+
+  /* Cross-section links (hero CTAs, quiz result callouts) navigate
+     between pages instead of scrolling within one. */
   const scrollTo = (key) => {
     setNavOpen(false);
-    refMap[key]?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    navigate(PATH_BY_KEY[key] || "/");
   };
 
   /* ---- assessment handlers ---- */
@@ -617,9 +623,9 @@ function App() {
     setStep(0);
     setShowQr(false);
     if (typeof window !== "undefined" && window.location.search) {
-      window.history.replaceState(null, "", window.location.pathname + window.location.hash);
+      window.history.replaceState(null, "", PATH_BY_KEY.assessment);
     }
-    assessmentRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handlePrint = () => window.print();
@@ -629,9 +635,9 @@ function App() {
      effect above, instead of just linking back to an empty assessment. */
   const shareLink =
     results && typeof window !== "undefined"
-      ? `${window.location.origin}${window.location.pathname}?r=${encodeURIComponent(
+      ? `${window.location.origin}${PATH_BY_KEY.assessment}?r=${encodeURIComponent(
           JSON.stringify(answers)
-        )}#assessment`
+        )}`
       : "";
 
   const qrDataUrl = useMemo(() => {
@@ -693,51 +699,52 @@ function App() {
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>
-    <div className="min-h-screen bg-[#F7F8FA] text-[#1A1A2E] antialiased">
+    <div className="min-h-screen bg-[#F2EFE4] text-[#0A0A0A] antialiased">
       {/* ============================ MAIN APP (hidden when printing) ===== */}
       <div className="print:hidden">
         {/* ----------------------------- NAV ----------------------------- */}
-        <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b border-[#E2E8F0] shadow-sm">
+        <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b-4 border-[#0A0A0A] shadow-hard-sm">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-16">
-              <button
-                onClick={() => scrollTo("story")}
+              <Link
+                to="/"
+                onClick={() => setNavOpen(false)}
                 className="flex items-center gap-2 group"
                 aria-label="Quantum4Colorado home"
               >
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#1B3A6B]">
-                  <Atom className="w-5 h-5 text-[#C4872A]" />
+                <span className="inline-flex items-center justify-center w-9 h-9 bg-[#1A1AE5] border-2 border-[#0A0A0A]">
+                  <Atom className="w-5 h-5 text-[#FFB800]" />
                 </span>
-                <span className="font-black tracking-tight text-lg text-[#1B3A6B]">
-                  Quantum<span className="text-[#C4872A]">4</span>Colorado
+                <span className="font-display font-black tracking-tight text-lg text-[#1A1AE5]">
+                  Quantum<span className="text-[#C42B00]">4</span>Colorado
                 </span>
-              </button>
+              </Link>
 
               <div className="hidden md:flex items-center gap-1">
                 {navLinks.map((l) => {
                   const active = activeSection === l.key;
                   return (
-                    <button
+                    <Link
                       key={l.key}
-                      onClick={() => scrollTo(l.key)}
-                      className={`relative px-3 py-2 text-sm font-semibold transition-colors ${
+                      to={PATH_BY_KEY[l.key]}
+                      className={`relative px-3 py-2 text-sm font-bold uppercase tracking-wide transition-colors ${
                         active
-                          ? "text-[#1B3A6B]"
-                          : "text-[#4A5568] hover:text-[#1B3A6B]"
+                          ? "text-[#0A0A0A]"
+                          : "text-[#2B2B2B] hover:text-[#1A1AE5]"
                       }`}
                     >
                       {t(l.label)}
                       {active && (
-                        <span className="absolute left-3 right-3 -bottom-0.5 h-0.5 rounded-full bg-[#C4872A]" />
+                        <span className="absolute left-2 right-2 -bottom-1 h-1 bg-[#FFB800] border-2 border-[#0A0A0A]" />
                       )}
-                    </button>
+                    </Link>
                   );
                 })}
                 <LanguageToggle className="ml-2" />
               </div>
 
               <button
-                className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-[#1B3A6B] hover:bg-[#F7F8FA]"
+                className="md:hidden inline-flex items-center justify-center w-10 h-10 border-2 border-[#0A0A0A] text-[#1A1AE5] hover:bg-[#FFB800]"
                 onClick={() => setNavOpen((o) => !o)}
                 aria-label="Toggle navigation menu"
                 aria-expanded={navOpen}
@@ -748,20 +755,21 @@ function App() {
           </div>
 
           {navOpen && (
-            <div className="md:hidden border-t border-[#E2E8F0] bg-white">
+            <div className="md:hidden border-t-2 border-[#0A0A0A] bg-white">
               <div className="px-4 py-2 flex flex-col">
                 {navLinks.map((l) => (
-                  <button
+                  <Link
                     key={l.key}
-                    onClick={() => scrollTo(l.key)}
-                    className={`text-left px-2 py-3 text-base font-semibold border-b border-[#F1F4F8] ${
+                    to={PATH_BY_KEY[l.key]}
+                    onClick={() => setNavOpen(false)}
+                    className={`text-left px-2 py-3 text-base font-bold uppercase tracking-wide border-b-2 border-[#0A0A0A] ${
                       activeSection === l.key
-                        ? "text-[#1B3A6B]"
-                        : "text-[#4A5568]"
+                        ? "text-[#0A0A0A] bg-[#FFB800]"
+                        : "text-[#2B2B2B]"
                     }`}
                   >
                     {t(l.label)}
-                  </button>
+                  </Link>
                 ))}
                 <div className="px-2 pt-3">
                   <LanguageToggle />
@@ -771,22 +779,20 @@ function App() {
           )}
         </nav>
 
+        <Routes>
         {/* ======================================================= SECTION 1 */}
-        <section
-          id="story"
-          ref={storyRef}
-          className="scroll-mt-16 pt-16"
-        >
+        <Route path="/" element={
+        <section id="story" className="pt-16">
           {/* Hero */}
-          <div className="bg-gradient-to-b from-[#1B3A6B] to-[#0E1E3A] text-white">
+          <div className="bg-gradient-to-b from-[#1A1AE5] to-[#05003D] text-white">
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
               <QuantumLine className="opacity-80" />
             </div>
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-20">
-              <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#C4872A] mb-5">
+              <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#FFB800] mb-5">
                 {t(UI.story.heroEyebrow)}
               </p>
-              <h1 className="font-black tracking-tight text-3xl sm:text-5xl lg:text-6xl leading-[1.05] max-w-4xl">
+              <h1 className="font-display font-black tracking-tight text-3xl sm:text-5xl lg:text-6xl leading-[1.05] max-w-4xl">
                 {t(UI.story.heroTitle)}
               </h1>
               <p className="mt-6 text-base sm:text-xl text-blue-100/90 max-w-3xl leading-relaxed">
@@ -797,9 +803,9 @@ function App() {
                 {HERO_STATS.map((s, i) => (
                   <div
                     key={i}
-                    className="rounded-2xl bg-white/10 border border-white/15 backdrop-blur px-6 py-7"
+                    className="bg-white/10 border border-white/15 backdrop-blur px-6 py-7"
                   >
-                    <div className="font-mono font-black text-4xl sm:text-5xl text-[#C4872A]">
+                    <div className="font-mono font-black text-4xl sm:text-5xl text-[#FFB800]">
                       {s.value}
                     </div>
                     <div className="mt-3 text-sm text-blue-50/90 leading-snug">
@@ -812,14 +818,14 @@ function App() {
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => scrollTo("assessment")}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#C4872A] hover:bg-[#b07a23] text-white font-semibold px-6 py-3 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors"
                 >
                   {t(UI.story.assessCta)}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => scrollTo("representatives")}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-6 py-3 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-6 py-3 transition-colors"
                 >
                   {t(UI.story.forRepsCta)}
                 </button>
@@ -831,7 +837,7 @@ function App() {
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
               <SectionLabel>{t(UI.story.explainerLabel)}</SectionLabel>
-              <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
                 {t(UI.story.explainerHeading)}
               </h2>
             </div>
@@ -841,15 +847,15 @@ function App() {
                 return (
                   <div
                     key={i}
-                    className="rounded-2xl bg-white border border-[#E2E8F0] p-7 shadow-sm"
+                    className="bg-white border-2 border-[#0A0A0A] p-7 shadow-hard shadow-hard-sm"
                   >
-                    <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#1B3A6B]/10">
-                      <Icon className="w-6 h-6 text-[#1B3A6B]" />
+                    <span className="inline-flex items-center justify-center w-12 h-12 bg-[#1A1AE5]/10">
+                      <Icon className="w-6 h-6 text-[#1A1AE5]" />
                     </span>
-                    <h3 className="mt-5 font-bold text-lg text-[#1A1A2E]">
+                    <h3 className="mt-5 font-bold text-lg text-[#0A0A0A]">
                       {t(card.title)}
                     </h3>
-                    <p className="mt-3 text-[#4A5568] leading-relaxed">
+                    <p className="mt-3 text-[#2B2B2B] leading-relaxed">
                       {t(card.body)}
                     </p>
                   </div>
@@ -859,14 +865,14 @@ function App() {
           </div>
 
           {/* Ecosystem map */}
-          <div className="bg-white border-y border-[#E2E8F0]">
+          <div className="bg-white border-y-4 border-[#0A0A0A]">
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
               <div className="max-w-3xl">
                 <SectionLabel>{t(UI.story.mapLabel)}</SectionLabel>
-                <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+                <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
                   {t(UI.story.mapHeading)}
                 </h2>
-                <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
+                <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
                   {t(UI.story.mapIntro)}
                 </p>
               </div>
@@ -882,8 +888,8 @@ function App() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
                         active
-                          ? "bg-[#1B3A6B] text-white border-[#1B3A6B]"
-                          : "bg-white text-[#4A5568] border-[#E2E8F0] hover:border-[#1B3A6B]/40"
+                          ? "bg-[#1A1AE5] text-white border-[#1A1AE5]"
+                          : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#1A1AE5]/40"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -902,29 +908,32 @@ function App() {
                   {tab.orgs.map((org) => (
                     <div
                       key={org.name}
-                      className="rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] p-6 hover:shadow-sm transition-shadow"
+                      className="bg-[#F2EFE4] border-2 border-[#0A0A0A] p-6 hover:shadow-hard-sm transition-shadow"
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <h3 className="font-bold text-lg text-[#1A1A2E] leading-snug">
+                        <h3 className="font-bold text-lg text-[#0A0A0A] leading-snug">
                           {org.name}
                         </h3>
                         <span
-                          className="shrink-0 font-mono text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-full text-white"
-                          style={{ backgroundColor: tab.color }}
+                          className="shrink-0 font-mono text-[10px] font-bold tracking-wider uppercase px-2.5 py-1 border-2 border-[#0A0A0A]"
+                          style={{
+                            backgroundColor: tab.color,
+                            color: readableOn(tab.color),
+                          }}
                         >
                           {t(tab.shortLabel)}
                         </span>
                       </div>
-                      <div className="mt-1.5 flex items-center gap-1.5 text-sm text-[#4A5568]">
-                        <MapPin className="w-3.5 h-3.5 text-[#C4872A]" />
+                      <div className="mt-1.5 flex items-center gap-1.5 text-sm text-[#2B2B2B]">
+                        <MapPin className="w-3.5 h-3.5 text-[#C42B00]" />
                         <span className="font-mono">{t(org.location)}</span>
                       </div>
-                      <p className="mt-3 text-[#4A5568] leading-relaxed">
+                      <p className="mt-3 text-[#2B2B2B] leading-relaxed">
                         {t(org.role)}
                       </p>
-                      <div className="mt-4 pt-3 border-t border-[#E2E8F0] flex gap-2">
-                        <TrendingUp className="w-4 h-4 text-[#2E7D52] shrink-0 mt-0.5" />
-                        <p className="text-sm text-[#1A1A2E]">
+                      <div className="mt-4 pt-3 border-t-4 border-[#0A0A0A] flex gap-2">
+                        <TrendingUp className="w-4 h-4 text-[#00A94F] shrink-0 mt-0.5" />
+                        <p className="text-sm text-[#0A0A0A]">
                           <span className="font-semibold">
                             {t(UI.story.significanceLabel)}{" "}
                           </span>
@@ -942,30 +951,30 @@ function App() {
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
               <SectionLabel>{t(UI.story.stakesLabel)}</SectionLabel>
-              <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
                 {t(UI.story.stakesHeading)}
               </h2>
             </div>
 
             <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* strengths */}
-              <div className="rounded-2xl border border-[#2E7D52]/30 bg-[#EAF5EF] p-7">
-                <div className="flex items-center gap-2 text-[#2E7D52]">
+              <div className="border border-[#00A94F]/30 bg-[#EAF5EF] p-7">
+                <div className="flex items-center gap-2 text-[#00A94F]">
                   <CheckCircle2 className="w-5 h-5" />
                   <h3 className="font-bold text-lg">{t(UI.story.strengthsHeading)}</h3>
                 </div>
                 <ul className="mt-5 space-y-4">
                   {STRENGTHS.map((s, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#2E7D52] shrink-0" />
-                      <span className="text-[#1A1A2E] leading-relaxed">{t(s)}</span>
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00A94F] shrink-0" />
+                      <span className="text-[#0A0A0A] leading-relaxed">{t(s)}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
               {/* gap */}
-              <div className="rounded-2xl border border-[#C4872A]/40 bg-[#FBF3E6] p-7">
+              <div className="border border-[#FFB800]/40 bg-[#FBF3E6] p-7">
                 <div className="flex items-center gap-2 text-[#9c6a1c]">
                   <AlertTriangle className="w-5 h-5" />
                   <h3 className="font-bold text-lg">{t(UI.story.gapHeading)}</h3>
@@ -973,8 +982,8 @@ function App() {
                 <ul className="mt-5 space-y-4">
                   {GAPS.map((g, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#C4872A] shrink-0" />
-                      <span className="text-[#1A1A2E] leading-relaxed">{t(g)}</span>
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#FFB800] shrink-0" />
+                      <span className="text-[#0A0A0A] leading-relaxed">{t(g)}</span>
                     </li>
                   ))}
                 </ul>
@@ -982,17 +991,17 @@ function App() {
             </div>
 
             {/* CTAs */}
-            <div className="mt-10 rounded-2xl bg-[#1B3A6B] text-white p-8 sm:p-10">
+            <div className="mt-10 bg-[#1A1AE5] text-white p-8 sm:p-10">
               <div className="grid gap-4 sm:grid-cols-2 items-center">
                 <button
                   onClick={() => scrollTo("assessment")}
-                  className="group text-left rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
+                  className="group text-left bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
                       {t(UI.story.ctaAssessTitle)}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-[#C4872A] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-[#FFB800] group-hover:translate-x-1 transition-transform" />
                   </div>
                   <p className="mt-1 text-blue-100/80 text-sm">
                     {t(UI.story.ctaAssessSub)}
@@ -1000,13 +1009,13 @@ function App() {
                 </button>
                 <button
                   onClick={() => scrollTo("representatives")}
-                  className="group text-left rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
+                  className="group text-left bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
                       {t(UI.story.ctaRepsTitle)}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-[#C4872A] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-[#FFB800] group-hover:translate-x-1 transition-transform" />
                   </div>
                   <p className="mt-1 text-blue-100/80 text-sm">
                     {t(UI.story.ctaRepsSub)}
@@ -1016,32 +1025,28 @@ function App() {
             </div>
           </div>
         </section>
-
-        {/* Divider */}
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <QuantumLine />
-        </div>
+        } />
 
         {/* ======================================================= SECTION 2 */}
+        <Route path="/assessment" element={
         <section
           id="assessment"
-          ref={assessmentRef}
-          className="scroll-mt-16 bg-white border-y border-[#E2E8F0]"
+          className="pt-16 bg-white border-b-4 border-[#0A0A0A]"
         >
           <div className="max-w-[1000px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
               <SectionLabel>{t(UI.assessment.sectionLabel)}</SectionLabel>
-              <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
                 {t(UI.assessment.heading)}
               </h2>
-              <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
+              <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
                 {t(UI.assessment.intro)}
               </p>
             </div>
 
             {/* explanation box */}
-            <div className="mt-8 rounded-r-xl bg-[#EAF1FB] border-l-4 border-[#1B3A6B] p-5">
-              <p className="text-[#1A1A2E] leading-relaxed">
+            <div className="mt-8 rounded-r-xl bg-[#EAF1FB] border-l-4 border-[#1A1AE5] p-5">
+              <p className="text-[#0A0A0A] leading-relaxed">
                 {t(UI.assessment.explainer)}
               </p>
             </div>
@@ -1049,18 +1054,18 @@ function App() {
             {!results && (
               <div className="mt-10">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-xs tracking-wider uppercase text-[#4A5568]">
+                  <span className="font-mono text-xs tracking-wider uppercase text-[#2B2B2B]">
                     {t(UI.assessment.question)} {Math.min(step + 1, QUESTIONS.length)}{" "}
                     {t(UI.assessment.of)} {QUESTIONS.length}
                   </span>
-                  <span className="font-mono text-xs text-[#4A5568]">
+                  <span className="font-mono text-xs text-[#2B2B2B]">
                     {Math.round(((step + (allAnswered ? 1 : 0)) / QUESTIONS.length) * 100)}
                     %
                   </span>
                 </div>
-                <div className="h-2 rounded-full bg-[#E2E8F0] overflow-hidden">
+                <div className="h-2 rounded-full bg-[#0A0A0A] overflow-hidden">
                   <div
-                    className="h-full bg-[#1B3A6B] transition-all duration-500"
+                    className="h-full bg-[#1A1AE5] transition-all duration-500"
                     style={{
                       width: `${
                         ((step + (allAnswered ? 1 : 0)) / QUESTIONS.length) * 100
@@ -1080,14 +1085,14 @@ function App() {
                   return (
                     <fieldset
                       key={q.id}
-                      className="rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] p-6"
+                      className="border-2 border-[#0A0A0A] bg-[#F2EFE4] p-6 shadow-hard"
                     >
                       <legend className="px-2">
-                        <span className="font-mono text-xs text-[#C4872A]">
+                        <span className="font-mono text-xs font-bold text-[#C42B00]">
                           Q{index + 1}
                         </span>
                       </legend>
-                      <p className="font-bold text-lg text-[#1A1A2E]">
+                      <p className="font-bold text-lg text-[#0A0A0A]">
                         {t(q.prompt)}
                       </p>
                       <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -1105,10 +1110,10 @@ function App() {
                                   : answerSingle(q.id, opt.id, index)
                               }
                               aria-pressed={selected}
-                              className={`flex items-start gap-3 text-left rounded-xl border p-4 transition-all ${
+                              className={`flex items-start gap-3 text-left border p-4 transition-all ${
                                 selected
-                                  ? "border-[#1B3A6B] bg-[#1B3A6B]/5 ring-1 ring-[#1B3A6B]/30"
-                                  : "border-[#E2E8F0] bg-white hover:border-[#1B3A6B]/40"
+                                  ? "border-[#1A1AE5] bg-[#1A1AE5]/5 ring-1 ring-[#1A1AE5]/30"
+                                  : "border-[#0A0A0A] bg-white hover:border-[#1A1AE5]/40"
                               }`}
                             >
                               <span
@@ -1116,7 +1121,7 @@ function App() {
                                   isMulti ? "rounded-md" : "rounded-full"
                                 } border-2 ${
                                   selected
-                                    ? "bg-[#1B3A6B] border-[#1B3A6B]"
+                                    ? "bg-[#1A1AE5] border-[#1A1AE5]"
                                     : "border-[#CBD5E0] bg-white"
                                 }`}
                               >
@@ -1127,8 +1132,8 @@ function App() {
                               <span
                                 className={`text-sm leading-snug ${
                                   selected
-                                    ? "text-[#1A1A2E] font-semibold"
-                                    : "text-[#4A5568]"
+                                    ? "text-[#0A0A0A] font-semibold"
+                                    : "text-[#2B2B2B]"
                                 }`}
                               >
                                 {t(opt.label)}
@@ -1146,7 +1151,7 @@ function App() {
                             <button
                               type="button"
                               onClick={() => advanceFromMulti(index)}
-                              className="inline-flex items-center gap-2 rounded-xl bg-[#1B3A6B] text-white font-semibold px-5 py-2.5 hover:bg-[#16304f] transition-colors"
+                              className="inline-flex items-center gap-2 bg-[#1A1AE5] text-white font-semibold px-5 py-2.5 hover:bg-[#0F0FA8] transition-colors"
                             >
                               {t(UI.assessment.continue)}
                               <ArrowRight className="w-4 h-4" />
@@ -1163,7 +1168,7 @@ function App() {
                     <button
                       type="button"
                       onClick={generate}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#C4872A] hover:bg-[#b07a23] text-white font-bold text-lg px-8 py-4 transition-colors"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-black text-lg px-8 py-4 transition-colors"
                     >
                       <ClipboardCheck className="w-5 h-5" />
                       {t(UI.assessment.generate)}
@@ -1177,12 +1182,12 @@ function App() {
             {results && (
               <div ref={resultsRef} className="mt-12 scroll-mt-20">
                 <div className="flex items-center justify-between flex-wrap gap-3">
-                  <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
+                  <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
                     {t(UI.assessment.profileHeading)}
                   </h3>
                   <button
                     onClick={restart}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#4A5568] hover:text-[#1B3A6B]"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#2B2B2B] hover:text-[#1A1AE5]"
                   >
                     <RotateCcw className="w-4 h-4" />
                     {t(UI.assessment.retake)}
@@ -1192,7 +1197,7 @@ function App() {
                 <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Panel 1 — score */}
                   <div
-                    className="rounded-2xl border p-7 flex flex-col items-center text-center"
+                    className="border p-7 flex flex-col items-center text-center"
                     style={{
                       borderColor: results.tier.color + "55",
                       backgroundColor: results.tier.bg,
@@ -1214,14 +1219,14 @@ function App() {
                         {t(results.tier.name)}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm text-[#1A1A2E] leading-relaxed">
+                    <p className="mt-3 text-sm text-[#0A0A0A] leading-relaxed">
                       {t(results.interpretation)}
                     </p>
                   </div>
 
                   {/* Panel 2 — risk factors */}
-                  <div className="rounded-2xl border border-[#E2E8F0] bg-white p-7">
-                    <h4 className="font-bold text-lg text-[#1A1A2E]">
+                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard">
+                    <h4 className="font-bold text-lg text-[#0A0A0A]">
                       {t(UI.assessment.riskFactorsHeading)}
                     </h4>
                     <ul className="mt-4 space-y-3">
@@ -1231,7 +1236,7 @@ function App() {
                             className="w-4 h-4 mt-1 shrink-0"
                             style={{ color: results.tier.color }}
                           />
-                          <span className="text-sm text-[#4A5568] leading-relaxed">
+                          <span className="text-sm text-[#2B2B2B] leading-relaxed">
                             {t(f)}
                           </span>
                         </li>
@@ -1240,8 +1245,8 @@ function App() {
                   </div>
 
                   {/* Panel 3 — actions */}
-                  <div className="rounded-2xl border border-[#E2E8F0] bg-white p-7">
-                    <h4 className="font-bold text-lg text-[#1A1A2E]">
+                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard">
+                    <h4 className="font-bold text-lg text-[#0A0A0A]">
                       {t(UI.assessment.actionListHeading)}
                     </h4>
                     <ol className="mt-4 space-y-5">
@@ -1250,15 +1255,15 @@ function App() {
                           <span
                             className={`inline-block font-mono text-[10px] tracking-wider uppercase px-2 py-0.5 rounded-full ${
                               PRIORITY_CLASS[a.priority] ||
-                              "bg-[#1B3A6B] text-white"
+                              "bg-[#1A1AE5] text-white"
                             }`}
                           >
                             {t(PRIORITY_LABELS[a.priority]) || a.priority}
                           </span>
-                          <p className="mt-1.5 font-semibold text-sm text-[#1A1A2E] leading-snug">
+                          <p className="mt-1.5 font-semibold text-sm text-[#0A0A0A] leading-snug">
                             {t(a.title)}
                           </p>
-                          <p className="mt-1 text-sm text-[#4A5568] leading-relaxed">
+                          <p className="mt-1 text-sm text-[#2B2B2B] leading-relaxed">
                             {t(a.description)}
                           </p>
                           {a.resource && (
@@ -1266,7 +1271,7 @@ function App() {
                               href={a.resource.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-[#1B3A6B] hover:underline"
+                              className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-[#1A1AE5] hover:underline"
                             >
                               {t(a.resource.label)}
                               <ExternalLink className="w-3 h-3" />
@@ -1282,21 +1287,21 @@ function App() {
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={handlePrint}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#1B3A6B] hover:bg-[#16304f] text-white font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-[#1A1AE5] hover:bg-[#0F0FA8] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-semibold px-6 py-3 transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     {t(UI.assessment.downloadPdf)}
                   </button>
                   <button
                     onClick={handleShare}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#1B3A6B]/40 text-[#1A1A2E] font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#1A1AE5]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
                   >
                     <Share2 className="w-4 h-4" />
                     {copied ? t(UI.assessment.linkCopied) : t(UI.assessment.shareTeam)}
                   </button>
                   <button
                     onClick={() => setShowQr((v) => !v)}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#1B3A6B]/40 text-[#1A1A2E] font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#1A1AE5]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
                   >
                     <QrCode className="w-4 h-4" />
                     {showQr ? t(UI.assessment.hideQr) : t(UI.assessment.showQr)}
@@ -1304,7 +1309,7 @@ function App() {
                 </div>
 
                 {showQr && qrDataUrl && (
-                  <div className="mt-4 flex flex-col items-center gap-2 rounded-2xl border border-[#E2E8F0] bg-white p-6">
+                  <div className="mt-4 flex flex-col items-center gap-2 border-2 border-[#0A0A0A] bg-white p-6 shadow-hard">
                     <img
                       src={qrDataUrl}
                       alt={t(UI.assessment.showQr)}
@@ -1312,15 +1317,15 @@ function App() {
                       height={168}
                       className="rounded-lg"
                     />
-                    <p className="text-xs text-[#4A5568] text-center max-w-xs">
+                    <p className="text-xs text-[#2B2B2B] text-center max-w-xs">
                       {t(UI.assessment.qrCaption)}
                     </p>
                   </div>
                 )}
 
                 {/* resources */}
-                <div className="mt-10 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] p-7">
-                  <h4 className="font-bold text-lg text-[#1A1A2E]">
+                <div className="mt-10 bg-[#F2EFE4] border-2 border-[#0A0A0A] p-7">
+                  <h4 className="font-bold text-lg text-[#0A0A0A]">
                     {t(UI.assessment.learnMore)}
                   </h4>
                   <div className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -1330,10 +1335,10 @@ function App() {
                         href={r.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-start gap-2 rounded-xl bg-white border border-[#E2E8F0] p-4 hover:border-[#1B3A6B]/40 transition-colors"
+                        className="flex items-start gap-2 bg-white border-2 border-[#0A0A0A] p-4 hover:border-[#1A1AE5]/40 transition-colors"
                       >
-                        <ExternalLink className="w-4 h-4 text-[#1B3A6B] mt-0.5 shrink-0" />
-                        <span className="text-sm font-semibold text-[#1A1A2E] leading-snug">
+                        <ExternalLink className="w-4 h-4 text-[#1A1AE5] mt-0.5 shrink-0" />
+                        <span className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                           {t(r.label)}
                         </span>
                       </a>
@@ -1344,37 +1349,34 @@ function App() {
             )}
           </div>
         </section>
-
-        {/* Divider */}
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <QuantumLine />
-        </div>
+        } />
 
         {/* ======================================================= SECTION 3 */}
-        <section id="representatives" ref={repsRef} className="scroll-mt-16">
+        <Route path="/representatives" element={
+        <section id="representatives" className="pt-16">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
               <SectionLabel>{t(UI.reps.sectionLabel)}</SectionLabel>
-              <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
                 {t(UI.reps.heading)}
               </h2>
-              <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
+              <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
                 {t(UI.reps.intro)}
               </p>
             </div>
 
             {/* A — Investment gap */}
             <div className="mt-12">
-              <h3 className="font-bold text-xl text-[#1A1A2E]">
+              <h3 className="font-bold text-xl text-[#0A0A0A]">
                 {t(UI.reps.caseHeading)}
               </h3>
 
               <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
                 {/* table */}
-                <div className="overflow-x-auto rounded-2xl border border-[#E2E8F0] bg-white">
+                <div className="overflow-x-auto border-2 border-[#0A0A0A] bg-white">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-[#1B3A6B] text-white text-left">
+                      <tr className="bg-[#1A1AE5] text-white text-left">
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableState)}</th>
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInitiative)}</th>
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInvestment)}</th>
@@ -1385,20 +1387,20 @@ function App() {
                       {INVESTMENT_TABLE.map((row) => (
                         <tr
                           key={row.state}
-                          className={`border-t border-[#E2E8F0] ${
+                          className={`border-t-4 border-[#0A0A0A] ${
                             row.highlight ? "bg-[#FBF3E6]" : ""
                           }`}
                         >
-                          <td className="px-4 py-3 font-semibold text-[#1A1A2E]">
+                          <td className="px-4 py-3 font-semibold text-[#0A0A0A]">
                             {row.state}
                           </td>
-                          <td className="px-4 py-3 text-[#4A5568]">
+                          <td className="px-4 py-3 text-[#2B2B2B]">
                             {t(row.initiative)}
                           </td>
-                          <td className="px-4 py-3 font-mono text-[#4A5568]">
+                          <td className="px-4 py-3 font-mono text-[#2B2B2B]">
                             {t(row.investment)}
                           </td>
-                          <td className="px-4 py-3 font-mono text-[#4A5568]">
+                          <td className="px-4 py-3 font-mono text-[#2B2B2B]">
                             {t(row.year)}
                           </td>
                         </tr>
@@ -1408,11 +1410,11 @@ function App() {
                 </div>
 
                 {/* chart */}
-                <div className="rounded-2xl border border-[#E2E8F0] bg-white p-6">
-                  <p className="font-semibold text-[#1A1A2E]">
+                <div className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard">
+                  <p className="font-semibold text-[#0A0A0A]">
                     {t(UI.reps.chartHeading)}
                   </p>
-                  <p className="font-mono text-xs text-[#4A5568] mb-3">
+                  <p className="font-mono text-xs text-[#2B2B2B] mb-3">
                     {t(UI.reps.chartSub)}
                   </p>
                   <div style={{ width: "100%", height: 240 }}>
@@ -1423,17 +1425,17 @@ function App() {
                       >
                         <XAxis
                           dataKey="state"
-                          tick={{ fontSize: 12, fill: "#4A5568" }}
-                          axisLine={{ stroke: "#E2E8F0" }}
+                          tick={{ fontSize: 12, fill: "#2B2B2B" }}
+                          axisLine={{ stroke: "#0A0A0A" }}
                           tickLine={false}
                         />
                         <YAxis
-                          tick={{ fontSize: 11, fill: "#4A5568" }}
+                          tick={{ fontSize: 11, fill: "#2B2B2B" }}
                           axisLine={false}
                           tickLine={false}
                         />
                         <Tooltip
-                          cursor={{ fill: "#F7F8FA" }}
+                          cursor={{ fill: "#F2EFE4" }}
                           formatter={(v) => [`$${v}M`, "Committed"]}
                         />
                         <Bar dataKey="amount" radius={[6, 6, 0, 0]}>
@@ -1454,21 +1456,21 @@ function App() {
                             style={{
                               fontSize: 11,
                               fontFamily: "monospace",
-                              fill: "#1A1A2E",
+                              fill: "#0A0A0A",
                             }}
                           />
                         </Bar>
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
-                  <p className="mt-2 text-xs text-[#4A5568] leading-snug">
+                  <p className="mt-2 text-xs text-[#2B2B2B] leading-snug">
                     {t(UI.reps.chartFootnote)}
                   </p>
                 </div>
               </div>
 
               {/* callout */}
-              <div className="mt-6 rounded-2xl bg-[#C4872A] text-white p-7">
+              <div className="mt-6 bg-[#FFB800] text-[#0A0A0A] p-7">
                 <p className="text-lg leading-relaxed">
                   {t(UI.reps.callout)}
                 </p>
@@ -1477,33 +1479,33 @@ function App() {
 
             {/* B — Detailed ecosystem accordion */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#1A1A2E]">
+              <h3 className="font-bold text-xl text-[#0A0A0A]">
                 {t(UI.reps.ecosystemHeading)}
               </h3>
-              <p className="mt-2 text-[#4A5568]">
+              <p className="mt-2 text-[#2B2B2B]">
                 {t(UI.reps.ecosystemIntro)}
               </p>
 
-              <div className="mt-6 rounded-2xl border border-[#E2E8F0] bg-white divide-y divide-[#E2E8F0] overflow-hidden">
+              <div className="mt-6 border-2 border-[#0A0A0A] bg-white divide-y divide-[#0A0A0A] overflow-hidden">
                 {DETAILED_ECOSYSTEM.map((inst, i) => {
                   const open = openAccordion === i;
                   return (
                     <div key={inst.name}>
                       <button
                         onClick={() => setOpenAccordion(open ? -1 : i)}
-                        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-[#F7F8FA] transition-colors"
+                        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left hover:bg-[#F2EFE4] transition-colors"
                         aria-expanded={open}
                       >
                         <span>
-                          <span className="font-bold text-[#1A1A2E]">
+                          <span className="font-bold text-[#0A0A0A]">
                             {inst.name}
                           </span>
-                          <span className="ml-2 font-mono text-xs text-[#4A5568]">
+                          <span className="ml-2 font-mono text-xs text-[#2B2B2B]">
                             {t(inst.location)}
                           </span>
                         </span>
                         <ChevronDown
-                          className={`w-5 h-5 text-[#1B3A6B] shrink-0 transition-transform ${
+                          className={`w-5 h-5 text-[#1A1AE5] shrink-0 transition-transform ${
                             open ? "rotate-180" : ""
                           }`}
                         />
@@ -1529,7 +1531,7 @@ function App() {
 
               <button
                 onClick={handlePrint}
-                className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#1B3A6B] hover:bg-[#16304f] text-white font-semibold px-6 py-3 transition-colors"
+                className="mt-5 inline-flex items-center gap-2 bg-[#1A1AE5] hover:bg-[#0F0FA8] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-semibold px-6 py-3 transition-colors"
               >
                 <FileText className="w-4 h-4" />
                 {t(UI.reps.downloadReportPdf)}
@@ -1538,38 +1540,38 @@ function App() {
 
             {/* C — Recommendations */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#1A1A2E]">
+              <h3 className="font-bold text-xl text-[#0A0A0A]">
                 {t(UI.reps.recommendationsHeading)}
               </h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {RECOMMENDATIONS.map((rec, i) => (
                   <div
                     key={i}
-                    className="rounded-2xl border border-[#E2E8F0] bg-white p-7"
+                    className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#1B3A6B] text-white font-mono font-bold">
+                      <span className="inline-flex items-center justify-center w-9 h-9 bg-[#1A1AE5] text-white font-mono font-bold">
                         {i + 1}
                       </span>
-                      <h4 className="font-bold text-[#1A1A2E] leading-snug">
+                      <h4 className="font-bold text-[#0A0A0A] leading-snug">
                         {t(rec.title)}
                       </h4>
                     </div>
-                    <p className="mt-4 text-[#4A5568] leading-relaxed">
+                    <p className="mt-4 text-[#2B2B2B] leading-relaxed">
                       {t(rec.rationale)}
                     </p>
                     <div className="mt-4 grid gap-2">
                       <div className="flex gap-2 text-sm">
-                        <span className="font-semibold text-[#1B3A6B] shrink-0">
+                        <span className="font-semibold text-[#1A1AE5] shrink-0">
                           {t(UI.reps.precedentLabel)}
                         </span>
-                        <span className="text-[#4A5568]">{t(rec.precedent)}</span>
+                        <span className="text-[#2B2B2B]">{t(rec.precedent)}</span>
                       </div>
                       <div className="flex gap-2 text-sm">
-                        <span className="font-semibold text-[#2E7D52] shrink-0">
+                        <span className="font-semibold text-[#00A94F] shrink-0">
                           {t(UI.reps.impactLabel)}
                         </span>
-                        <span className="text-[#4A5568]">{t(rec.impact)}</span>
+                        <span className="text-[#2B2B2B]">{t(rec.impact)}</span>
                       </div>
                     </div>
                   </div>
@@ -1579,22 +1581,22 @@ function App() {
 
             {/* D — Contact & engagement */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#1A1A2E]">{t(UI.reps.takeActionHeading)}</h3>
+              <h3 className="font-bold text-xl text-[#0A0A0A]">{t(UI.reps.takeActionHeading)}</h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a
                   href="https://crow.house.gov"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-2xl border border-[#E2E8F0] bg-white p-6 hover:border-[#1B3A6B]/40 transition-colors"
+                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard hover:border-[#1A1AE5]/40 transition-colors"
                 >
-                  <Landmark className="w-6 h-6 text-[#1B3A6B]" />
-                  <h4 className="mt-3 font-bold text-[#1A1A2E]">
+                  <Landmark className="w-6 h-6 text-[#1A1AE5]" />
+                  <h4 className="mt-3 font-bold text-[#0A0A0A]">
                     {t(UI.reps.contactCrowTitle)}
                   </h4>
-                  <p className="mt-1 text-sm text-[#4A5568]">
+                  <p className="mt-1 text-sm text-[#2B2B2B]">
                     {t(UI.reps.contactCrowSub)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
                     crow.house.gov <ExternalLink className="w-3.5 h-3.5" />
                   </span>
                 </a>
@@ -1603,29 +1605,29 @@ function App() {
                   href="https://coloradoquantum.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-2xl border border-[#E2E8F0] bg-white p-6 hover:border-[#1B3A6B]/40 transition-colors"
+                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard hover:border-[#1A1AE5]/40 transition-colors"
                 >
-                  <Users className="w-6 h-6 text-[#2E7D52]" />
-                  <h4 className="mt-3 font-bold text-[#1A1A2E]">
+                  <Users className="w-6 h-6 text-[#00A94F]" />
+                  <h4 className="mt-3 font-bold text-[#0A0A0A]">
                     {t(UI.reps.contactCQNTitle)}
                   </h4>
-                  <p className="mt-1 text-sm text-[#4A5568]">
+                  <p className="mt-1 text-sm text-[#2B2B2B]">
                     {t(UI.reps.contactCQNSub)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
                     coloradoquantum.org <ExternalLink className="w-3.5 h-3.5" />
                   </span>
                 </a>
 
                 <button
                   onClick={emailTemplate}
-                  className="text-left rounded-2xl border border-[#C4872A]/40 bg-[#FBF3E6] p-6 hover:border-[#C4872A] transition-colors"
+                  className="text-left border border-[#FFB800]/40 bg-[#FBF3E6] p-6 hover:border-[#FFB800] transition-colors"
                 >
                   <Mail className="w-6 h-6 text-[#9c6a1c]" />
-                  <h4 className="mt-3 font-bold text-[#1A1A2E]">
+                  <h4 className="mt-3 font-bold text-[#0A0A0A]">
                     {t(UI.reps.shareRepTitle)}
                   </h4>
-                  <p className="mt-1 text-sm text-[#4A5568]">
+                  <p className="mt-1 text-sm text-[#2B2B2B]">
                     {t(UI.reps.shareRepSub)}
                   </p>
                   <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#9c6a1c]">
@@ -1636,38 +1638,28 @@ function App() {
             </div>
           </div>
         </section>
-
-        {/* Divider */}
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <QuantumLine />
-        </div>
+        } />
 
         {/* ======================================================= SECTION 4 */}
-        <section id="youth" ref={youthRef} className="scroll-mt-16">
+        <Route path="/youth" element={
+        <section id="youth" className="pt-16">
           <YouthEducation scrollTo={scrollTo} />
         </section>
-
-        {/* Divider */}
-        <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <QuantumLine />
-        </div>
+        } />
 
         {/* ======================================================= SECTION 5 */}
-        <section
-          id="about"
-          ref={aboutRef}
-          className="scroll-mt-16 bg-white border-t border-[#E2E8F0]"
-        >
+        <Route path="/about" element={
+        <section id="about" className="pt-16 bg-white">
           <div className="max-w-[900px] mx-auto px-4 sm:px-6 py-20">
             <SectionLabel>About</SectionLabel>
-            <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+            <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
               About Quantum4Colorado
             </h2>
 
             <div className="mt-8 space-y-8">
               <div>
-                <h3 className="font-bold text-lg text-[#1A1A2E]">What this is</h3>
-                <p className="mt-2 text-[#4A5568] leading-relaxed">
+                <h3 className="font-bold text-lg text-[#0A0A0A]">What this is</h3>
+                <p className="mt-2 text-[#2B2B2B] leading-relaxed">
                   Quantum4Colorado was built by a team of Colorado high school
                   students for the 2026 Congressional App Challenge. It is a
                   nonpartisan civic information resource.
@@ -1675,10 +1667,10 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#1A1A2E]">
+                <h3 className="font-bold text-lg text-[#0A0A0A]">
                   Why we built it
                 </h3>
-                <p className="mt-2 text-[#4A5568] leading-relaxed">
+                <p className="mt-2 text-[#2B2B2B] leading-relaxed">
                   Colorado sits at the center of the quantum computing revolution
                   — NIST Boulder, JILA, and Quantinuum make this state uniquely
                   positioned nationally. We built this app because most Coloradans
@@ -1689,21 +1681,21 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#1A1A2E]">
+                <h3 className="font-bold text-lg text-[#0A0A0A]">
                   Where This Data Comes From
                 </h3>
-                <p className="mt-2 text-sm text-[#4A5568]">
+                <p className="mt-2 text-sm text-[#2B2B2B]">
                   Every ecosystem entry, assessment recommendation, and policy
                   claim in this app traces back to one of these sources.
                 </p>
-                <div className="mt-4 rounded-2xl border border-[#E2E8F0] bg-white divide-y divide-[#E2E8F0] overflow-hidden">
+                <div className="mt-4 border-2 border-[#0A0A0A] bg-white divide-y divide-[#0A0A0A] overflow-hidden">
                   {SOURCES.map((src, i) => {
                     const content = (
                       <>
-                        <p className="font-semibold text-sm text-[#1A1A2E]">
+                        <p className="font-semibold text-sm text-[#0A0A0A]">
                           {t(src.organization)}
                         </p>
-                        <p className="mt-1 text-xs text-[#4A5568] leading-relaxed">
+                        <p className="mt-1 text-xs text-[#2B2B2B] leading-relaxed">
                           {t(src.supports)}
                         </p>
                       </>
@@ -1714,11 +1706,11 @@ function App() {
                         href={src.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-start justify-between gap-3 p-4 hover:bg-[#F7F8FA] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-inset"
+                        className="group flex items-start justify-between gap-3 p-4 hover:bg-[#F2EFE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-inset"
                       >
                         <div>{content}</div>
                         <ExternalLink
-                          className="w-4 h-4 text-[#1B3A6B] shrink-0 mt-0.5 opacity-60 group-hover:opacity-100"
+                          className="w-4 h-4 text-[#1A1AE5] shrink-0 mt-0.5 opacity-60 group-hover:opacity-100"
                           aria-hidden="true"
                         />
                       </a>
@@ -1729,7 +1721,7 @@ function App() {
                     );
                   })}
                 </div>
-                <p className="mt-3 text-xs text-[#4A5568] leading-relaxed">
+                <p className="mt-3 text-xs text-[#2B2B2B] leading-relaxed">
                   Statistics are drawn from public sources. Figures such as
                   federal investment and researcher counts are approximate and
                   reflect the most recent publicly available reporting. Quantum
@@ -1740,12 +1732,12 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#1A1A2E]">
+                <h3 className="font-bold text-lg text-[#0A0A0A]">
                   Contact &amp; feedback
                 </h3>
                 <a
                   href="mailto:team@quantum4colorado.org"
-                  className="mt-2 inline-flex items-center gap-2 text-[#1B3A6B] font-semibold hover:underline"
+                  className="mt-2 inline-flex items-center gap-2 text-[#1A1AE5] font-semibold hover:underline"
                 >
                   <Mail className="w-4 h-4" />
                   team@quantum4colorado.org
@@ -1754,17 +1746,19 @@ function App() {
             </div>
           </div>
         </section>
+        } />
+        </Routes>
 
         {/* footer */}
-        <footer className="bg-[#0E1E3A] text-blue-100/70">
+        <footer className="bg-[#05003D] text-blue-100/70">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-10">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
-                <span className="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/10">
-                  <Atom className="w-4 h-4 text-[#C4872A]" />
+                <span className="inline-flex items-center justify-center w-8 h-8 bg-white/10">
+                  <Atom className="w-4 h-4 text-[#FFB800]" />
                 </span>
                 <span className="font-black text-white">
-                  Quantum<span className="text-[#C4872A]">4</span>Colorado
+                  Quantum<span className="text-[#C42B00]">4</span>Colorado
                 </span>
               </div>
               <p className="text-sm text-center sm:text-right">
@@ -1778,12 +1772,12 @@ function App() {
 
       {/* ====================== PRINTABLE REPORT (print only) ============== */}
       {results && (
-        <div className="hidden print:block p-8 text-[#1A1A2E]">
-          <div className="border-b-2 border-[#1B3A6B] pb-4 mb-6">
-            <h1 className="font-black text-2xl text-[#1B3A6B]">
+        <div className="hidden print:block p-8 text-[#0A0A0A]">
+          <div className="border-b-2 border-[#1A1AE5] pb-4 mb-6">
+            <h1 className="font-black text-2xl text-[#1A1AE5]">
               {t(UI.report.title)}
             </h1>
-            <p className="text-sm text-[#4A5568] mt-1">
+            <p className="text-sm text-[#2B2B2B] mt-1">
               {t(UI.report.subtitle)}
             </p>
           </div>
@@ -1805,7 +1799,7 @@ function App() {
           </div>
 
           <div className="mb-6">
-            <h2 className="font-bold text-lg border-b border-[#E2E8F0] pb-1 mb-2">
+            <h2 className="font-bold text-lg border-b-4 border-[#0A0A0A] pb-1 mb-2">
               {t(UI.report.identifiedFactors)}
             </h2>
             <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -1816,7 +1810,7 @@ function App() {
           </div>
 
           <div className="mb-6">
-            <h2 className="font-bold text-lg border-b border-[#E2E8F0] pb-1 mb-2">
+            <h2 className="font-bold text-lg border-b-4 border-[#0A0A0A] pb-1 mb-2">
               {t(UI.report.priorityActions)}
             </h2>
             <ol className="space-y-3 text-sm">
@@ -1825,16 +1819,16 @@ function App() {
                   <span className="font-semibold">
                     [{t(PRIORITY_LABELS[a.priority]) || a.priority}] {t(a.title)}
                   </span>
-                  <p className="text-[#4A5568]">{t(a.description)}</p>
+                  <p className="text-[#2B2B2B]">{t(a.description)}</p>
                   {a.resource && (
-                    <p className="text-[#1B3A6B]">{t(a.resource.label)}: {a.resource.url}</p>
+                    <p className="text-[#1A1AE5]">{t(a.resource.label)}: {a.resource.url}</p>
                   )}
                 </li>
               ))}
             </ol>
           </div>
 
-          <div className="text-xs text-[#4A5568] border-t border-[#E2E8F0] pt-3">
+          <div className="text-xs text-[#2B2B2B] border-t-4 border-[#0A0A0A] pt-3">
             <p>
               {t(UI.report.resources)} {NIST_PQC.url} &middot; {CISA_PQC.url} &middot;{" "}
               {NSA_PQC.url}
@@ -1865,7 +1859,7 @@ function ScoreRing({ score, color }) {
           cy="80"
           r={r}
           fill="none"
-          stroke="#E2E8F0"
+          stroke="#0A0A0A"
           strokeWidth="12"
         />
         <circle
@@ -1888,7 +1882,7 @@ function ScoreRing({ score, color }) {
         >
           {score}
         </span>
-        <span className="font-mono text-xs text-[#4A5568]">/ 100</span>
+        <span className="font-mono text-xs text-[#2B2B2B]">/ 100</span>
       </div>
     </div>
   );
@@ -1896,11 +1890,11 @@ function ScoreRing({ score, color }) {
 
 function DetailRow({ label, value }) {
   return (
-    <div className="rounded-xl bg-[#F7F8FA] border border-[#E2E8F0] p-4">
-      <p className="font-mono text-[10px] tracking-wider uppercase text-[#C4872A]">
+    <div className="bg-[#F2EFE4] border-2 border-[#0A0A0A] p-4">
+      <p className="font-mono text-[10px] font-bold tracking-wider uppercase text-[#C42B00]">
         {label}
       </p>
-      <p className="mt-1 text-sm text-[#1A1A2E] leading-relaxed">{value}</p>
+      <p className="mt-1 text-sm text-[#0A0A0A] leading-relaxed">{value}</p>
     </div>
   );
 }
@@ -1973,10 +1967,10 @@ function YouthEducation({ scrollTo }) {
         {/* header */}
         <div className="max-w-3xl">
           <SectionLabel>{t(UI.youth.sectionLabel)}</SectionLabel>
-          <h2 className="font-black tracking-tight text-2xl sm:text-4xl text-[#1A1A2E]">
+          <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
             {t(UI.youth.heading)}
           </h2>
-          <p className="mt-4 text-[#4A5568] text-lg leading-relaxed">
+          <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
             {t(UI.youth.intro)}
           </p>
         </div>
@@ -1989,28 +1983,28 @@ function YouthEducation({ scrollTo }) {
             return (
               <div
                 key={i}
-                className={`rounded-2xl border p-6 transition-colors ${
+                className={`border p-6 transition-colors ${
                   open
-                    ? "border-[#1B3A6B] bg-[#1B3A6B]/5"
-                    : "border-[#E2E8F0] bg-white"
+                    ? "border-[#1A1AE5] bg-[#1A1AE5]/5"
+                    : "border-[#0A0A0A] bg-white"
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => setExpandedHero(open ? null : i)}
                   aria-expanded={open}
-                  className="w-full text-left rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                  className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
                 >
-                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#1B3A6B]/10">
-                    <Icon className="w-6 h-6 text-[#1B3A6B]" aria-hidden="true" />
+                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#1A1AE5]/10">
+                    <Icon className="w-6 h-6 text-[#1A1AE5]" aria-hidden="true" />
                   </span>
-                  <h3 className="mt-4 font-bold text-lg text-[#1A1A2E]">
+                  <h3 className="mt-4 font-bold text-lg text-[#0A0A0A]">
                     {t(card.title)}
                   </h3>
-                  <p className="mt-2 text-[#4A5568] leading-relaxed">
+                  <p className="mt-2 text-[#2B2B2B] leading-relaxed">
                     {t(card.teaser)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
                     {open ? t(UI.youth.showLess) : t(UI.youth.tellMeMore)}
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
@@ -2021,7 +2015,7 @@ function YouthEducation({ scrollTo }) {
                   </span>
                 </button>
                 {open && (
-                  <p className="mt-4 pt-4 border-t border-[#E2E8F0] text-sm text-[#1A1A2E] leading-relaxed">
+                  <p className="mt-4 pt-4 border-t-4 border-[#0A0A0A] text-sm text-[#0A0A0A] leading-relaxed">
                     {t(card.expanded)}
                   </p>
                 )}
@@ -2032,10 +2026,10 @@ function YouthEducation({ scrollTo }) {
 
         {/* -------------------------- Layer 2: concept cards ------------------------ */}
         <div className="mt-16">
-          <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
+          <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
             {t(UI.youth.conceptsHeading)}
           </h3>
-          <p className="mt-2 text-[#4A5568]">
+          <p className="mt-2 text-[#2B2B2B]">
             {t(UI.youth.conceptsIntro)}
           </p>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -2044,22 +2038,22 @@ function YouthEducation({ scrollTo }) {
               return (
                 <div
                   key={i}
-                  className="rounded-2xl bg-white border border-[#E2E8F0] p-7"
+                  className="bg-white border-2 border-[#0A0A0A] p-7 shadow-hard"
                 >
-                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-[#2E7D52]/10">
-                    <Icon className="w-6 h-6 text-[#2E7D52]" aria-hidden="true" />
+                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#00A94F]/10">
+                    <Icon className="w-6 h-6 text-[#00A94F]" aria-hidden="true" />
                   </span>
-                  <h4 className="mt-4 font-bold text-lg text-[#1A1A2E]">
+                  <h4 className="mt-4 font-bold text-lg text-[#0A0A0A]">
                     {t(c.title)}
                   </h4>
-                  <p className="mt-3 text-[#4A5568] leading-relaxed">
+                  <p className="mt-3 text-[#2B2B2B] leading-relaxed">
                     {t(c.body)}
                   </p>
                   <a
                     href="#"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#C42B00] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C42B00] focus-visible:ring-offset-2"
                   >
                     {t(UI.youth.goDeeperOn)} {c.resourceLabel}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2072,10 +2066,10 @@ function YouthEducation({ scrollTo }) {
 
         {/* -------------------------- Layer 3: resource platform --------------------- */}
         <div className="mt-16">
-          <h3 className="font-black tracking-tight text-2xl text-[#1A1A2E]">
+          <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
             {t(UI.youth.roadmapHeading)}
           </h3>
-          <p className="mt-2 text-[#4A5568]">
+          <p className="mt-2 text-[#2B2B2B]">
             {t(UI.youth.roadmapIntro)}
           </p>
 
@@ -2094,10 +2088,10 @@ function YouthEducation({ scrollTo }) {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setActiveResourceTab(tab.id)}
-                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2 ${
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2 ${
                     active
-                      ? "bg-[#1B3A6B] text-white border-[#1B3A6B]"
-                      : "bg-white text-[#4A5568] border-[#E2E8F0] hover:border-[#1B3A6B]/40"
+                      ? "bg-[#1A1AE5] text-white border-[#1A1AE5]"
+                      : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#1A1AE5]/40"
                   }`}
                 >
                   <Icon className="w-4 h-4" aria-hidden="true" />
@@ -2122,18 +2116,18 @@ function YouthEducation({ scrollTo }) {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] p-6 hover:border-[#1B3A6B]/40 hover:shadow-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                  className="group bg-[#F2EFE4] border-2 border-[#0A0A0A] p-6 hover:border-[#1A1AE5]/40 hover:shadow-hard-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-bold text-[#1A1A2E] leading-snug">
+                    <h4 className="font-bold text-[#0A0A0A] leading-snug">
                       {item.name}
                     </h4>
                     <ExternalLink
-                      className="w-4 h-4 text-[#1B3A6B] shrink-0 opacity-60 group-hover:opacity-100"
+                      className="w-4 h-4 text-[#1A1AE5] shrink-0 opacity-60 group-hover:opacity-100"
                       aria-hidden="true"
                     />
                   </div>
-                  <p className="mt-2 text-sm text-[#4A5568] leading-relaxed">
+                  <p className="mt-2 text-sm text-[#2B2B2B] leading-relaxed">
                     {t(item.description)}
                   </p>
                 </a>
@@ -2153,39 +2147,39 @@ function YouthEducation({ scrollTo }) {
                 return (
                   <div
                     key={track.id}
-                    className={`rounded-2xl border bg-white p-6 ${
-                      open ? "border-[#1B3A6B]" : "border-[#E2E8F0]"
+                    className={`border bg-white p-6 ${
+                      open ? "border-[#1A1AE5]" : "border-[#0A0A0A]"
                     }`}
                   >
                     <button
                       type="button"
                       onClick={() => setExpandedCareer(open ? null : i)}
                       aria-expanded={open}
-                      className="w-full text-left rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                      className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#1B3A6B]/10 shrink-0">
+                        <span className="inline-flex items-center justify-center w-11 h-11 bg-[#1A1AE5]/10 shrink-0">
                           <Icon
-                            className="w-5 h-5 text-[#1B3A6B]"
+                            className="w-5 h-5 text-[#1A1AE5]"
                             aria-hidden="true"
                           />
                         </span>
                         <ChevronDown
-                          className={`w-5 h-5 text-[#1B3A6B] shrink-0 mt-2 transition-transform ${
+                          className={`w-5 h-5 text-[#1A1AE5] shrink-0 mt-2 transition-transform ${
                             open ? "rotate-180" : ""
                           }`}
                           aria-hidden="true"
                         />
                       </div>
-                      <h4 className="mt-3 font-bold text-lg text-[#1A1A2E]">
+                      <h4 className="mt-3 font-bold text-lg text-[#0A0A0A]">
                         {t(track.label)}
                       </h4>
-                      <p className="mt-1 text-sm text-[#4A5568]">
+                      <p className="mt-1 text-sm text-[#2B2B2B]">
                         {t(track.oneLiner)}
                       </p>
                     </button>
                     {open && (
-                      <div className="mt-4 pt-4 border-t border-[#E2E8F0] space-y-3">
+                      <div className="mt-4 pt-4 border-t-4 border-[#0A0A0A] space-y-3">
                         <DetailRow
                           label={t(UI.youth.whatTheyBuild)}
                           value={t(track.whatTheyBuild)}
@@ -2200,7 +2194,7 @@ function YouthEducation({ scrollTo }) {
                           <button
                             type="button"
                             onClick={() => scrollTo && scrollTo("assessment")}
-                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
                           >
                             {t(UI.youth.crossLinkCrypto)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2212,14 +2206,14 @@ function YouthEducation({ scrollTo }) {
                             onClick={() =>
                               scrollTo && scrollTo("representatives")
                             }
-                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1B3A6B] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B3A6B] focus-visible:ring-offset-2"
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
                           >
                             {t(UI.youth.crossLinkPolicy)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                           </button>
                         )}
 
-                        <p className="text-sm text-[#1A1A2E] leading-relaxed">
+                        <p className="text-sm text-[#0A0A0A] leading-relaxed">
                           <span className="font-bold">
                             {t(UI.youth.nextStepLabel)}{" "}
                           </span>
@@ -2235,13 +2229,13 @@ function YouthEducation({ scrollTo }) {
         </div>
 
         {/* -------------------------- Layer 4: quiz ---------------------------------- */}
-        <div className="mt-16 rounded-2xl bg-[#1B3A6B] text-white p-7 sm:p-10">
+        <div className="mt-16 bg-[#1A1AE5] text-white p-7 sm:p-10">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-white/10 shrink-0">
-              <Compass className="w-6 h-6 text-[#C4872A]" aria-hidden="true" />
+            <span className="inline-flex items-center justify-center w-11 h-11 bg-white/10 shrink-0">
+              <Compass className="w-6 h-6 text-[#FFB800]" aria-hidden="true" />
             </span>
             <div>
-              <h3 className="font-black tracking-tight text-2xl">
+              <h3 className="font-display font-black tracking-tight text-2xl">
                 {t(UI.youth.quizHeading)}
               </h3>
               <p className="text-blue-100/80 text-sm mt-0.5">
@@ -2260,7 +2254,7 @@ function YouthEducation({ scrollTo }) {
               </div>
               <div className="h-2 rounded-full bg-white/15 overflow-hidden">
                 <div
-                  className="h-full bg-[#C4872A] transition-all duration-500"
+                  className="h-full bg-[#FFB800] transition-all duration-500"
                   style={{
                     width: `${(quizAnsweredCount / QUIZ_QUESTIONS.length) * 100}%`,
                   }}
@@ -2280,9 +2274,9 @@ function YouthEducation({ scrollTo }) {
                         type="button"
                         onClick={() => selectQuizAnswer(quizStep, opt.track)}
                         aria-pressed={selected}
-                        className={`text-left rounded-xl border p-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2 ${
+                        className={`text-left border p-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2 ${
                           selected
-                            ? "border-[#C4872A] bg-white/10 font-semibold"
+                            ? "border-[#FFB800] bg-white/10 font-semibold"
                             : "border-white/20 bg-white/5 hover:border-white/40"
                         }`}
                       >
@@ -2297,11 +2291,11 @@ function YouthEducation({ scrollTo }) {
 
           {quizDone && quizResult && (
             <div className="mt-8">
-              <p className="font-mono text-xs tracking-wider uppercase text-[#C4872A]">
+              <p className="font-mono text-xs tracking-wider uppercase text-[#FFB800]">
                 {t(UI.youth.yourResult)}
               </p>
               <h4 className="mt-1 font-black text-2xl sm:text-3xl flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-[#C4872A]" aria-hidden="true" />
+                <Sparkles className="w-6 h-6 text-[#FFB800]" aria-hidden="true" />
                 {t(UI.youth.builtFor)} {t(quizResult.label)}
               </h4>
               <p className="mt-3 text-blue-100/90 leading-relaxed max-w-2xl">
@@ -2312,9 +2306,9 @@ function YouthEducation({ scrollTo }) {
                 {quizResult.firstSteps.map((step, i) => (
                   <div
                     key={i}
-                    className="rounded-xl bg-white/10 border border-white/15 p-4"
+                    className="bg-white/10 border border-white/15 p-4"
                   >
-                    <span className="font-mono text-xs text-[#C4872A]">
+                    <span className="font-mono text-xs font-bold text-[#FFB800]">
                       {t(UI.youth.step)} {i + 1}
                     </span>
                     <p className="mt-1 text-sm text-white leading-relaxed">
@@ -2325,14 +2319,14 @@ function YouthEducation({ scrollTo }) {
               </div>
 
               {quizResult.id === "policy" && (
-                <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
+                <div className="mt-6 bg-[#FFB800]/20 border border-[#FFB800]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
                     {t(UI.youth.calloutPolicyText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("representatives")}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#FFB800] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2"
                   >
                     {t(UI.youth.calloutPolicyLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2340,14 +2334,14 @@ function YouthEducation({ scrollTo }) {
                 </div>
               )}
               {quizResult.id === "crypto" && (
-                <div className="mt-6 rounded-xl bg-[#C4872A]/20 border border-[#C4872A]/50 p-5">
+                <div className="mt-6 bg-[#FFB800]/20 border border-[#FFB800]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
                     {t(UI.youth.calloutCryptoText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("assessment")}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#C4872A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C4872A] focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#FFB800] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2"
                   >
                     {t(UI.youth.calloutCryptoLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

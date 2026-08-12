@@ -324,8 +324,8 @@ export const TIERS = [
     min: 0,
     max: 30,
     name: { en: "Emerging Awareness", es: "Conciencia Emergente" },
-    color: "#2E7D52",
-    bg: "#EAF5EF",
+    color: "#00A94F",
+    bg: "#D6F5E3",
     icon: "CheckCircle2",
     blurb: {
       en: "Your immediate risk is low — this is the ideal time to build a plan before migration becomes urgent.",
@@ -336,8 +336,8 @@ export const TIERS = [
     min: 31,
     max: 55,
     name: { en: "Preparation Needed", es: "Se Necesita Preparación" },
-    color: "#C4872A",
-    bg: "#FBF3E6",
+    color: "#FFB800",
+    bg: "#FFF0C2",
     icon: "AlertCircle",
     blurb: {
       en: "Your risk is moderate, and specific preparation steps should begin now.",
@@ -348,8 +348,8 @@ export const TIERS = [
     min: 56,
     max: 75,
     name: { en: "Significant Exposure", es: "Exposición Significativa" },
-    color: "#DD6B20",
-    bg: "#FDEEE2",
+    color: "#FF6A00",
+    bg: "#FFE3CC",
     icon: "AlertTriangle",
     blurb: {
       en: "Your risk is high, and prioritized action is required in the near term.",
@@ -360,8 +360,8 @@ export const TIERS = [
     min: 76,
     max: 100,
     name: { en: "Critical Priority", es: "Prioridad Crítica" },
-    color: "#B03A2E",
-    bg: "#FBEAE8",
+    color: "#D50000",
+    bg: "#FFDAD6",
     icon: "ShieldAlert",
     blurb: {
       en: "Your risk is critical and likely carries regulatory implications — immediate action is warranted.",

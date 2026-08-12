@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Svg, { Circle } from "react-native-svg";
-import { colors, mono } from "../theme";
+import { colors, mono, fonts } from "../theme";
 
 /* Circular progress ring showing the 0–100 readiness score. */
 export default function ScoreRing({ score = 0, color = colors.primary, size = 160 }) {
@@ -41,6 +41,6 @@ export default function ScoreRing({ score = 0, color = colors.primary, size = 16
 
 const styles = StyleSheet.create({
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  score: { fontFamily: mono, fontSize: 40, fontWeight: "900" },
+  score: { fontFamily: mono, fontSize: 40, fontFamily: fonts.bodyBlack },
   outOf: { fontFamily: mono, fontSize: 12, color: colors.textSecondary },
 });

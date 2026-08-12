@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet, Linking } from "react-native";
 import { Screen, Eyebrow, H2, Body, Card } from "../components/ui";
 import Icon from "../components/Icon";
 import BarChart from "../components/BarChart";
-import { colors, mono, radius, withAlpha } from "../theme";
+import { colors, mono, radius, withAlpha, fonts } from "../theme";
 import {
   INVESTMENT_TABLE,
   INVESTMENT_CHART,
@@ -206,7 +206,7 @@ function ContactCard({ icon, iconColor, title, sub, onPress, tint }) {
 
 const styles = StyleSheet.create({
   section: { paddingHorizontal: 20, paddingVertical: 28 },
-  h3: { fontSize: 19, fontWeight: "800", color: colors.textPrimary, marginTop: 30 },
+  h3: { fontSize: 19, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 30 },
   tableRow: {
     backgroundColor: colors.surface,
     borderWidth: 1,
@@ -216,12 +216,12 @@ const styles = StyleSheet.create({
   },
   tableRowHi: { backgroundColor: colors.goldTint, borderColor: withAlpha(colors.accent, 0.4) },
   tableTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  tableState: { fontSize: 15, fontWeight: "800", color: colors.textPrimary },
+  tableState: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
   tableYear: { fontFamily: mono, fontSize: 12, color: colors.textSecondary },
   tableInit: { fontSize: 13, color: colors.textSecondary, marginTop: 3 },
   tableInvest: { fontFamily: mono, fontSize: 13, color: colors.textPrimary, marginTop: 3 },
 
-  chartTitle: { fontSize: 15, fontWeight: "800", color: colors.textPrimary },
+  chartTitle: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
   chartSub: { fontFamily: mono, fontSize: 11, color: colors.textSecondary, marginTop: 2 },
   chartNote: { fontSize: 12, color: colors.textSecondary, lineHeight: 18, marginTop: 12 },
 
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
   },
   accDivider: { borderTopWidth: 1, borderTopColor: colors.border },
   accHead: { flexDirection: "row", alignItems: "center", gap: 10, padding: 16 },
-  accName: { fontSize: 15, fontWeight: "800", color: colors.textPrimary },
+  accName: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
   accLoc: { fontFamily: mono, fontSize: 12, color: colors.textSecondary, marginTop: 2 },
   accBody: { paddingHorizontal: 16, paddingBottom: 16, gap: 10 },
   detail: { backgroundColor: colors.bg, borderWidth: 1, borderColor: colors.border, borderRadius: radius.md, padding: 12 },
@@ -248,18 +248,18 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6,
     textTransform: "uppercase",
     color: colors.accent,
-    fontWeight: "700",
+    fontFamily: fonts.bodyBold,
   },
   detailValue: { fontSize: 14, color: colors.textPrimary, lineHeight: 20, marginTop: 4 },
 
   recHead: { flexDirection: "row", alignItems: "center", gap: 12 },
   recNum: { width: 34, height: 34, borderRadius: 9, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center" },
-  recNumText: { fontFamily: mono, color: "#fff", fontWeight: "800", fontSize: 15 },
-  recTitle: { flex: 1, fontSize: 15, fontWeight: "800", color: colors.textPrimary, lineHeight: 20 },
+  recNumText: { fontFamily: mono, color: "#fff", fontFamily: fonts.bodyBlack, fontSize: 15 },
+  recTitle: { flex: 1, fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary, lineHeight: 20 },
   metaLine: { fontSize: 13, color: colors.textSecondary, lineHeight: 19 },
-  metaKey: { fontWeight: "800" },
+  metaKey: { fontFamily: fonts.bodyBlack },
 
-  contactTitle: { fontSize: 15, fontWeight: "800", color: colors.textPrimary, marginTop: 12 },
+  contactTitle: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.textPrimary, marginTop: 12 },
   contactSubRow: { flexDirection: "row", alignItems: "center", gap: 6, marginTop: 4 },
-  contactSub: { fontSize: 13, fontWeight: "700", color: colors.primary },
+  contactSub: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.primary },
 });
