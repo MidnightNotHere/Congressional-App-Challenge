@@ -51,6 +51,31 @@ import {
   QUIZ_RESULTS,
   computeQuizResult as computeQuizResultId,
 } from "../data/quiz-data.js";
+import {
+  UNITS,
+  ALL_LESSONS,
+  TOTAL_LESSONS,
+  TOTAL_MINUTES,
+  getLessonBySlug,
+  getUnitForLesson,
+  getUnitById,
+  getAdjacentLessons,
+} from "../data/curriculum.js";
+
+/* The Learn Quantum course. Pure content plus lookup helpers, so it needs
+   no mobile-specific adaptation — the screens under src/education consume
+   these exactly as the web app does. Diagram keys resolve through each
+   platform's own registry (mobile: src/education/diagrams). */
+export {
+  UNITS,
+  ALL_LESSONS,
+  TOTAL_LESSONS,
+  TOTAL_MINUTES,
+  getLessonBySlug,
+  getUnitForLesson,
+  getUnitById,
+  getAdjacentLessons,
+};
 
 export {
   HERO_STATS,

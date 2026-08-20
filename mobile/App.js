@@ -24,8 +24,9 @@ import { LanguageProvider, useLanguage } from "./src/i18n/LanguageContext";
 import StoryScreen from "./src/screens/StoryScreen";
 import AssessmentScreen from "./src/screens/AssessmentScreen";
 import RepsScreen from "./src/screens/RepsScreen";
-import YouthScreen from "./src/screens/YouthScreen";
+import YouthTab from "./src/screens/YouthTab";
 import AboutScreen from "./src/screens/AboutScreen";
+import { CourseProgressProvider } from "./src/education/progress";
 
 const Tab = createBottomTabNavigator();
 
@@ -76,7 +77,11 @@ function AppNavigator() {
         <Tab.Screen name="Story" component={StoryScreen} />
         <Tab.Screen name="Assessment" component={AssessmentScreen} />
         <Tab.Screen name="Reps" component={RepsScreen} />
-        <Tab.Screen name="Youth" component={YouthScreen} />
+        {/* The Youth tab also hosts the Learn Quantum course — YouthTab
+            switches between the Youth screen, the course map, and a
+            lesson. Kept inside this tab rather than adding a sixth so the
+            bottom bar stays legible, especially with Spanish labels. */}
+        <Tab.Screen name="Youth" component={YouthTab} />
         <Tab.Screen name="About" component={AboutScreen} />
       </Tab.Navigator>
     </NavigationContainer>
@@ -101,8 +106,10 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <LanguageProvider>
-        <StatusBar style="dark" />
-        <AppNavigator />
+        <CourseProgressProvider>
+          <StatusBar style="dark" />
+          <AppNavigator />
+        </CourseProgressProvider>
       </LanguageProvider>
     </SafeAreaProvider>
   );

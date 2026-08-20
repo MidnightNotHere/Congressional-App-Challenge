@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView, Pressable, StyleSheet, Linking, Dimensions } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleSheet, Linking, useWindowDimensions } from "react-native";
 import { Screen, Eyebrow, H2, Body, Card } from "../components/ui";
 import QuantumLine from "../components/QuantumLine";
 import Icon from "../components/Icon";
-import { colors, mono, radius, space, withAlpha, fonts } from "../theme";
+import { colors, mono, radius, space, withAlpha, fonts, shadow } from "../theme";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS, CAREER_TRACKS, QUIZ_QUESTIONS, computeQuizResult } from "../data";
 import { useLanguage } from "../i18n/LanguageContext";
 
-const W = Dimensions.get("window").width;
+/* Horizontal padding either side of the screen content. */
+const GUTTER = 20;
 
 /* External resource hrefs are still "#" placeholders (see data.js TODOs) —
    openLink no-ops until real URLs are filled in, so nothing crashes today. */
@@ -36,6 +37,20 @@ const UI = {
     es: "Sin matemáticas. Sin fórmulas. Solo las ideas, explicadas con cosas que ya conoce.",
   },
   goDeeperOn: { en: "Go deeper on", es: "Profundizar en" },
+  learnThisProperly: { en: "Learn this properly", es: "Aprender esto a fondo" },
+  courseCalloutLabel: {
+    en: "WANT THE FULL VERSION?",
+    es: "¿QUIERE LA VERSIÓN COMPLETA?",
+  },
+  courseCalloutHeading: {
+    en: "There's a whole course behind these four cards",
+    es: "Hay un curso completo detrás de estas cuatro tarjetas",
+  },
+  courseCalloutBody: {
+    en: "Eighteen short lessons across seven units, from what a qubit actually is through to the encryption standards written in Boulder. No physics background needed, and it's free.",
+    es: "Dieciocho lecciones breves en siete unidades, desde qué es realmente un qubit hasta los estándares de cifrado escritos en Boulder. No hace falta saber física, y es gratis.",
+  },
+  courseCalloutCta: { en: "Start learning", es: "Empezar a aprender" },
   roadmapHeading: {
     en: "Your Roadmap: Competitions, Programs, and Careers",
     es: "Su Hoja de Ruta: Competencias, Programas y Carreras",
@@ -88,8 +103,13 @@ const UI = {
   retakeQuiz: { en: "Retake quiz", es: "Repetir cuestionario" },
 };
 
-export default function YouthScreen({ navigation }) {
+export default function YouthScreen({ onOpenCourse, onOpenLesson }) {
   const { t } = useLanguage();
+
+  /* Read at render time rather than module load: Dimensions is 0 before
+     first layout on some platforms, and this also tracks rotation. */
+  const { width } = useWindowDimensions();
+  const contentWidth = Math.max(0, width - GUTTER * 2);
 
   // Layer 1: entry-point hero (expand-in-place)
   const [expandedHero, setExpandedHero] = useState(null);
@@ -131,7 +151,7 @@ export default function YouthScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.section}>
-        <QuantumLine width={W - 40} />
+        <QuantumLine width={contentWidth} />
         <View style={{ marginTop: 18 }}>
           <Eyebrow>{t(UI.eyebrow)}</Eyebrow>
           <H2>{t(UI.heading)}</H2>
@@ -183,16 +203,35 @@ export default function YouthScreen({ navigation }) {
                 </View>
                 <Text style={styles.cardTitle}>{t(c.title)}</Text>
                 <Body style={{ marginTop: 8 }}>{t(c.body)}</Body>
+                {/* Opens the matching course lesson. The slug lives in its
+                    own field rather than in the shared `href`, which stays
+                    an external URL both platforms can open. */}
                 <Pressable
-                  onPress={() => openLink(c.href)}
-                  accessibilityRole="link"
+                  onPress={() => onOpenLesson && onOpenLesson(c.lessonSlug)}
+                  accessibilityRole="button"
                   style={styles.goDeeper}
                 >
-                  <Text style={styles.goDeeperText}>{t(UI.goDeeperOn)} {c.resourceLabel}</Text>
+                  <Text style={styles.goDeeperText}>{t(UI.learnThisProperly)}</Text>
                   <Icon name="ArrowRight" size={14} color={colors.accentDark} />
                 </Pressable>
               </Card>
             ))}
+          </View>
+
+          {/* Bridge into the full course — these four cards are the summary,
+              the course is the long version. */}
+          <View style={[styles.courseCallout, shadow(2)]}>
+            <Text style={styles.courseCalloutLabel}>{t(UI.courseCalloutLabel)}</Text>
+            <Text style={styles.courseCalloutHeading}>{t(UI.courseCalloutHeading)}</Text>
+            <Text style={styles.courseCalloutBody}>{t(UI.courseCalloutBody)}</Text>
+            <Pressable
+              onPress={() => onOpenCourse && onOpenCourse()}
+              accessibilityRole="button"
+              style={({ pressed }) => [styles.courseCalloutBtn, pressed && { opacity: 0.85 }]}
+            >
+              <Text style={styles.courseCalloutBtnText}>{t(UI.courseCalloutCta)}</Text>
+              <Icon name="ArrowRight" size={16} color={colors.textPrimary} />
+            </Pressable>
           </View>
         </View>
 
@@ -424,7 +463,7 @@ function Detail({ label, value }) {
 }
 
 const styles = StyleSheet.create({
-  section: { paddingHorizontal: 20, paddingVertical: 24 },
+  section: { paddingHorizontal: GUTTER, paddingVertical: 24 },
   h3: { fontSize: 19, fontFamily: fonts.bodyBlack, color: colors.textPrimary },
 
   iconBadge: {
@@ -459,6 +498,54 @@ const styles = StyleSheet.create({
 
   goDeeper: { flexDirection: "row", alignItems: "center", gap: 5, marginTop: 12 },
   goDeeperText: { fontSize: 13, fontFamily: fonts.bodyBold, color: colors.accentDark },
+
+  courseCallout: {
+    marginTop: space.lg,
+    backgroundColor: colors.primary,
+    borderWidth: 2,
+    borderColor: colors.border,
+    padding: space.xl,
+  },
+  courseCalloutLabel: {
+    fontFamily: fonts.monoBold,
+    fontSize: 9,
+    letterSpacing: 1,
+    color: colors.accent,
+  },
+  courseCalloutHeading: {
+    fontFamily: fonts.display,
+    fontSize: 18,
+    color: "#fff",
+    letterSpacing: -0.5,
+    lineHeight: 25,
+    marginTop: space.md,
+  },
+  courseCalloutBody: {
+    fontFamily: fonts.body,
+    fontSize: 14,
+    color: "rgba(255,255,255,0.88)",
+    lineHeight: 21,
+    marginTop: 8,
+  },
+  courseCalloutBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "flex-start",
+    gap: 8,
+    marginTop: space.lg,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    backgroundColor: colors.accent,
+    borderWidth: 2,
+    borderColor: colors.border,
+  },
+  courseCalloutBtnText: {
+    fontFamily: fonts.bodyBlack,
+    fontSize: 13,
+    textTransform: "uppercase",
+    letterSpacing: 0.3,
+    color: colors.textPrimary,
+  },
 
   tabPill: {
     flexDirection: "row",
