@@ -10,6 +10,13 @@
    Bilingual (Phase 4): every user-facing string is an { en, es } pair.
    Organization/program names (Science Olympiad, JILA, etc.) are proper
    nouns and stay untranslated in both languages.
+
+   A note on CONCEPT_CARDS' two link fields: `href` is the external URL
+   both platforms open (still a "#" placeholder, which mobile's openLink
+   treats as a no-op), while `lessonSlug` names the matching lesson in the
+   web course at /learn/:slug. They are kept separate deliberately — the
+   web route doesn't exist in the mobile app, so putting a relative path in
+   `href` would break Linking.openURL there.
    ========================================================================= */
 
 export const HERO_CARDS = [
@@ -63,6 +70,7 @@ export const CONCEPT_CARDS = [
     // TODO: link to Khan Academy's physics fundamentals content —
     // https://www.khanacademy.org/science/physics (accessible entry point, no prior background needed)
     href: "#",
+    lessonSlug: "superposition",
   },
   {
     title: { en: "Entanglement", es: "Entrelazamiento" },
@@ -75,6 +83,7 @@ export const CONCEPT_CARDS = [
     // TODO: link to MIT OpenCourseWare's quantum mechanics / quantum computation materials —
     // https://ocw.mit.edu (search "quantum entanglement") for students ready to go deeper
     href: "#",
+    lessonSlug: "entanglement",
   },
   {
     title: { en: "Post-Quantum Cryptography", es: "Criptografía Poscuántica" },
@@ -87,6 +96,7 @@ export const CONCEPT_CARDS = [
     // TODO: link to IBM Quantum Learning's cryptography-focused modules —
     // https://learning.quantum.ibm.com (hands-on, uses real quantum hardware)
     href: "#",
+    lessonSlug: "post-quantum-cryptography",
   },
   {
     title: { en: "Quantum Advantage", es: "Ventaja Cuántica" },
@@ -99,6 +109,7 @@ export const CONCEPT_CARDS = [
     // TODO: link to IBM Quantum Learning's quantum advantage explainers —
     // https://learning.quantum.ibm.com (demonstrates real use cases on real hardware)
     href: "#",
+    lessonSlug: "quantum-advantage",
   },
 ];
 

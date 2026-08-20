@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useEffect, useMemo, createContext, useContext } from "react";
+﻿import React, { useState, useRef, useEffect, useMemo } from "react";
 import {
   Atom,
   Lock,
@@ -72,6 +72,17 @@ import { CAREERS } from "./data/careers.js";
 import { HERO_CARDS, CONCEPT_CARDS, RESOURCE_TABS } from "./data/resources.js";
 import { QUIZ_QUESTIONS, computeQuizResult, QUIZ_RESULTS } from "./data/quiz-data.js";
 import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "./data/i18n.js";
+import {
+  ICON_REGISTRY,
+  C,
+  QuantumLine,
+  readableOn,
+  SectionLabel,
+  LanguageContext,
+  useLanguage,
+} from "./src/shared/uiKit.jsx";
+import LearnHub from "./src/education/LearnHub.jsx";
+import LessonPage from "./src/education/LessonPage.jsx";
 import qrcode from "qrcode-generator";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -88,99 +99,21 @@ import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom"
    see /data/*.js. Only design tokens and JSX/markup live in this file.
    ========================================================================= */
 
-/* Resolves the string icon names used throughout /data to the actual
-   lucide-react components imported above. Mobile has an equivalent
-   registry (mobile/src/components/Icon.js) resolving the same string
-   names against lucide-react-native, since a shared data file can't
-   hold component references from either platform's icon package. */
-const ICON_REGISTRY = {
-  Lock,
-  Shield,
-  MapPin,
-  Landmark,
-  GraduationCap,
-  Cpu,
-  Building2,
-  CheckCircle2,
-  AlertTriangle,
-  AlertCircle,
-  ShieldAlert,
-  Briefcase,
-  Globe,
-  Layers,
-  Link2,
-  KeyRound,
-  Zap,
-  Trophy,
-  FlaskConical,
-  Laptop,
-  Code2,
-  Handshake,
-};
-
-/* ----------------------------- Brand palette ----------------------------- */
-const C = {
-  primary: "#1A1AE5", // Colorado sky blue
-  secondary: "#00A94F", // Rocky Mountain forest green
-  accent: "#FFB800", // sandstone gold
-  danger: "#D50000", // deep red
-  bg: "#F2EFE4",
-  surface: "#FFFFFF",
-  textPrimary: "#0A0A0A",
-  textSecondary: "#2B2B2B",
-  border: "#0A0A0A",
-};
-
-/* ------------------------- Signature design element ----------------------- */
-/* A thin quantum-circuit line with gold accent nodes. Used at the top of the
-   hero and as a divider between the three major layers. */
-function QuantumLine({ className = "", nodes = [80, 300, 520, 740, 960, 1140] }) {
-  return (
-    <svg
-      viewBox="0 0 1200 24"
-      className={`w-full h-6 ${className}`}
-      role="presentation"
-      aria-hidden="true"
-    >
-      <line
-        x1="0"
-        y1="12"
-        x2="1200"
-        y2="12"
-        stroke={C.primary}
-        strokeWidth="1.5"
-        strokeOpacity="0.4"
-      />
-      {nodes.map((x, i) => (
-        <g key={i}>
-          <circle cx={x} cy="12" r="9" fill={C.accent} fillOpacity="0.2" />
-          <circle cx={x} cy="12" r="4.5" fill={C.accent} />
-        </g>
-      ))}
-    </svg>
-  );
-}
-
 /* ------------------------------- Static data ----------------------------- */
-/* Content now lives in /data — see imports above. */
+/* Content now lives in /data — see imports above. Design tokens and the
+   small primitives built on them (the palette, QuantumLine, SectionLabel,
+   readableOn, the language context, and the icon registry) live in
+   src/shared/uiKit.jsx so the course pages under src/education can use
+   them without importing from this file. */
 
-/* Picks black or white text for a given background so the bold palette's
-   light colors (amber especially) stay readable on dynamically-colored
-   chips. Mobile has the same helper in its theme module. */
-function readableOn(hex) {
-  const c = hex.replace("#", "");
-  const r = parseInt(c.slice(0, 2), 16);
-  const g = parseInt(c.slice(2, 4), 16);
-  const b = parseInt(c.slice(4, 6), 16);
-  return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? "#0A0A0A" : "#FFFFFF";
-}
-
-/* Section key <-> URL path. Each of the five sections is a real route so
-   they're independently linkable and the app isn't one endless scroll. */
+/* Section key <-> URL path. Each section is a real route so they're
+   independently linkable and the app isn't one endless scroll. The course
+   also owns /learn/:lessonSlug, which has no section key of its own. */
 const PATH_BY_KEY = {
   story: "/",
   assessment: "/assessment",
   representatives: "/representatives",
+  learn: "/learn",
   youth: "/youth",
   about: "/about",
 };
@@ -195,29 +128,12 @@ const PRIORITY_CLASS = {
   "Within 1 Year": "bg-[#1A1AE5] text-white",
 };
 
-function SectionLabel({ children }) {
-  return (
-    <p className="inline-block font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-[#FFB800] text-[#0A0A0A] border-2 border-[#0A0A0A] px-2.5 py-1 mb-4">
-      {children}
-    </p>
-  );
-}
-
 /* ------------------------------ Language context --------------------------- */
 /* Bilingual support (English/Spanish). Content fields are { en, es } pairs
-   living directly in /data (see data/i18n.js); this context tracks which
-   language is active and persists the user's choice across sessions. */
+   living directly in /data (see data/i18n.js); LanguageContext (in the shared
+   UI kit) tracks which language is active, and the provider below persists
+   the user's choice across sessions. */
 const LANG_STORAGE_KEY = "q4co-lang";
-
-const LanguageContext = createContext({
-  lang: DEFAULT_LANGUAGE,
-  setLang: () => {},
-  t: makeTranslator(DEFAULT_LANGUAGE),
-});
-
-function useLanguage() {
-  return useContext(LanguageContext);
-}
 
 /* Toggle rendered in the web nav and reused in the mobile-style spots that
    need it (kept small and self-contained since it's used in a couple of
@@ -334,6 +250,20 @@ const UI = {
       es: "Sin matemáticas. Sin fórmulas. Solo las ideas, explicadas con cosas que ya conoce.",
     },
     goDeeperOn: { en: "Go deeper on", es: "Profundizar en" },
+    learnThisProperly: {
+      en: "Learn this properly",
+      es: "Aprender esto a fondo",
+    },
+    courseCalloutLabel: { en: "Want the full version?", es: "¿Quiere la versión completa?" },
+    courseCalloutHeading: {
+      en: "There's a whole course behind these four cards",
+      es: "Hay un curso completo detrás de estas cuatro tarjetas",
+    },
+    courseCalloutBody: {
+      en: "Eighteen short lessons across seven units, from what a qubit actually is through to the encryption standards written in Boulder. No physics background needed, and it's free.",
+      es: "Dieciocho lecciones breves en siete unidades, desde qué es realmente un qubit hasta los estándares de cifrado escritos en Boulder. No hace falta saber física, y es gratis.",
+    },
+    courseCalloutCta: { en: "Start learning", es: "Empezar a aprender" },
     roadmapHeading: {
       en: "Your Roadmap: Competitions, Programs, and Careers",
       es: "Su Hoja de Ruta: Competencias, Programas y Carreras",
@@ -562,7 +492,14 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const activeSection = KEY_BY_PATH[location.pathname] || "story";
+  /* Exact match for the flat sections, plus a prefix check for the course,
+     whose lesson pages (/learn/:lessonSlug) still belong to the "learn" nav
+     item. The trailing-slash test keeps a path like /learnmore from
+     matching. */
+  const activeSection =
+    location.pathname === "/learn" || location.pathname.startsWith("/learn/")
+      ? "learn"
+      : KEY_BY_PATH[location.pathname] || "story";
 
   /* Cross-section links (hero CTAs, quiz result callouts) navigate
      between pages instead of scrolling within one. */
@@ -689,6 +626,10 @@ function App() {
     {
       key: "representatives",
       label: { en: "For Representatives", es: "Para Representantes" },
+    },
+    {
+      key: "learn",
+      label: { en: "Learn Quantum", es: "Aprender Cuántica" },
     },
     {
       key: "youth",
@@ -1640,6 +1581,21 @@ function App() {
         </section>
         } />
 
+        {/* ================================================== LEARN QUANTUM */}
+        {/* The course: a hub listing every unit, plus one page per lesson.
+            Route order doesn't matter here — react-router ranks by
+            specificity, so /learn/:lessonSlug can't shadow /learn. */}
+        <Route path="/learn" element={
+        <section id="learn" className="pt-16">
+          <LearnHub />
+        </section>
+        } />
+        <Route path="/learn/:lessonSlug" element={
+        <section id="lesson" className="pt-16">
+          <LessonPage />
+        </section>
+        } />
+
         {/* ======================================================= SECTION 4 */}
         <Route path="/youth" element={
         <section id="youth" className="pt-16">
@@ -2049,18 +2005,40 @@ function YouthEducation({ scrollTo }) {
                   <p className="mt-3 text-[#2B2B2B] leading-relaxed">
                     {t(c.body)}
                   </p>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* Points into the course rather than off-site. The slug
+                      lives in a separate field from the shared `href` so
+                      mobile, which has no /learn route, is unaffected. */}
+                  <Link
+                    to={`/learn/${c.lessonSlug}`}
                     className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#C42B00] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C42B00] focus-visible:ring-offset-2"
                   >
-                    {t(UI.youth.goDeeperOn)} {c.resourceLabel}
+                    {t(UI.youth.learnThisProperly)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </a>
+                  </Link>
                 </div>
               );
             })}
+          </div>
+
+          {/* Bridge into the full course — these four cards are the summary,
+              /learn is the long version. */}
+          <div className="mt-8 bg-[#1A1AE5] border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8 text-white">
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#FFB800]">
+              {t(UI.youth.courseCalloutLabel)}
+            </p>
+            <h4 className="mt-3 font-display font-black tracking-tight text-xl sm:text-2xl">
+              {t(UI.youth.courseCalloutHeading)}
+            </h4>
+            <p className="mt-2 text-white/85 leading-relaxed max-w-2xl">
+              {t(UI.youth.courseCalloutBody)}
+            </p>
+            <Link
+              to="/learn"
+              className="mt-5 inline-flex items-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1AE5]"
+            >
+              {t(UI.youth.courseCalloutCta)}
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
         </div>
 
