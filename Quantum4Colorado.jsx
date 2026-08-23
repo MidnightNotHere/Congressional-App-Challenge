@@ -83,6 +83,7 @@ import {
 } from "./src/shared/uiKit.jsx";
 import LearnHub from "./src/education/LearnHub.jsx";
 import LessonPage from "./src/education/LessonPage.jsx";
+import QuantumLab from "./src/lab/QuantumLab.jsx";
 import qrcode from "qrcode-generator";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -264,6 +265,7 @@ const UI = {
       es: "Dieciocho lecciones breves en siete unidades, desde qué es realmente un qubit hasta los estándares de cifrado escritos en Boulder. No hace falta saber física, y es gratis.",
     },
     courseCalloutCta: { en: "Start learning", es: "Empezar a aprender" },
+    tryItYourself: { en: "Try It Yourself", es: "Pruébelo Usted Mismo" },
     roadmapHeading: {
       en: "Your Roadmap: Competitions, Programs, and Careers",
       es: "Su Hoja de Ruta: Competencias, Programas y Carreras",
@@ -1870,12 +1872,29 @@ function DetailRow({ label, value }) {
    Nothing in this section relies on an icon or color alone to convey meaning.
    --------------------------------------------------------------------------- */
 
+/* Which concept cards get a "Try It Yourself" button into the Quantum Lab
+   below, and which lab preset it loads. Post-Quantum Cryptography and
+   Quantum Advantage aren't cleanly representable as a 1-2 qubit circuit,
+   so they keep only their "Learn this properly" course link. */
+const LAB_PRESET_BY_SLUG = {
+  superposition: "superposition",
+  entanglement: "entanglement",
+};
 
 function YouthEducation({ scrollTo }) {
   const { t } = useLanguage();
 
   // Layer 1: entry-point hero (expand-in-place, not a modal)
   const [expandedHero, setExpandedHero] = useState(null);
+
+  // Quantum Lab: shared with the concept cards below, whose "Try It
+  // Yourself" buttons request a preset here. The nonce (rather than just
+  // the preset name) lets the lab re-trigger the same preset on a second
+  // click of the same card, since a repeated identical value wouldn't
+  // otherwise register as a change.
+  const [labPresetRequest, setLabPresetRequest] = useState(null);
+  const requestLabPreset = (preset) =>
+    setLabPresetRequest({ preset, nonce: Date.now() });
 
   // Layer 3: resource platform tabs + expandable career cards
   const [activeResourceTab, setActiveResourceTab] = useState("competitions");
@@ -1991,6 +2010,7 @@ function YouthEducation({ scrollTo }) {
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             {CONCEPT_CARDS.map((c, i) => {
               const Icon = ICON_REGISTRY[c.icon];
+              const labPreset = LAB_PRESET_BY_SLUG[c.lessonSlug];
               return (
                 <div
                   key={i}
@@ -2005,16 +2025,32 @@ function YouthEducation({ scrollTo }) {
                   <p className="mt-3 text-[#2B2B2B] leading-relaxed">
                     {t(c.body)}
                   </p>
-                  {/* Points into the course rather than off-site. The slug
-                      lives in a separate field from the shared `href` so
-                      mobile, which has no /learn route, is unaffected. */}
-                  <Link
-                    to={`/learn/${c.lessonSlug}`}
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#C42B00] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C42B00] focus-visible:ring-offset-2"
-                  >
-                    {t(UI.youth.learnThisProperly)}
-                    <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                  </Link>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                    {/* Points into the course rather than off-site. The slug
+                        lives in a separate field from the shared `href` so
+                        mobile, which has no /learn route, is unaffected. */}
+                    <Link
+                      to={`/learn/${c.lessonSlug}`}
+                      className="inline-flex items-center gap-1 text-sm font-bold text-[#C42B00] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C42B00] focus-visible:ring-offset-2"
+                    >
+                      {t(UI.youth.learnThisProperly)}
+                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </Link>
+                    {/* A second, adjacent action rather than repurposing the
+                        link above — this one scrolls down and auto-loads the
+                        matching preset in the Quantum Lab instead of
+                        navigating away. */}
+                    {labPreset && (
+                      <button
+                        type="button"
+                        onClick={() => requestLabPreset(labPreset)}
+                        className="inline-flex items-center gap-1 text-sm font-bold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                      >
+                        <FlaskConical className="w-3.5 h-3.5" aria-hidden="true" />
+                        {t(UI.youth.tryItYourself)}
+                      </button>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -2041,6 +2077,9 @@ function YouthEducation({ scrollTo }) {
             </Link>
           </div>
         </div>
+
+        {/* -------------------------- Quantum Lab: try it yourself -------------------- */}
+        <QuantumLab presetRequest={labPresetRequest} />
 
         {/* -------------------------- Layer 3: resource platform --------------------- */}
         <div className="mt-16">
