@@ -7,7 +7,11 @@
 
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, Tooltip, LabelList } from "recharts";
-import { C } from "../shared/uiKit.jsx";
+import { C, CYBER } from "../shared/uiKit.jsx";
+
+/* Renders inside a white results card, so C.textPrimary/C.border/C.bg
+   (light-surface tokens) are unchanged — only the bar fill itself moves
+   to the cyber brand color. */
 
 export default function Histogram({ counts, numShots, t, UI }) {
   const labels = Object.keys(counts).sort();
@@ -41,7 +45,7 @@ export default function Histogram({ counts, numShots, t, UI }) {
             />
             <Bar dataKey="count" radius={0} isAnimationActive maxBarSize={90}>
               {data.map((entry) => (
-                <Cell key={entry.label} fill={C.primary} stroke={C.border} strokeWidth={2} />
+                <Cell key={entry.label} fill={CYBER.primary} stroke={C.border} strokeWidth={2} />
               ))}
               <LabelList
                 dataKey="percent"

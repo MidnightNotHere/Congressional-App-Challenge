@@ -76,11 +76,13 @@ export default function ErrorCorrection({ title, t }) {
       <text x="266" y="26" fontFamily={D.mono} fontSize="10.5" fontWeight="700" fill={D.rust}>
         {t(L.oneLogical)}
       </text>
+      {/* D.green is a bright, light cyan under this palette — dark ink on
+          top of it, not white, is what actually stays readable. */}
       <rect x="274" y="72" width="110" height="100" fill={D.green} stroke={D.ink} strokeWidth={STROKE} />
-      <text x="329" y="118" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.white} textAnchor="middle">
+      <text x="329" y="118" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.ink} textAnchor="middle">
         {t(L.reliable1)}
       </text>
-      <text x="329" y="140" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.white} textAnchor="middle">
+      <text x="329" y="140" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.ink} textAnchor="middle">
         {t(L.reliable2)}
       </text>
 

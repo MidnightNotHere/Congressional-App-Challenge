@@ -72,15 +72,15 @@ export default function LessonPage() {
   if (!lesson) {
     return (
       <div className="max-w-[900px] mx-auto px-4 sm:px-6 py-24">
-        <div className="bg-white border-2 border-[#0A0A0A] shadow-hard p-8">
-          <AlertCircle className="w-10 h-10 text-[#D50000]" aria-hidden="true" />
+        <div className="bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-8">
+          <AlertCircle className="w-10 h-10 text-[#FF2D55]" aria-hidden="true" />
           <h2 className="mt-4 font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
             {t(UI.notFoundTitle)}
           </h2>
           <p className="mt-3 text-[#2B2B2B] leading-relaxed">{t(UI.notFoundBody)}</p>
           <Link
             to="/learn"
-            className="mt-6 inline-flex items-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+            className="mt-6 inline-flex items-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#0A0A0A] px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
           >
             {t(UI.backToMap)}
             <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -101,16 +101,16 @@ export default function LessonPage() {
   return (
     <>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
-        <QuantumLine />
+        <QuantumLine tone="cyber" />
       </div>
 
       <article className="max-w-[900px] mx-auto px-4 sm:px-6 py-16">
         {/* ---------------------------- breadcrumb ---------------------------- */}
         <nav
           aria-label="Breadcrumb"
-          className="font-mono text-xs uppercase tracking-widest text-[#2B2B2B] flex flex-wrap items-center gap-x-2 gap-y-1"
+          className="font-mono text-xs uppercase tracking-widest text-[#9FA8C4] flex flex-wrap items-center gap-x-2 gap-y-1"
         >
-          <Link to="/learn" className="font-bold text-[#1A1AE5] hover:underline">
+          <Link to="/learn" className="font-bold text-[#6E8CFF] hover:underline">
             {t(UI.courseName)}
           </Link>
           <span aria-hidden="true">/</span>
@@ -121,16 +121,16 @@ export default function LessonPage() {
 
         {/* ------------------------------ header ------------------------------ */}
         <header className="mt-6">
-          <SectionLabel>
+          <SectionLabel tone="cyber">
             {t(UI.lesson)} {lesson.courseNumber} {t(UI.of)} {TOTAL_LESSONS}
           </SectionLabel>
-          <h1 className="font-display font-black tracking-tight text-3xl sm:text-4xl lg:text-5xl text-[#0A0A0A] leading-tight">
+          <h1 className="font-display font-black tracking-tight text-3xl sm:text-4xl lg:text-5xl text-[#EEF1FA] leading-tight">
             {t(lesson.title)}
           </h1>
-          <p className="mt-3 font-mono text-sm text-[#2B2B2B]">
+          <p className="mt-3 font-mono text-sm text-[#9FA8C4]">
             {lesson.estimatedMinutes} {t(UI.min)}
             {complete && (
-              <span className="ml-3 inline-flex items-center gap-1 font-bold text-[#00A94F]">
+              <span className="ml-3 inline-flex items-center gap-1 font-bold text-[#00D4FF]">
                 <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                 {t(UI.completed)}
               </span>
@@ -139,11 +139,11 @@ export default function LessonPage() {
         </header>
 
         {/* ----------------------------- big idea ----------------------------- */}
-        <aside className="mt-8 bg-[#FFB800] border-2 border-[#0A0A0A] shadow-hard p-6">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#0A0A0A]">
+        <aside className="mt-8 bg-[#FFE600] border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#04070F]">
             {t(UI.bigIdea)}
           </p>
-          <p className="mt-2 text-[#0A0A0A] text-lg font-bold leading-relaxed">
+          <p className="mt-2 text-[#04070F] text-lg font-bold leading-relaxed">
             {t(lesson.bigIdea)}
           </p>
         </aside>
@@ -152,10 +152,10 @@ export default function LessonPage() {
         <div className="mt-12">
           {lesson.sections.map((section, i) => (
             <section key={i} className={i > 0 ? "mt-12" : ""}>
-              <h2 className="font-display font-black tracking-tight text-xl sm:text-2xl text-[#0A0A0A]">
+              <h2 className="font-display font-black tracking-tight text-xl sm:text-2xl text-[#EEF1FA]">
                 {t(section.heading)}
               </h2>
-              <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed max-w-[68ch]">
+              <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed max-w-[68ch]">
                 {t(section.body)}
               </p>
               {section.diagram && <Diagram name={section.diagram} />}
@@ -170,14 +170,14 @@ export default function LessonPage() {
         <div className="mt-12 border-t-4 border-[#0A0A0A] pt-8">
           {complete ? (
             <div className="flex flex-wrap items-center gap-4">
-              <span className="inline-flex items-center gap-2 font-bold text-[#00A94F]">
+              <span className="inline-flex items-center gap-2 font-bold text-[#00D4FF]">
                 <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
                 {t(UI.completed)}
               </span>
               <button
                 type="button"
                 onClick={() => markIncomplete(lesson.slug)}
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#2B2B2B] hover:text-[#1A1AE5] rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#9FA8C4] hover:text-[#6E8CFF] rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
               >
                 <Circle className="w-4 h-4" aria-hidden="true" />
                 {t(UI.markIncomplete)}
@@ -187,7 +187,7 @@ export default function LessonPage() {
             <button
               type="button"
               onClick={completeAndContinue}
-              className="inline-flex items-center gap-2 bg-[#00A94F] hover:bg-[#008F43] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 bg-[#00D4FF] hover:bg-[#33DFFF] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
               {next ? t(UI.markComplete) : t(UI.markCompleteLast)}
@@ -200,9 +200,9 @@ export default function LessonPage() {
           {prev ? (
             <Link
               to={`/learn/${prev.slug}`}
-              className="group bg-white border-2 border-[#0A0A0A] p-5 shadow-hard-sm hover:bg-[#F2EFE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="group bg-white border-2 border-[#0A0A0A] p-5 shadow-[3px_3px_0_0_#FFFFFF] hover:bg-[#F2EFE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00]">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-widest text-[#00707A]">
                 <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
                 {t(UI.prevLesson)}
               </span>
@@ -217,9 +217,9 @@ export default function LessonPage() {
           {next && (
             <Link
               to={`/learn/${next.slug}`}
-              className="group bg-white border-2 border-[#0A0A0A] p-5 shadow-hard-sm hover:bg-[#F2EFE4] transition-colors sm:text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="group bg-white border-2 border-[#0A0A0A] p-5 shadow-[3px_3px_0_0_#FFFFFF] hover:bg-[#F2EFE4] transition-colors sm:text-right focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00]">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-widest text-[#00707A]">
                 {t(UI.nextLesson)}
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
               </span>
@@ -233,7 +233,7 @@ export default function LessonPage() {
         <div className="mt-8">
           <Link
             to="/learn"
-            className="inline-flex items-center gap-1.5 text-sm font-bold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+            className="inline-flex items-center gap-1.5 text-sm font-bold text-[#6E8CFF] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
           >
             <ArrowLeft className="w-4 h-4" aria-hidden="true" />
             {t(UI.backToMap)}

@@ -55,8 +55,10 @@ export default function QubitHardware({ title, t }) {
 
       {/* ================= trapped ion ================= */}
       <rect x="210" y="20" width="180" height="176" fill={D.white} stroke={D.ink} strokeWidth={STROKE} />
+      {/* D.green is a bright, light cyan under this palette — dark ink on
+          top of it, not white, is what actually stays readable. */}
       <rect x="210" y="20" width="180" height="30" fill={D.green} />
-      <text x="300" y="41" fontFamily={D.mono} fontSize="10" fontWeight="700" fill={D.white} textAnchor="middle">
+      <text x="300" y="41" fontFamily={D.mono} fontSize="10" fontWeight="700" fill={D.ink} textAnchor="middle">
         {t(L.trappedIon)}
       </text>
       {/* suspended atoms hit by a laser */}
@@ -66,7 +68,9 @@ export default function QubitHardware({ title, t }) {
       <circle cx="336" cy="89" r="9" fill={D.gold} stroke={D.ink} strokeWidth="2" />
       <line x1="300" y1="60" x2="300" y2="78" stroke={D.red} strokeWidth="3" />
       <path d="M 300 80 l -5 -8 h 10 z" fill={D.red} />
-      <text x="300" y="134" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.green} textAnchor="middle">
+      {/* On the white card below the header bar, not on D.green itself —
+          needs the darker on-light teal (D.rust), not the bright fill. */}
+      <text x="300" y="134" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.rust} textAnchor="middle">
         COLORADO
       </text>
       <text x="300" y="156" fontFamily={D.sans} fontSize="12" fontWeight="700" fill={D.ink} textAnchor="middle">

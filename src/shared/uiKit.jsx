@@ -96,10 +96,78 @@ export const C = {
   border: "#0A0A0A",
 };
 
+/* -------------------------- Cyber palette (scoped) ------------------------- */
+/* "Void Blue" — used only in the education/lab surfaces (Youth section, the
+   Learn course, the Quantum Lab), not site-wide. Story/Assessment/
+   Representatives/About and the shared nav/footer stay on `C` above.
+
+   The page canvas goes dark, but cards and buttons stay WHITE (same as the
+   light theme) — which forces a split the light theme never needed:
+
+   - `border` stays BLACK. It always outlines a white or bright fill, and
+     black reads fine against both regardless of what's behind it — this is
+     unchanged from the light theme on purpose.
+   - `shadowHex` (and the two ready-made `shadowClass*` strings below) is
+     WHITE instead. The signature hard-shadow's visible sliver lands on
+     whatever surface sits *behind* the element — the dark page canvas here
+     — so it has to flip for the same reason it stays black in the light
+     theme: the shadow must contrast the surface behind it, not the surface
+     it's attached to. It can't come from the shared `shadow-hard` Tailwind
+     utility (tailwind.config.js — a single global black value used by every
+     other page), so cyber components use the arbitrary-value classes below
+     instead of that utility.
+   - Text needs two pairs, not one: `textOnDark*` for copy sitting directly
+     on the page canvas (headings, intro paragraphs), `textOnLight*` for
+     copy inside a white card or button (identical to the light theme's ink,
+     since white surfaces still need dark text no matter the page bg).
+     Picking the wrong one is exactly the "pale text on a white button"
+     mistake to avoid — check what's immediately behind the text, not what
+     page it's on. */
+export const CYBER = {
+  bg: "#04070F",
+  surface: "#FFFFFF",
+  primary: "#375FFF",
+  primaryInk: "#FFFFFF",
+  // #375FFF is fine as a *fill* (white ink on top does the contrast work),
+  // but measures ~4.2:1 used directly as small text/links on the #04070F
+  // page — under the 4.5:1 AA threshold for normal text. This lighter,
+  // more saturated variant is for exactly that case: inline links and
+  // labels sitting straight on the dark canvas, not inside a fill.
+  primaryTextOnDark: "#6E8CFF",
+  secondary: "#00D4FF",
+  secondaryInk: "#04070F",
+  // #00D4FF itself fails contrast as small text on a pale tint (e.g. a
+  // 10%-opacity success badge on white) the same way the light theme's
+  // #00A94F secondary is already too dark to use as a *fill* but exactly
+  // right as *text* — this is that same darker, readable-as-text shade,
+  // just built for the cyan hue instead of green.
+  secondaryTextOnLight: "#00707A",
+  accent: "#FFE600",
+  accentInk: "#04070F",
+  danger: "#FF2D55",
+  dangerInk: "#FFFFFF",
+  // Same problem as secondaryTextOnLight, different color: #FF2D55 measures
+  // ~3.6:1 as small text/borders on a white surface — under the 4.5:1 text
+  // threshold. Darker red for that specific case.
+  dangerTextOnLight: "#B8123F",
+  border: "#0A0A0A",
+  shadowHex: "#FFFFFF",
+  shadowClass: "shadow-[6px_6px_0_0_#FFFFFF]",
+  shadowClassSm: "shadow-[3px_3px_0_0_#FFFFFF]",
+  textOnDark: "#EEF1FA",
+  textOnDarkMuted: "#9FA8C4",
+  textOnLight: "#0A0A0A",
+  textOnLightMuted: "#2B2B2B",
+};
+
 /* ------------------------- Signature design element ----------------------- */
 /* A thin quantum-circuit line with gold accent nodes. Used at the top of the
    hero and as a divider between the three major layers. */
-export function QuantumLine({ className = "", nodes = [80, 300, 520, 740, 960, 1140] }) {
+/* `tone="cyber"` swaps the line/node colors for the Void Blue palette —
+   see the SectionLabel note above, same reasoning. */
+export function QuantumLine({ className = "", nodes = [80, 300, 520, 740, 960, 1140], tone = "gold" }) {
+  const stroke = tone === "cyber" ? CYBER.primary : C.primary;
+  const node = tone === "cyber" ? CYBER.accent : C.accent;
   return (
     <svg
       viewBox="0 0 1200 24"
@@ -112,14 +180,14 @@ export function QuantumLine({ className = "", nodes = [80, 300, 520, 740, 960, 1
         y1="12"
         x2="1200"
         y2="12"
-        stroke={C.primary}
+        stroke={stroke}
         strokeWidth="1.5"
         strokeOpacity="0.4"
       />
       {nodes.map((x, i) => (
         <g key={i}>
-          <circle cx={x} cy="12" r="9" fill={C.accent} fillOpacity="0.2" />
-          <circle cx={x} cy="12" r="4.5" fill={C.accent} />
+          <circle cx={x} cy="12" r="9" fill={node} fillOpacity="0.2" />
+          <circle cx={x} cy="12" r="4.5" fill={node} />
         </g>
       ))}
     </svg>
@@ -137,9 +205,19 @@ export function readableOn(hex) {
   return (r * 299 + g * 587 + b * 114) / 1000 > 150 ? "#0A0A0A" : "#FFFFFF";
 }
 
-export function SectionLabel({ children }) {
+/* `tone="cyber"` swaps the gold chip for the Void Blue accent, for use
+   only within the cyber-scoped surfaces (Youth/Learn/Lab). Every other
+   call site is unaffected — the default stays the original gold-on-black
+   chip used across the rest of the app. */
+export function SectionLabel({ children, tone = "gold" }) {
+  const cls =
+    tone === "cyber"
+      ? "bg-[#FFE600] text-[#04070F] border-[#0A0A0A]"
+      : "bg-[#FFB800] text-[#0A0A0A] border-[#0A0A0A]";
   return (
-    <p className="inline-block font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase bg-[#FFB800] text-[#0A0A0A] border-2 border-[#0A0A0A] px-2.5 py-1 mb-4">
+    <p
+      className={`inline-block font-mono text-[10px] sm:text-xs font-bold tracking-widest uppercase border-2 px-2.5 py-1 mb-4 ${cls}`}
+    >
       {children}
     </p>
   );

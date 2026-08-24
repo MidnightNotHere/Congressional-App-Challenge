@@ -73,14 +73,16 @@ export default function EncryptionLock({ title, t }) {
         {t(L.symUnlocks)}
       </text>
 
+      {/* D.green is a bright, light cyan under this palette — dark ink on
+          top of it, not white, is what actually stays readable. */}
       <rect x="418" y="38" width="166" height="76" fill={D.green} stroke={D.ink} strokeWidth={STROKE} />
-      <text x="501" y="62" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.white} textAnchor="middle">
+      <text x="501" y="62" fontFamily={D.mono} fontSize="11" fontWeight="700" fill={D.ink} textAnchor="middle">
         {t(L.survives)}
       </text>
-      <text x="501" y="82" fontFamily={D.sans} fontSize="11" fill={D.white} textAnchor="middle">
+      <text x="501" y="82" fontFamily={D.sans} fontSize="11" fill={D.ink} textAnchor="middle">
         {t(L.survives1)}
       </text>
-      <text x="501" y="99" fontFamily={D.sans} fontSize="11" fill={D.white} textAnchor="middle">
+      <text x="501" y="99" fontFamily={D.sans} fontSize="11" fill={D.ink} textAnchor="middle">
         {t(L.survives2)}
       </text>
 

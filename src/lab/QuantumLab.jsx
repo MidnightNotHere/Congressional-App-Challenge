@@ -20,7 +20,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Beaker, Play, RotateCcw, Trash2 } from "lucide-react";
-import { QuantumLine, SectionLabel, useLanguage, C } from "../shared/uiKit.jsx";
+import { QuantumLine, SectionLabel, useLanguage, C, CYBER } from "../shared/uiKit.jsx";
 import {
   runCircuit,
   getProbabilities,
@@ -355,47 +355,47 @@ export default function QuantumLab({ presetRequest }) {
   return (
     <div>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-2">
-        <QuantumLine />
+        <QuantumLine tone="cyber" />
       </div>
 
       <div className="mt-10">
         <div className="flex items-start gap-3">
-          <span className="inline-flex items-center justify-center w-10 h-10 shrink-0 bg-[#1A1AE5]/10 border-2 border-[#0A0A0A]">
-            <Beaker className="w-5 h-5 text-[#1A1AE5]" aria-hidden="true" />
+          <span className="inline-flex items-center justify-center w-10 h-10 shrink-0 bg-[#375FFF] border-2 border-[#0A0A0A]">
+            <Beaker className="w-5 h-5 text-white" aria-hidden="true" />
           </span>
           <div>
-            <SectionLabel>{t(UI.sectionLabel)}</SectionLabel>
-            <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
+            <SectionLabel tone="cyber">{t(UI.sectionLabel)}</SectionLabel>
+            <h3 className="font-display font-black tracking-tight text-2xl text-[#EEF1FA]">
               {t(UI.heading)}
             </h3>
           </div>
         </div>
-        <p className="mt-3 text-[#2B2B2B] max-w-2xl leading-relaxed">{t(UI.intro)}</p>
+        <p className="mt-3 text-[#9FA8C4] max-w-2xl leading-relaxed">{t(UI.intro)}</p>
 
         {/* ------------------------------- presets ------------------------------- */}
         <div className="mt-8">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00] mb-3">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#00D4FF] mb-3">
             {t(UI.presetsHeading)}
           </p>
           <div className="flex flex-wrap gap-3">
             <button
               type="button"
               onClick={() => applyPreset("superposition")}
-              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               {t(UI.presetSuperposition)}
             </button>
             <button
               type="button"
               onClick={() => applyPreset("entanglement")}
-              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               {t(UI.presetEntanglement)}
             </button>
             <button
               type="button"
               onClick={() => applyPreset("classicalFlip")}
-              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold text-sm px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               {t(UI.presetClassical)}
             </button>
@@ -404,7 +404,7 @@ export default function QuantumLab({ presetRequest }) {
 
         {/* ---------------------------- qubit mode toggle ---------------------------- */}
         <div className="mt-8 flex items-center gap-3">
-          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#2B2B2B]">
+          <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#9FA8C4]">
             {t(UI.qubitModeLabel)}
           </span>
           <div className="inline-flex border-2 border-[#0A0A0A] overflow-hidden">
@@ -415,7 +415,7 @@ export default function QuantumLab({ presetRequest }) {
                 onClick={() => handleSetNumQubits(n)}
                 aria-pressed={numQubits === n}
                 className={`px-4 py-1.5 text-sm font-bold font-mono transition-colors ${
-                  numQubits === n ? "bg-[#1A1AE5] text-white" : "bg-white text-[#2B2B2B] hover:bg-[#F2EFE4]"
+                  numQubits === n ? "bg-[#375FFF] text-white" : "bg-white text-[#2B2B2B] hover:bg-[#F2EFE4]"
                 } ${n === 1 ? "border-r-2 border-[#0A0A0A]" : ""}`}
               >
                 {n === 1 ? t(UI.oneQubit) : t(UI.twoQubits)}
@@ -426,10 +426,10 @@ export default function QuantumLab({ presetRequest }) {
 
         {/* -------------------------------- palette -------------------------------- */}
         <div className="mt-8">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#2B2B2B] mb-1">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#9FA8C4] mb-1">
             {t(UI.paletteHeading)}
           </p>
-          <p className="text-sm text-[#2B2B2B] mb-3">{t(UI.paletteHint)}</p>
+          <p className="text-sm text-[#9FA8C4] mb-3">{t(UI.paletteHint)}</p>
           <div className="flex flex-wrap gap-3">
             {GATE_DEFS.map((gate) => {
               const disabled = gate.type === "CNOT" && numQubits !== 2;
@@ -455,11 +455,11 @@ export default function QuantumLab({ presetRequest }) {
                   aria-pressed={armed}
                   aria-label={`${t(gate.name)}${disabled ? ` — ${t(UI.cnotDisabledHint)}` : ""}`}
                   title={disabled ? t(UI.cnotDisabledHint) : t(gate.name)}
-                  className={`w-20 h-20 flex flex-col items-center justify-center border-2 shadow-hard-sm font-mono transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2 ${
+                  className={`w-20 h-20 flex flex-col items-center justify-center border-2 shadow-[3px_3px_0_0_#FFFFFF] font-mono transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F] ${
                     disabled
                       ? "bg-[#F2EFE4] border-[#0A0A0A]/30 text-[#2B2B2B]/40 cursor-not-allowed"
                       : armed
-                      ? "bg-[#FFB800] border-[#0A0A0A] text-[#0A0A0A]"
+                      ? "bg-[#FFE600] border-[#0A0A0A] text-[#04070F]"
                       : "bg-white border-[#0A0A0A] text-[#0A0A0A] hover:bg-[#F2EFE4] cursor-grab"
                   }`}
                 >
@@ -473,14 +473,14 @@ export default function QuantumLab({ presetRequest }) {
 
         {/* -------------------------------- circuit -------------------------------- */}
         <div className="mt-8">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#2B2B2B] mb-3">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#9FA8C4] mb-3">
             {t(UI.circuitHeading)}
           </p>
 
           <div
             ref={circuitRef}
-            className={`overflow-x-auto bg-white border-2 border-[#0A0A0A] shadow-hard p-4 transition-shadow duration-300 ${
-              pulsing ? "ring-4 ring-[#FFB800] ring-offset-4 ring-offset-[#F2EFE4]" : ""
+            className={`overflow-x-auto bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-4 transition-shadow duration-300 ${
+              pulsing ? "ring-4 ring-[#FFE600] ring-offset-4 ring-offset-[#04070F]" : ""
             }`}
           >
             <div style={{ width: LABEL_W + CELL_W * NUM_STEPS }}>
@@ -532,17 +532,17 @@ export default function QuantumLab({ presetRequest }) {
                         }
 
                         let cellClass =
-                          "relative shrink-0 flex items-center justify-center border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-1";
+                          "relative shrink-0 flex items-center justify-center border border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-1";
                         if (occupied && gate.type !== "CNOT") {
                           cellClass += selected
-                            ? " bg-[#FFB800] border-[#0A0A0A]"
-                            : " bg-[#1A1AE5] text-white border-[#0A0A0A]";
+                            ? " bg-[#FFE600] border-[#0A0A0A]"
+                            : " bg-[#375FFF] text-white border-[#0A0A0A]";
                         } else if (isPendingAnchor) {
-                          cellClass += " bg-[#FFB800]/40 border-[#0A0A0A] border-dashed";
+                          cellClass += " bg-[#FFE600]/40 border-[#0A0A0A] border-dashed";
                         } else if (isPendingTarget) {
-                          cellClass += " bg-[#00A94F]/10 border-[#00A94F] border-dashed";
+                          cellClass += " bg-[#00D4FF]/10 border-[#00707A] border-dashed";
                         } else if (dropPreview) {
-                          cellClass += " bg-[#1A1AE5]/10 border-[#1A1AE5] border-dashed";
+                          cellClass += " bg-[#375FFF]/10 border-[#375FFF] border-dashed";
                         } else if (!occupied) {
                           cellClass += " hover:bg-[#F2EFE4]";
                         }
@@ -594,7 +594,13 @@ export default function QuantumLab({ presetRequest }) {
                       const y1 = op.control * CELL_H + CELL_H / 2;
                       const y2 = op.target * CELL_H + CELL_H / 2;
                       const selected = op.id === selectedGateId;
-                      const stroke = selected ? C.accent : C.primary;
+                      /* The connecting line and the target ring are bare
+                         strokes with no fill behind them — unlike a filled
+                         dot, a stroke's own color has to carry the contrast
+                         against the white card, so "selected" needs the
+                         darker on-light teal rather than raw accent yellow
+                         (which measures well under 3:1 on white). */
+                      const stroke = selected ? "#00707A" : CYBER.primary;
                       return (
                         <g key={op.id}>
                           <line x1={colX} y1={y1} x2={colX} y2={y2} stroke={stroke} strokeWidth="3" />
@@ -617,7 +623,7 @@ export default function QuantumLab({ presetRequest }) {
                       cx={LABEL_W + cnotPending.timeStep * CELL_W + CELL_W / 2}
                       cy={cnotPending.controlQubit * CELL_H + CELL_H / 2}
                       r="7"
-                      fill={C.accent}
+                      fill={CYBER.accent}
                       stroke={C.border}
                       strokeWidth="2"
                     />
@@ -631,7 +637,7 @@ export default function QuantumLab({ presetRequest }) {
               as text too, and is the only feedback channel for keyboard users */}
           <div aria-live="polite" className="mt-3 min-h-[1.5rem]">
             {statusMessage && (
-              <p className="font-mono text-xs text-[#1A1AE5] font-bold">{statusMessage}</p>
+              <p className="font-mono text-xs text-[#6E8CFF] font-bold">{statusMessage}</p>
             )}
           </div>
 
@@ -640,7 +646,7 @@ export default function QuantumLab({ presetRequest }) {
             <button
               type="button"
               onClick={handleRun}
-              className="inline-flex items-center gap-2 bg-[#00A94F] hover:bg-[#008F43] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 bg-[#00D4FF] hover:bg-[#33DFFF] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               <Play className="w-4 h-4" aria-hidden="true" />
               {t(UI.runButton)}
@@ -648,7 +654,7 @@ export default function QuantumLab({ presetRequest }) {
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-2 bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-5 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 bg-white hover:bg-[#F2EFE4] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-5 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               <RotateCcw className="w-4 h-4" aria-hidden="true" />
               {t(UI.resetButton)}
@@ -657,7 +663,7 @@ export default function QuantumLab({ presetRequest }) {
               <button
                 type="button"
                 onClick={handleDeleteSelected}
-                className="inline-flex items-center gap-2 bg-white hover:bg-[#D50000]/10 text-[#D50000] border-2 border-[#D50000] font-bold px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D50000] focus-visible:ring-offset-2"
+                className="inline-flex items-center gap-2 bg-white hover:bg-[#FF2D55]/10 text-[#B8123F] border-2 border-[#B8123F] font-bold px-4 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8123F] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
               >
                 <Trash2 className="w-4 h-4" aria-hidden="true" />
                 {t(UI.deleteButton)}
@@ -668,16 +674,16 @@ export default function QuantumLab({ presetRequest }) {
 
         {/* -------------------------------- results -------------------------------- */}
         <div ref={resultsRef} className="mt-10">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00] mb-3">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#00D4FF] mb-3">
             {t(UI.resultsHeading)}
           </p>
 
           {!results ? (
-            <div className="border-2 border-dashed border-[#0A0A0A]/30 p-8 text-center text-[#2B2B2B]">
+            <div className="border-2 border-dashed border-white/30 p-8 text-center text-[#9FA8C4]">
               {t(UI.resultsEmptyHint)}
             </div>
           ) : (
-            <div className="bg-white border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8">
+            <div className="bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6 sm:p-8">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
                   <h4 className="font-display font-black tracking-tight text-lg text-[#0A0A0A] mb-3">
@@ -699,7 +705,7 @@ export default function QuantumLab({ presetRequest }) {
 
               <div className="mt-8 border-t-4 border-[#0A0A0A] pt-6">
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="inline-block font-mono text-[10px] font-bold tracking-widest uppercase bg-[#FFB800] text-[#0A0A0A] border-2 border-[#0A0A0A] px-2 py-1">
+                  <span className="inline-block font-mono text-[10px] font-bold tracking-widest uppercase bg-[#FFE600] text-[#04070F] border-2 border-[#0A0A0A] px-2 py-1">
                     {t(UI.categoryBadge[results.explanation.category])}
                   </span>
                   <h4 className="font-display font-black tracking-tight text-lg text-[#0A0A0A]">
@@ -708,7 +714,7 @@ export default function QuantumLab({ presetRequest }) {
                 </div>
                 <p className="text-[#2B2B2B] leading-relaxed">{t(results.explanation.main)}</p>
                 {results.explanation.blochNote && (
-                  <p className="mt-4 border-l-4 border-[#1A1AE5] bg-[#1A1AE5]/5 pl-4 py-3 text-[#0A0A0A] leading-relaxed">
+                  <p className="mt-4 border-l-4 border-[#375FFF] bg-[#375FFF]/5 pl-4 py-3 text-[#0A0A0A] leading-relaxed">
                     {t(results.explanation.blochNote)}
                   </p>
                 )}

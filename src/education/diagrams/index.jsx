@@ -102,7 +102,7 @@ export default function Diagram({ name }) {
   const title = DIAGRAM_TITLES[name] ? t(DIAGRAM_TITLES[name]) : "";
 
   return (
-    <figure className="my-8 bg-white border-2 border-[#0A0A0A] shadow-hard p-4 sm:p-6 overflow-x-auto">
+    <figure className="my-8 bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-4 sm:p-6 overflow-x-auto">
       <Component title={title} t={t} />
     </figure>
   );

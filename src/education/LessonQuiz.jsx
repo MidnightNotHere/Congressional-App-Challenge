@@ -96,7 +96,7 @@ export default function LessonQuiz({ questions, lessonSlug }) {
     return (
       <section
         aria-labelledby={`quiz-${lessonSlug}`}
-        className="mt-12 bg-[#1A1AE5] border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8 text-white"
+        className="mt-12 bg-[#375FFF] border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6 sm:p-8 text-white"
       >
         <h3
           id={`quiz-${lessonSlug}`}
@@ -104,14 +104,16 @@ export default function LessonQuiz({ questions, lessonSlug }) {
         >
           {t(UI.heading)}
         </h3>
-        <p className="mt-4 font-mono text-3xl sm:text-4xl font-bold text-[#FFB800]">
+        <p className="mt-4 font-mono text-3xl sm:text-4xl font-bold text-[#FFE600]">
           {t(UI.yourScore)} {score} {t(UI.outOf)} {questions.length}
         </p>
-        <p className="mt-3 text-white/90 leading-relaxed">{t(verdict)}</p>
+        {/* white/90 measures ~4.31:1 on this particular blue — just under
+            the 4.5:1 this regular-weight paragraph text needs. */}
+        <p className="mt-3 text-white leading-relaxed">{t(verdict)}</p>
         <button
           type="button"
           onClick={retake}
-          className="mt-6 inline-flex items-center gap-2 bg-white text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-5 py-2.5 hover:bg-[#FFB800] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1AE5]"
+          className="mt-6 inline-flex items-center gap-2 bg-white text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#0A0A0A] font-bold px-5 py-2.5 hover:bg-[#FFE600] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF]"
         >
           <RotateCcw className="w-4 h-4" aria-hidden="true" />
           {t(UI.retake)}
@@ -124,7 +126,7 @@ export default function LessonQuiz({ questions, lessonSlug }) {
   return (
     <section
       aria-labelledby={`quiz-${lessonSlug}`}
-      className="mt-12 bg-white border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8"
+      className="mt-12 bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6 sm:p-8"
     >
       <h3
         id={`quiz-${lessonSlug}`}
@@ -136,12 +138,12 @@ export default function LessonQuiz({ questions, lessonSlug }) {
 
       {/* progress through the question set */}
       <div className="mt-6 flex items-center gap-3">
-        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00]">
+        <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#00707A]">
           {t(UI.questionCounter)} {step + 1} {t(UI.of)} {questions.length}
         </span>
         <div className="flex-1 h-2 bg-[#F2EFE4] border-2 border-[#0A0A0A]">
           <div
-            className="h-full bg-[#FFB800]"
+            className="h-full bg-[#FFE600]"
             style={{ width: `${((step + (revealed ? 1 : 0)) / questions.length) * 100}%` }}
           />
         </div>
@@ -162,9 +164,9 @@ export default function LessonQuiz({ questions, lessonSlug }) {
                each with an icon and text so color is never the only signal. */
             let style = "bg-white border-[#0A0A0A] hover:bg-[#F2EFE4]";
             if (revealed && isCorrect) {
-              style = "bg-[#00A94F]/10 border-[#00A94F]";
+              style = "bg-[#00D4FF]/10 border-[#00707A]";
             } else if (revealed && isChosen) {
-              style = "bg-[#D50000]/10 border-[#D50000]";
+              style = "bg-[#FF2D55]/10 border-[#B8123F]";
             } else if (revealed) {
               style = "bg-white border-[#0A0A0A] opacity-55";
             }
@@ -176,7 +178,7 @@ export default function LessonQuiz({ questions, lessonSlug }) {
                 onClick={() => choose(i)}
                 disabled={revealed}
                 aria-pressed={isChosen}
-                className={`w-full text-left border-2 px-4 py-3 flex items-start gap-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2 ${style} ${
+                className={`w-full text-left border-2 px-4 py-3 flex items-start gap-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 ${style} ${
                   revealed ? "cursor-default" : "cursor-pointer"
                 }`}
               >
@@ -185,13 +187,13 @@ export default function LessonQuiz({ questions, lessonSlug }) {
                 </span>
                 <span className="flex-1 text-[#0A0A0A] leading-relaxed">{t(choice)}</span>
                 {revealed && isCorrect && (
-                  <span className="inline-flex items-center gap-1 shrink-0 text-[#00A94F] font-bold text-sm">
+                  <span className="inline-flex items-center gap-1 shrink-0 text-[#00707A] font-bold text-sm">
                     <CheckCircle2 className="w-5 h-5" aria-hidden="true" />
                     {t(UI.correct)}
                   </span>
                 )}
                 {revealed && isChosen && !isCorrect && (
-                  <span className="inline-flex items-center gap-1 shrink-0 text-[#D50000] font-bold text-sm">
+                  <span className="inline-flex items-center gap-1 shrink-0 text-[#B8123F] font-bold text-sm">
                     <AlertCircle className="w-5 h-5" aria-hidden="true" />
                     {t(UI.notQuite)}
                   </span>
@@ -205,7 +207,7 @@ export default function LessonQuiz({ questions, lessonSlug }) {
       {/* explanation appears once an answer is locked in */}
       <div aria-live="polite">
         {revealed && (
-          <div className="mt-5 border-l-4 border-[#1A1AE5] bg-[#1A1AE5]/5 p-4">
+          <div className="mt-5 border-l-4 border-[#375FFF] bg-[#375FFF]/5 p-4">
             <p className="text-[#0A0A0A] leading-relaxed">{t(question.explanation)}</p>
           </div>
         )}
@@ -215,7 +217,7 @@ export default function LessonQuiz({ questions, lessonSlug }) {
         <button
           type="button"
           onClick={advance}
-          className="mt-6 inline-flex items-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+          className="mt-6 inline-flex items-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#0A0A0A] font-bold px-5 py-2.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
         >
           {isLast ? t(UI.seeResults) : t(UI.nextQuestion)}
           <ArrowRight className="w-4 h-4" aria-hidden="true" />

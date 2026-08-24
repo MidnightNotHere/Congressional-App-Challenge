@@ -74,17 +74,17 @@ export default function LearnHub() {
   return (
     <>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
-        <QuantumLine />
+        <QuantumLine tone="cyber" />
       </div>
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
         {/* ------------------------------ header ------------------------------ */}
         <div className="max-w-3xl">
-          <SectionLabel>{t(UI.sectionLabel)}</SectionLabel>
-          <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl lg:text-5xl text-[#0A0A0A]">
+          <SectionLabel tone="cyber">{t(UI.sectionLabel)}</SectionLabel>
+          <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl lg:text-5xl text-[#EEF1FA]">
             {t(UI.heading)}
           </h2>
-          <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">{t(UI.intro)}</p>
+          <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed">{t(UI.intro)}</p>
         </div>
 
         {/* course stats */}
@@ -96,9 +96,9 @@ export default function LearnHub() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="bg-white border-2 border-[#0A0A0A] px-5 py-3 shadow-hard-sm"
+              className="bg-white border-2 border-[#0A0A0A] px-5 py-3 shadow-[3px_3px_0_0_#FFFFFF]"
             >
-              <span className="font-mono text-2xl font-bold text-[#1A1AE5]">{stat.value}</span>
+              <span className="font-mono text-2xl font-bold text-[#375FFF]">{stat.value}</span>
               <span className="ml-2 font-mono text-xs uppercase tracking-widest text-[#2B2B2B]">
                 {stat.label}
               </span>
@@ -107,21 +107,25 @@ export default function LearnHub() {
         </div>
 
         {/* --------------------- resume / start banner --------------------- */}
-        <div className="mt-10 bg-[#1A1AE5] border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8 text-white">
+        <div className="mt-10 bg-[#375FFF] border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6 sm:p-8 text-white">
           {nextLesson ? (
             <>
-              <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#FFB800]">
+              {/* White, not accent yellow, at this size: #FFE600 on #375FFF
+                  measures 3.91:1, under the 4.5:1 this needs. Same reasoning
+                  for the text-white below in place of a dimmer opacity — on
+                  this particular blue, even 85% opacity white lands short. */}
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-white">
                 {hasStarted ? t(UI.continueHeading) : t(UI.startCourse)}
               </p>
               <h3 className="mt-3 font-display font-black tracking-tight text-xl sm:text-2xl">
                 {t(nextLesson.title)}
               </h3>
-              <p className="mt-2 text-white/80 text-sm font-mono">
+              <p className="mt-2 text-white text-sm font-mono">
                 {t(UI.unit)} {nextLesson.unitNumber} · {nextLesson.estimatedMinutes} {t(UI.min)}
               </p>
               <Link
                 to={`/learn/${nextLesson.slug}`}
-                className="mt-5 inline-flex items-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1AE5]"
+                className="mt-5 inline-flex items-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF]"
               >
                 {hasStarted ? t(UI.continueCta) : t(UI.startCourse)}
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -129,7 +133,7 @@ export default function LearnHub() {
             </>
           ) : (
             <>
-              <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#FFB800]">
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-white">
                 {t(UI.progressLabel)}
               </p>
               <h3 className="mt-3 font-display font-black tracking-tight text-xl sm:text-2xl">
@@ -143,23 +147,23 @@ export default function LearnHub() {
         {hasStarted && (
           <div className="mt-8">
             <div className="flex items-baseline justify-between gap-4">
-              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00]">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#00D4FF]">
                 {t(UI.progressLabel)}
               </span>
-              <span className="font-mono text-sm font-bold text-[#0A0A0A]">
+              <span className="font-mono text-sm font-bold text-[#EEF1FA]">
                 {completedCount}/{TOTAL_LESSONS} · {overallPercent}% {t(UI.complete)}
               </span>
             </div>
             <div className="mt-2 h-4 bg-white border-2 border-[#0A0A0A]">
               <div
-                className="h-full bg-[#00A94F] transition-[width] duration-500"
+                className="h-full bg-[#00D4FF] transition-[width] duration-500"
                 style={{ width: `${overallPercent}%` }}
               />
             </div>
             <button
               type="button"
               onClick={handleReset}
-              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#2B2B2B] hover:text-[#D50000] rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-[#9FA8C4] hover:text-[#FF2D55] rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
             >
               <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               {t(UI.resetProgress)}
@@ -180,27 +184,27 @@ export default function LearnHub() {
                 <div className="flex items-start gap-4">
                   <span
                     className={`inline-flex items-center justify-center w-14 h-14 shrink-0 border-2 border-[#0A0A0A] ${
-                      unitDone ? "bg-[#00A94F]" : "bg-[#FFB800]"
+                      unitDone ? "bg-[#00D4FF]" : "bg-[#FFE600]"
                     }`}
                   >
                     {Icon && (
                       <Icon
-                        className={`w-7 h-7 ${unitDone ? "text-white" : "text-[#0A0A0A]"}`}
+                        className="w-7 h-7 text-[#04070F]"
                         aria-hidden="true"
                       />
                     )}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#C42B00]">
+                    <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#00D4FF]">
                       {t(UI.unit)} {unitIndex + 1} · {done}/{total}
                     </p>
                     <h3
                       id={`unit-${unit.id}`}
-                      className="mt-1 font-display font-black tracking-tight text-xl sm:text-2xl text-[#0A0A0A]"
+                      className="mt-1 font-display font-black tracking-tight text-xl sm:text-2xl text-[#EEF1FA]"
                     >
                       {t(unit.title)}
                     </h3>
-                    <p className="mt-2 text-[#2B2B2B] leading-relaxed max-w-2xl">
+                    <p className="mt-2 text-[#9FA8C4] leading-relaxed max-w-2xl">
                       {t(unit.summary)}
                     </p>
                   </div>
@@ -209,7 +213,7 @@ export default function LearnHub() {
                 {/* per-unit progress */}
                 <div className="mt-4 h-2 bg-white border-2 border-[#0A0A0A]">
                   <div
-                    className="h-full bg-[#00A94F] transition-[width] duration-500"
+                    className="h-full bg-[#00D4FF] transition-[width] duration-500"
                     style={{ width: `${total ? (done / total) * 100 : 0}%` }}
                   />
                 </div>
@@ -222,8 +226,8 @@ export default function LearnHub() {
                       <Link
                         key={lesson.slug}
                         to={`/learn/${lesson.slug}`}
-                        className={`group block border-2 border-[#0A0A0A] p-6 shadow-hard transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2 ${
-                          complete ? "bg-[#00A94F]/10" : "bg-white"
+                        className={`group block border-2 border-[#0A0A0A] p-6 shadow-[6px_6px_0_0_#FFFFFF] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F] ${
+                          complete ? "bg-[#00D4FF]/10" : "bg-white"
                         }`}
                       >
                         <div className="flex items-center justify-between gap-2">
@@ -231,7 +235,7 @@ export default function LearnHub() {
                             {unitIndex + 1}.{lessonIndex + 1}
                           </span>
                           {complete ? (
-                            <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-widest text-[#00A94F]">
+                            <span className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase tracking-widest text-[#00707A]">
                               <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
                               {t(UI.done)}
                             </span>
@@ -247,7 +251,7 @@ export default function LearnHub() {
                         <p className="mt-2 text-sm text-[#2B2B2B] leading-relaxed line-clamp-3">
                           {t(lesson.bigIdea)}
                         </p>
-                        <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#1A1AE5]">
+                        <span className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#375FFF]">
                           {t(UI.continueCta)}
                           <ArrowRight
                             className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"

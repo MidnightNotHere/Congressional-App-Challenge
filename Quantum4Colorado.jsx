@@ -1587,20 +1587,25 @@ function App() {
         {/* The course: a hub listing every unit, plus one page per lesson.
             Route order doesn't matter here — react-router ranks by
             specificity, so /learn/:lessonSlug can't shadow /learn. */}
+        {/* These three sections are the cyber-scoped surfaces ("Void Blue" —
+            see CYBER in src/shared/uiKit.jsx). bg-[#04070F] + min-h-screen
+            here is what covers the pt-16 gap under the fixed nav and any
+            short-content state, so no cream ever peeks through — the rest
+            of the app stays on the light C palette untouched. */}
         <Route path="/learn" element={
-        <section id="learn" className="pt-16">
+        <section id="learn" className="pt-16 min-h-screen bg-[#04070F]">
           <LearnHub />
         </section>
         } />
         <Route path="/learn/:lessonSlug" element={
-        <section id="lesson" className="pt-16">
+        <section id="lesson" className="pt-16 min-h-screen bg-[#04070F]">
           <LessonPage />
         </section>
         } />
 
         {/* ======================================================= SECTION 4 */}
         <Route path="/youth" element={
-        <section id="youth" className="pt-16">
+        <section id="youth" className="pt-16 min-h-screen bg-[#04070F]">
           <YouthEducation scrollTo={scrollTo} />
         </section>
         } />
@@ -1935,17 +1940,17 @@ function YouthEducation({ scrollTo }) {
   return (
     <>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
-        <QuantumLine />
+        <QuantumLine tone="cyber" />
       </div>
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
         {/* header */}
         <div className="max-w-3xl">
-          <SectionLabel>{t(UI.youth.sectionLabel)}</SectionLabel>
-          <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+          <SectionLabel tone="cyber">{t(UI.youth.sectionLabel)}</SectionLabel>
+          <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
             {t(UI.youth.heading)}
           </h2>
-          <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
+          <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed">
             {t(UI.youth.intro)}
           </p>
         </div>
@@ -1960,7 +1965,7 @@ function YouthEducation({ scrollTo }) {
                 key={i}
                 className={`border p-6 transition-colors ${
                   open
-                    ? "border-[#1A1AE5] bg-[#1A1AE5]/5"
+                    ? "border-[#375FFF] bg-[#EAF0FF]"
                     : "border-[#0A0A0A] bg-white"
                 }`}
               >
@@ -1968,10 +1973,10 @@ function YouthEducation({ scrollTo }) {
                   type="button"
                   onClick={() => setExpandedHero(open ? null : i)}
                   aria-expanded={open}
-                  className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                  className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
                 >
-                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#1A1AE5]/10">
-                    <Icon className="w-6 h-6 text-[#1A1AE5]" aria-hidden="true" />
+                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#375FFF]/10">
+                    <Icon className="w-6 h-6 text-[#375FFF]" aria-hidden="true" />
                   </span>
                   <h3 className="mt-4 font-bold text-lg text-[#0A0A0A]">
                     {t(card.title)}
@@ -1979,7 +1984,7 @@ function YouthEducation({ scrollTo }) {
                   <p className="mt-2 text-[#2B2B2B] leading-relaxed">
                     {t(card.teaser)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#375FFF]">
                     {open ? t(UI.youth.showLess) : t(UI.youth.tellMeMore)}
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
@@ -2001,10 +2006,10 @@ function YouthEducation({ scrollTo }) {
 
         {/* -------------------------- Layer 2: concept cards ------------------------ */}
         <div className="mt-16">
-          <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
+          <h3 className="font-display font-black tracking-tight text-2xl text-[#EEF1FA]">
             {t(UI.youth.conceptsHeading)}
           </h3>
-          <p className="mt-2 text-[#2B2B2B]">
+          <p className="mt-2 text-[#9FA8C4]">
             {t(UI.youth.conceptsIntro)}
           </p>
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -2014,10 +2019,10 @@ function YouthEducation({ scrollTo }) {
               return (
                 <div
                   key={i}
-                  className="bg-white border-2 border-[#0A0A0A] p-7 shadow-hard"
+                  className="bg-white border-2 border-[#0A0A0A] p-7 shadow-[6px_6px_0_0_#FFFFFF]"
                 >
-                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#00A94F]/10">
-                    <Icon className="w-6 h-6 text-[#00A94F]" aria-hidden="true" />
+                  <span className="inline-flex items-center justify-center w-12 h-12 bg-[#00D4FF]/10">
+                    <Icon className="w-6 h-6 text-[#00707A]" aria-hidden="true" />
                   </span>
                   <h4 className="mt-4 font-bold text-lg text-[#0A0A0A]">
                     {t(c.title)}
@@ -2031,7 +2036,7 @@ function YouthEducation({ scrollTo }) {
                         mobile, which has no /learn route, is unaffected. */}
                     <Link
                       to={`/learn/${c.lessonSlug}`}
-                      className="inline-flex items-center gap-1 text-sm font-bold text-[#C42B00] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C42B00] focus-visible:ring-offset-2"
+                      className="inline-flex items-center gap-1 text-sm font-bold text-[#00707A] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00707A] focus-visible:ring-offset-2"
                     >
                       {t(UI.youth.learnThisProperly)}
                       <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2044,7 +2049,7 @@ function YouthEducation({ scrollTo }) {
                       <button
                         type="button"
                         onClick={() => requestLabPreset(labPreset)}
-                        className="inline-flex items-center gap-1 text-sm font-bold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                        className="inline-flex items-center gap-1 text-sm font-bold text-[#375FFF] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
                       >
                         <FlaskConical className="w-3.5 h-3.5" aria-hidden="true" />
                         {t(UI.youth.tryItYourself)}
@@ -2058,8 +2063,11 @@ function YouthEducation({ scrollTo }) {
 
           {/* Bridge into the full course — these four cards are the summary,
               /learn is the long version. */}
-          <div className="mt-8 bg-[#1A1AE5] border-2 border-[#0A0A0A] shadow-hard p-6 sm:p-8 text-white">
-            <p className="font-mono text-xs font-bold uppercase tracking-widest text-[#FFB800]">
+          <div className="mt-8 bg-[#375FFF] border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-6 sm:p-8 text-white">
+            {/* White, not accent yellow, at this size: #FFE600 on #375FFF
+                measures 3.91:1 — enough for the icon above (3:1 threshold)
+                but under 4.5:1 for 12px text. */}
+            <p className="font-mono text-xs font-bold uppercase tracking-widest text-white">
               {t(UI.youth.courseCalloutLabel)}
             </p>
             <h4 className="mt-3 font-display font-black tracking-tight text-xl sm:text-2xl">
@@ -2070,7 +2078,7 @@ function YouthEducation({ scrollTo }) {
             </p>
             <Link
               to="/learn"
-              className="mt-5 inline-flex items-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#1A1AE5]"
+              className="mt-5 inline-flex items-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-6 py-3 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF]"
             >
               {t(UI.youth.courseCalloutCta)}
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -2083,10 +2091,10 @@ function YouthEducation({ scrollTo }) {
 
         {/* -------------------------- Layer 3: resource platform --------------------- */}
         <div className="mt-16">
-          <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
+          <h3 className="font-display font-black tracking-tight text-2xl text-[#EEF1FA]">
             {t(UI.youth.roadmapHeading)}
           </h3>
-          <p className="mt-2 text-[#2B2B2B]">
+          <p className="mt-2 text-[#9FA8C4]">
             {t(UI.youth.roadmapIntro)}
           </p>
 
@@ -2105,10 +2113,10 @@ function YouthEducation({ scrollTo }) {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setActiveResourceTab(tab.id)}
-                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2 ${
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F] ${
                     active
-                      ? "bg-[#1A1AE5] text-white border-[#1A1AE5]"
-                      : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#1A1AE5]/40"
+                      ? "bg-[#375FFF] text-white border-[#375FFF]"
+                      : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#375FFF]/40"
                   }`}
                 >
                   <Icon className="w-4 h-4" aria-hidden="true" />
@@ -2133,14 +2141,14 @@ function YouthEducation({ scrollTo }) {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group bg-[#F2EFE4] border-2 border-[#0A0A0A] p-6 hover:border-[#1A1AE5]/40 hover:shadow-hard-sm transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                  className="group bg-white border-2 border-[#0A0A0A] p-6 hover:border-[#375FFF]/40 hover:shadow-[3px_3px_0_0_#FFFFFF] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F]"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h4 className="font-bold text-[#0A0A0A] leading-snug">
                       {item.name}
                     </h4>
                     <ExternalLink
-                      className="w-4 h-4 text-[#1A1AE5] shrink-0 opacity-60 group-hover:opacity-100"
+                      className="w-4 h-4 text-[#375FFF] shrink-0 opacity-60 group-hover:opacity-100"
                       aria-hidden="true"
                     />
                   </div>
@@ -2165,24 +2173,24 @@ function YouthEducation({ scrollTo }) {
                   <div
                     key={track.id}
                     className={`border bg-white p-6 ${
-                      open ? "border-[#1A1AE5]" : "border-[#0A0A0A]"
+                      open ? "border-[#375FFF]" : "border-[#0A0A0A]"
                     }`}
                   >
                     <button
                       type="button"
                       onClick={() => setExpandedCareer(open ? null : i)}
                       aria-expanded={open}
-                      className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                      className="w-full text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <span className="inline-flex items-center justify-center w-11 h-11 bg-[#1A1AE5]/10 shrink-0">
+                        <span className="inline-flex items-center justify-center w-11 h-11 bg-[#375FFF]/10 shrink-0">
                           <Icon
-                            className="w-5 h-5 text-[#1A1AE5]"
+                            className="w-5 h-5 text-[#375FFF]"
                             aria-hidden="true"
                           />
                         </span>
                         <ChevronDown
-                          className={`w-5 h-5 text-[#1A1AE5] shrink-0 mt-2 transition-transform ${
+                          className={`w-5 h-5 text-[#375FFF] shrink-0 mt-2 transition-transform ${
                             open ? "rotate-180" : ""
                           }`}
                           aria-hidden="true"
@@ -2211,7 +2219,7 @@ function YouthEducation({ scrollTo }) {
                           <button
                             type="button"
                             onClick={() => scrollTo && scrollTo("assessment")}
-                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#375FFF] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
                           >
                             {t(UI.youth.crossLinkCrypto)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2223,7 +2231,7 @@ function YouthEducation({ scrollTo }) {
                             onClick={() =>
                               scrollTo && scrollTo("representatives")
                             }
-                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-offset-2"
+                            className="inline-flex items-center gap-1 text-sm font-semibold text-[#375FFF] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2"
                           >
                             {t(UI.youth.crossLinkPolicy)}
                             <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2246,16 +2254,22 @@ function YouthEducation({ scrollTo }) {
         </div>
 
         {/* -------------------------- Layer 4: quiz ---------------------------------- */}
-        <div className="mt-16 bg-[#1A1AE5] text-white p-7 sm:p-10">
+        <div className="mt-16 bg-[#375FFF] text-white p-7 sm:p-10">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center justify-center w-11 h-11 bg-white/10 shrink-0">
-              <Compass className="w-6 h-6 text-[#FFB800]" aria-hidden="true" />
+              <Compass className="w-6 h-6 text-[#FFE600]" aria-hidden="true" />
             </span>
             <div>
               <h3 className="font-display font-black tracking-tight text-2xl">
                 {t(UI.youth.quizHeading)}
               </h3>
-              <p className="text-blue-100/80 text-sm mt-0.5">
+              {/* text-blue-100 is nearly white already, so opacity is what's
+                  doing the (insufficient) work here — the tint on top of
+                  the brighter #375FFF measures ~4.06:1 at 70-80% opacity,
+                  under the 4.5:1 needed for text this size, and even 85%
+                  opacity white only reaches ~4.04:1. Fully opaque is what
+                  it actually takes (~4.97:1) against this particular blue. */}
+              <p className="text-white text-sm mt-0.5">
                 {t(UI.youth.quizSubheading)}
               </p>
             </div>
@@ -2264,14 +2278,14 @@ function YouthEducation({ scrollTo }) {
           {!quizDone && (
             <div className="mt-8">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-mono text-xs tracking-wider uppercase text-blue-100/70">
+                <span className="font-mono text-xs tracking-wider uppercase text-white">
                   {t(UI.assessment.question)} {Math.min(quizStep + 1, QUIZ_QUESTIONS.length)}{" "}
                   {t(UI.assessment.of)} {QUIZ_QUESTIONS.length}
                 </span>
               </div>
               <div className="h-2 rounded-full bg-white/15 overflow-hidden">
                 <div
-                  className="h-full bg-[#FFB800] transition-all duration-500"
+                  className="h-full bg-[#FFE600] transition-all duration-500"
                   style={{
                     width: `${(quizAnsweredCount / QUIZ_QUESTIONS.length) * 100}%`,
                   }}
@@ -2291,9 +2305,9 @@ function YouthEducation({ scrollTo }) {
                         type="button"
                         onClick={() => selectQuizAnswer(quizStep, opt.track)}
                         aria-pressed={selected}
-                        className={`text-left border p-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2 ${
+                        className={`text-left border p-4 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFE600] focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF] ${
                           selected
-                            ? "border-[#FFB800] bg-white/10 font-semibold"
+                            ? "border-[#FFE600] bg-white/10 font-semibold"
                             : "border-white/20 bg-white/5 hover:border-white/40"
                         }`}
                       >
@@ -2308,14 +2322,17 @@ function YouthEducation({ scrollTo }) {
 
           {quizDone && quizResult && (
             <div className="mt-8">
-              <p className="font-mono text-xs tracking-wider uppercase text-[#FFB800]">
+              <p className="font-mono text-xs tracking-wider uppercase text-white">
                 {t(UI.youth.yourResult)}
               </p>
               <h4 className="mt-1 font-black text-2xl sm:text-3xl flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-[#FFB800]" aria-hidden="true" />
+                <Sparkles className="w-6 h-6 text-[#FFE600]" aria-hidden="true" />
                 {t(UI.youth.builtFor)} {t(quizResult.label)}
               </h4>
-              <p className="mt-3 text-blue-100/90 leading-relaxed max-w-2xl">
+              {/* Same story as the other text-blue-100 instances above:
+                  90% opacity measures ~4.06:1 on #375FFF, under the 4.5:1
+                  this needs at 16px. */}
+              <p className="mt-3 text-white leading-relaxed max-w-2xl">
                 {t(quizResult.resultBlurb)}
               </p>
 
@@ -2325,7 +2342,7 @@ function YouthEducation({ scrollTo }) {
                     key={i}
                     className="bg-white/10 border border-white/15 p-4"
                   >
-                    <span className="font-mono text-xs font-bold text-[#FFB800]">
+                    <span className="font-mono text-xs font-bold text-white">
                       {t(UI.youth.step)} {i + 1}
                     </span>
                     <p className="mt-1 text-sm text-white leading-relaxed">
@@ -2336,14 +2353,14 @@ function YouthEducation({ scrollTo }) {
               </div>
 
               {quizResult.id === "policy" && (
-                <div className="mt-6 bg-[#FFB800]/20 border border-[#FFB800]/50 p-5">
+                <div className="mt-6 bg-[#FFE600]/20 border border-[#FFE600]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
                     {t(UI.youth.calloutPolicyText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("representatives")}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#FFB800] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-white hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF]"
                   >
                     {t(UI.youth.calloutPolicyLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -2351,14 +2368,14 @@ function YouthEducation({ scrollTo }) {
                 </div>
               )}
               {quizResult.id === "crypto" && (
-                <div className="mt-6 bg-[#FFB800]/20 border border-[#FFB800]/50 p-5">
+                <div className="mt-6 bg-[#FFE600]/20 border border-[#FFE600]/50 p-5">
                   <p className="text-sm text-white leading-relaxed mb-2">
                     {t(UI.youth.calloutCryptoText)}
                   </p>
                   <button
                     type="button"
                     onClick={() => scrollTo && scrollTo("assessment")}
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-[#FFB800] hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] focus-visible:ring-offset-2"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-white hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#375FFF]"
                   >
                     {t(UI.youth.calloutCryptoLink)}
                     <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

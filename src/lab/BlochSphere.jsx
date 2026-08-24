@@ -13,8 +13,14 @@
    ========================================================================= */
 
 import React from "react";
-import { C } from "../shared/uiKit.jsx";
+import { C, CYBER } from "../shared/uiKit.jsx";
 import { blochVectorLength } from "./quantumEngine.js";
+
+/* This sphere renders inside a white results card (see the Quantum Lab's
+   results panel), so `C.surface`/`C.border`/`C.textPrimary`/
+   `C.textSecondary` are unchanged below — that's still a light surface
+   regardless of the cyber page canvas behind it. Only the actual brand
+   colors (the vector itself, the shrunk-vector warning) move to CYBER. */
 
 const SIZE = 220;
 const CENTER = SIZE / 2;
@@ -50,7 +56,7 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
             refY="4"
             orient="auto"
           >
-            <path d="M0,0 L8,4 L0,8 Z" fill={C.primary} />
+            <path d="M0,0 L8,4 L0,8 Z" fill={CYBER.primary} />
           </marker>
         </defs>
 
@@ -131,12 +137,12 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
             y1={CENTER}
             x2={px}
             y2={py}
-            stroke={C.primary}
+            stroke={CYBER.primary}
             strokeWidth="3"
             markerEnd={`url(#${arrowId})`}
           />
         )}
-        <circle cx={px} cy={py} r="6" fill={shrunk ? C.danger : C.accent} stroke={C.border} strokeWidth="2" />
+        <circle cx={px} cy={py} r="6" fill={shrunk ? CYBER.danger : CYBER.accent} stroke={C.border} strokeWidth="2" />
       </svg>
 
       {/* text equivalent — the visual is never the only way to get this
@@ -144,7 +150,7 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
       <div className="mt-3 w-full font-mono text-xs text-[#2B2B2B] bg-[#F2EFE4] border-2 border-[#0A0A0A] px-3 py-2 text-center">
         <div className="font-bold text-[#0A0A0A]">{t(UI.qubitLabel)} {qubitLabel}</div>
         <div className="mt-1">x={x.toFixed(2)} · y={y.toFixed(2)} · z={z.toFixed(2)}</div>
-        <div className={shrunk ? "mt-1 font-bold text-[#D50000]" : "mt-1 text-[#2B2B2B]"}>
+        <div className={shrunk ? "mt-1 font-bold text-[#B8123F]" : "mt-1 text-[#2B2B2B]"}>
           {t(UI.vectorLength)} {length.toFixed(2)}
           {shrunk && ` — ${t(UI.entangledShort)}`}
         </div>
