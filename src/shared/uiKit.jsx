@@ -96,10 +96,15 @@ export const C = {
   border: "#0A0A0A",
 };
 
-/* -------------------------- Cyber palette (scoped) ------------------------- */
-/* "Void Blue" — used only in the education/lab surfaces (Youth section, the
-   Learn course, the Quantum Lab), not site-wide. Story/Assessment/
-   Representatives/About and the shared nav/footer stay on `C` above.
+/* ------------------------------ Cyber palette ------------------------------ */
+/* "Void Blue" — the site-wide dark theme (Story, Assessment, Representatives,
+   About, the shared nav/footer, and the education/lab surfaces). `C` above is
+   kept and still used within it: several components (BlochSphere, Histogram,
+   ScoreRing, DetailRow) render inside a nested white card/panel and reach for
+   `C.textPrimary`/`C.border`/`C.bg` etc. for that inner light surface, which
+   is identical in both themes — a white card needs dark ink whether the page
+   around it is cream or near-black. `CYBER` supplies everything that touches
+   the dark page canvas directly.
 
    The page canvas goes dark, but cards and buttons stay WHITE (same as the
    light theme) — which forces a split the light theme never needed:
@@ -158,6 +163,14 @@ export const CYBER = {
   textOnDarkMuted: "#9FA8C4",
   textOnLight: "#0A0A0A",
   textOnLightMuted: "#2B2B2B",
+  // A third accent (Colorado-flag orange) used sparingly — the logo's "4",
+  // map pins, Q-number labels. Not bright enough on #04070F to use directly
+  // as text/icon color on the dark canvas (fails 4.5:1), so — same split as
+  // secondary/danger above — `tertiary` is the on-dark-safe brightened
+  // version and `tertiaryTextOnLight` is the original, already-dark value,
+  // still correct wherever it sits on a white card.
+  tertiary: "#FF6A3D",
+  tertiaryTextOnLight: "#C42B00",
 };
 
 /* ------------------------- Signature design element ----------------------- */

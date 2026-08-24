@@ -26,6 +26,13 @@ const SIZE = 220;
 const CENTER = SIZE / 2;
 const RADIUS = 84;
 const ELLIPSE_RY = RADIUS * 0.42; // flattens the circle into a perspective ellipse
+// The |0⟩/|1⟩ pole labels sit above/below the sphere at RADIUS+20/+32 from
+// center — outside a viewBox that's only as tall as the sphere itself, so
+// their glyphs were clipped top and bottom. This pads the viewBox instead
+// of shrinking the labels' offset, so they stay clear of the sphere.
+const PAD_Y = 26;
+const CX = CENTER;
+const CY = CENTER + PAD_Y;
 
 export default function BlochSphere({ vector, qubitLabel, t, UI }) {
   const { x, y, z } = vector;
@@ -33,8 +40,8 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
 
   // Simple oblique projection: y nudges the point diagonally so it reads
   // as "coming toward/away from you" without real 3D math.
-  const px = CENTER + x * RADIUS + y * RADIUS * 0.22;
-  const py = CENTER - z * RADIUS - y * RADIUS * 0.16;
+  const px = CX + x * RADIUS + y * RADIUS * 0.22;
+  const py = CY - z * RADIUS - y * RADIUS * 0.16;
 
   const arrowId = `bloch-arrowhead-${qubitLabel}`;
   const shrunk = length < 0.3;
@@ -42,7 +49,7 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
   return (
     <div className="flex flex-col items-center">
       <svg
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        viewBox={`0 0 ${SIZE} ${SIZE + PAD_Y * 2}`}
         className="w-full max-w-[240px] h-auto"
         role="img"
         aria-label={t(UI.blochAriaLabel)(qubitLabel, x, y, z)}
@@ -62,8 +69,8 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
 
         {/* sphere outline, in perspective */}
         <ellipse
-          cx={CENTER}
-          cy={CENTER}
+          cx={CX}
+          cy={CY}
           rx={RADIUS}
           ry={RADIUS}
           fill={C.surface}
@@ -71,8 +78,8 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
           strokeWidth="2"
         />
         <ellipse
-          cx={CENTER}
-          cy={CENTER}
+          cx={CX}
+          cy={CY}
           rx={RADIUS}
           ry={ELLIPSE_RY}
           fill="none"
@@ -84,19 +91,19 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
 
         {/* axes */}
         <line
-          x1={CENTER}
-          y1={CENTER - RADIUS - 14}
-          x2={CENTER}
-          y2={CENTER + RADIUS + 14}
+          x1={CX}
+          y1={CY - RADIUS - 14}
+          x2={CX}
+          y2={CY + RADIUS + 14}
           stroke={C.textSecondary}
           strokeWidth="1"
           strokeOpacity="0.4"
         />
         <line
-          x1={CENTER - RADIUS - 14}
-          y1={CENTER}
-          x2={CENTER + RADIUS + 14}
-          y2={CENTER}
+          x1={CX - RADIUS - 14}
+          y1={CY}
+          x2={CX + RADIUS + 14}
+          y2={CY}
           stroke={C.textSecondary}
           strokeWidth="1"
           strokeOpacity="0.4"
@@ -104,8 +111,8 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
 
         {/* pole labels */}
         <text
-          x={CENTER}
-          y={CENTER - RADIUS - 20}
+          x={CX}
+          y={CY - RADIUS - 20}
           textAnchor="middle"
           fontFamily="Martian Mono, monospace"
           fontSize="13"
@@ -115,8 +122,8 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
           |0⟩
         </text>
         <text
-          x={CENTER}
-          y={CENTER + RADIUS + 32}
+          x={CX}
+          y={CY + RADIUS + 32}
           textAnchor="middle"
           fontFamily="Martian Mono, monospace"
           fontSize="13"
@@ -127,14 +134,14 @@ export default function BlochSphere({ vector, qubitLabel, t, UI }) {
         </text>
 
         {/* center point */}
-        <circle cx={CENTER} cy={CENTER} r="3" fill={C.border} />
+        <circle cx={CX} cy={CY} r="3" fill={C.border} />
 
         {/* the vector itself — this is the one part of the drawing driven
             directly by the actual computed state, not decoration */}
         {length > 0.02 && (
           <line
-            x1={CENTER}
-            y1={CENTER}
+            x1={CX}
+            y1={CY}
             x2={px}
             y2={py}
             stroke={CYBER.primary}

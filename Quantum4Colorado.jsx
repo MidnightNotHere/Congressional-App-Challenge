@@ -75,6 +75,7 @@ import { LANGUAGES, DEFAULT_LANGUAGE, makeTranslator } from "./data/i18n.js";
 import {
   ICON_REGISTRY,
   C,
+  CYBER,
   QuantumLine,
   readableOn,
   SectionLabel,
@@ -124,9 +125,13 @@ const KEY_BY_PATH = Object.fromEntries(
 
 /* ------------------------------ Small atoms ------------------------------ */
 const PRIORITY_CLASS = {
-  Immediate: "bg-[#D50000] text-white",
-  "Within 6 Months": "bg-[#FFB800] text-[#0A0A0A]",
-  "Within 1 Year": "bg-[#1A1AE5] text-white",
+  // #FF2D55 measures only ~3.65:1 against white in either direction — under
+  // the 4.5:1 this small (10px) pill text needs. The darker on-light red
+  // (same value as CYBER.dangerTextOnLight) is the fix, same reasoning as
+  // the diagrams' D.red.
+  Immediate: "bg-[#B8123F] text-white",
+  "Within 6 Months": "bg-[#FFE600] text-[#04070F]",
+  "Within 1 Year": "bg-[#375FFF] text-white",
 };
 
 /* ------------------------------ Language context --------------------------- */
@@ -143,7 +148,7 @@ function LanguageToggle({ className = "" }) {
   const { lang, setLang } = useLanguage();
   return (
     <div
-      className={`inline-flex items-center rounded-full border-2 border-[#0A0A0A] bg-[#F2EFE4] p-0.5 ${className}`}
+      className={`inline-flex items-center rounded-full border-2 border-[#0A0A0A] bg-white p-0.5 ${className}`}
       role="group"
       aria-label="Language"
     >
@@ -155,8 +160,8 @@ function LanguageToggle({ className = "" }) {
           aria-pressed={lang === l.code}
           className={`px-2.5 py-1 rounded-full text-xs font-bold font-mono transition-colors ${
             lang === l.code
-              ? "bg-[#1A1AE5] text-white"
-              : "text-[#2B2B2B] hover:text-[#1A1AE5]"
+              ? "bg-[#375FFF] text-white"
+              : "text-[#2B2B2B] hover:text-[#375FFF]"
           }`}
         >
           {l.shortLabel}
@@ -642,11 +647,11 @@ function App() {
 
   return (
     <LanguageContext.Provider value={{ lang, setLang, t }}>
-    <div className="min-h-screen bg-[#F2EFE4] text-[#0A0A0A] antialiased">
+    <div className="min-h-screen bg-[#04070F] text-[#EEF1FA] antialiased">
       {/* ============================ MAIN APP (hidden when printing) ===== */}
       <div className="print:hidden">
         {/* ----------------------------- NAV ----------------------------- */}
-        <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur border-b-4 border-[#0A0A0A] shadow-hard-sm">
+        <nav className="fixed top-0 inset-x-0 z-50 bg-[#04070F]/95 backdrop-blur border-b-4 border-[#0A0A0A] shadow-[0_4px_0_0_#0A0A0A]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
             <div className="flex items-center justify-between h-16">
               <Link
@@ -655,11 +660,11 @@ function App() {
                 className="flex items-center gap-2 group"
                 aria-label="Quantum4Colorado home"
               >
-                <span className="inline-flex items-center justify-center w-9 h-9 bg-[#1A1AE5] border-2 border-[#0A0A0A]">
-                  <Atom className="w-5 h-5 text-[#FFB800]" />
+                <span className="inline-flex items-center justify-center w-9 h-9 bg-[#375FFF] border-2 border-[#0A0A0A]">
+                  <Atom className="w-5 h-5 text-[#FFE600]" />
                 </span>
-                <span className="font-display font-black tracking-tight text-lg text-[#1A1AE5]">
-                  Quantum<span className="text-[#C42B00]">4</span>Colorado
+                <span className="font-display font-black tracking-tight text-lg text-[#6E8CFF]">
+                  Quantum<span className="text-[#FF6A3D]">4</span>Colorado
                 </span>
               </Link>
 
@@ -672,13 +677,13 @@ function App() {
                       to={PATH_BY_KEY[l.key]}
                       className={`relative px-3 py-2 text-sm font-bold uppercase tracking-wide transition-colors ${
                         active
-                          ? "text-[#0A0A0A]"
-                          : "text-[#2B2B2B] hover:text-[#1A1AE5]"
+                          ? "text-[#EEF1FA]"
+                          : "text-[#9FA8C4] hover:text-[#6E8CFF]"
                       }`}
                     >
                       {t(l.label)}
                       {active && (
-                        <span className="absolute left-2 right-2 -bottom-1 h-1 bg-[#FFB800] border-2 border-[#0A0A0A]" />
+                        <span className="absolute left-2 right-2 -bottom-1 h-1 bg-[#FFE600] border-2 border-[#0A0A0A]" />
                       )}
                     </Link>
                   );
@@ -687,7 +692,7 @@ function App() {
               </div>
 
               <button
-                className="md:hidden inline-flex items-center justify-center w-10 h-10 border-2 border-[#0A0A0A] text-[#1A1AE5] hover:bg-[#FFB800]"
+                className="md:hidden inline-flex items-center justify-center w-10 h-10 border-2 border-[#0A0A0A] bg-white text-[#375FFF] hover:bg-[#FFE600]"
                 onClick={() => setNavOpen((o) => !o)}
                 aria-label="Toggle navigation menu"
                 aria-expanded={navOpen}
@@ -698,7 +703,7 @@ function App() {
           </div>
 
           {navOpen && (
-            <div className="md:hidden border-t-2 border-[#0A0A0A] bg-white">
+            <div className="md:hidden border-t-2 border-[#0A0A0A] bg-[#04070F]">
               <div className="px-4 py-2 flex flex-col">
                 {navLinks.map((l) => (
                   <Link
@@ -707,8 +712,8 @@ function App() {
                     onClick={() => setNavOpen(false)}
                     className={`text-left px-2 py-3 text-base font-bold uppercase tracking-wide border-b-2 border-[#0A0A0A] ${
                       activeSection === l.key
-                        ? "text-[#0A0A0A] bg-[#FFB800]"
-                        : "text-[#2B2B2B]"
+                        ? "text-[#04070F] bg-[#FFE600]"
+                        : "text-[#9FA8C4]"
                     }`}
                   >
                     {t(l.label)}
@@ -725,20 +730,20 @@ function App() {
         <Routes>
         {/* ======================================================= SECTION 1 */}
         <Route path="/" element={
-        <section id="story" className="pt-16">
+        <section id="story" className="pt-16 bg-[#04070F]">
           {/* Hero */}
-          <div className="bg-gradient-to-b from-[#1A1AE5] to-[#05003D] text-white">
+          <div className="bg-gradient-to-b from-[#375FFF] to-[#04070F] text-white">
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
-              <QuantumLine className="opacity-80" />
+              <QuantumLine className="opacity-80" tone="cyber" />
             </div>
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-20">
-              <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#FFB800] mb-5">
+              <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#FFE600] mb-5">
                 {t(UI.story.heroEyebrow)}
               </p>
               <h1 className="font-display font-black tracking-tight text-3xl sm:text-5xl lg:text-6xl leading-[1.05] max-w-4xl">
                 {t(UI.story.heroTitle)}
               </h1>
-              <p className="mt-6 text-base sm:text-xl text-blue-100/90 max-w-3xl leading-relaxed">
+              <p className="mt-6 text-base sm:text-xl text-white max-w-3xl leading-relaxed">
                 {t(UI.story.heroSubtitle)}
               </p>
 
@@ -748,10 +753,10 @@ function App() {
                     key={i}
                     className="bg-white/10 border border-white/15 backdrop-blur px-6 py-7"
                   >
-                    <div className="font-mono font-black text-4xl sm:text-5xl text-[#FFB800]">
+                    <div className="font-mono font-black text-4xl sm:text-5xl text-[#FFE600]">
                       {s.value}
                     </div>
-                    <div className="mt-3 text-sm text-blue-50/90 leading-snug">
+                    <div className="mt-3 text-sm text-white leading-snug">
                       {t(s.label)}
                     </div>
                   </div>
@@ -761,7 +766,7 @@ function App() {
               <div className="mt-10 flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => scrollTo("assessment")}
-                  className="inline-flex items-center justify-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-bold px-6 py-3 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-bold px-6 py-3 transition-colors"
                 >
                   {t(UI.story.assessCta)}
                   <ArrowRight className="w-4 h-4" />
@@ -779,8 +784,8 @@ function App() {
           {/* Plain-language explainer */}
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>{t(UI.story.explainerLabel)}</SectionLabel>
-              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+              <SectionLabel tone="cyber">{t(UI.story.explainerLabel)}</SectionLabel>
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
                 {t(UI.story.explainerHeading)}
               </h2>
             </div>
@@ -790,10 +795,10 @@ function App() {
                 return (
                   <div
                     key={i}
-                    className="bg-white border-2 border-[#0A0A0A] p-7 shadow-hard shadow-hard-sm"
+                    className="bg-white border-2 border-[#0A0A0A] p-7 shadow-[6px_6px_0_0_#FFFFFF]"
                   >
-                    <span className="inline-flex items-center justify-center w-12 h-12 bg-[#1A1AE5]/10">
-                      <Icon className="w-6 h-6 text-[#1A1AE5]" />
+                    <span className="inline-flex items-center justify-center w-12 h-12 bg-[#375FFF]/10">
+                      <Icon className="w-6 h-6 text-[#375FFF]" />
                     </span>
                     <h3 className="mt-5 font-bold text-lg text-[#0A0A0A]">
                       {t(card.title)}
@@ -808,14 +813,14 @@ function App() {
           </div>
 
           {/* Ecosystem map */}
-          <div className="bg-white border-y-4 border-[#0A0A0A]">
+          <div className="bg-[#04070F] border-y-4 border-[#0A0A0A]">
             <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
               <div className="max-w-3xl">
-                <SectionLabel>{t(UI.story.mapLabel)}</SectionLabel>
-                <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+                <SectionLabel tone="cyber">{t(UI.story.mapLabel)}</SectionLabel>
+                <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
                   {t(UI.story.mapHeading)}
                 </h2>
-                <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
+                <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed">
                   {t(UI.story.mapIntro)}
                 </p>
               </div>
@@ -831,8 +836,8 @@ function App() {
                       onClick={() => setActiveTab(tab.id)}
                       className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold border transition-colors ${
                         active
-                          ? "bg-[#1A1AE5] text-white border-[#1A1AE5]"
-                          : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#1A1AE5]/40"
+                          ? "bg-[#375FFF] text-white border-[#375FFF]"
+                          : "bg-white text-[#2B2B2B] border-[#0A0A0A] hover:border-[#375FFF]/40"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -851,7 +856,7 @@ function App() {
                   {tab.orgs.map((org) => (
                     <div
                       key={org.name}
-                      className="bg-[#F2EFE4] border-2 border-[#0A0A0A] p-6 hover:shadow-hard-sm transition-shadow"
+                      className="bg-white border-2 border-[#0A0A0A] p-6 hover:shadow-[3px_3px_0_0_#FFFFFF] transition-shadow"
                     >
                       <div className="flex items-start justify-between gap-3">
                         <h3 className="font-bold text-lg text-[#0A0A0A] leading-snug">
@@ -875,7 +880,7 @@ function App() {
                         {t(org.role)}
                       </p>
                       <div className="mt-4 pt-3 border-t-4 border-[#0A0A0A] flex gap-2">
-                        <TrendingUp className="w-4 h-4 text-[#00A94F] shrink-0 mt-0.5" />
+                        <TrendingUp className="w-4 h-4 text-[#00707A] shrink-0 mt-0.5" />
                         <p className="text-sm text-[#0A0A0A]">
                           <span className="font-semibold">
                             {t(UI.story.significanceLabel)}{" "}
@@ -893,23 +898,23 @@ function App() {
           {/* National position */}
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>{t(UI.story.stakesLabel)}</SectionLabel>
-              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+              <SectionLabel tone="cyber">{t(UI.story.stakesLabel)}</SectionLabel>
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
                 {t(UI.story.stakesHeading)}
               </h2>
             </div>
 
             <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* strengths */}
-              <div className="border border-[#00A94F]/30 bg-[#EAF5EF] p-7">
-                <div className="flex items-center gap-2 text-[#00A94F]">
+              <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-[6px_6px_0_0_#FFFFFF]">
+                <div className="flex items-center gap-2 text-[#00707A]">
                   <CheckCircle2 className="w-5 h-5" />
                   <h3 className="font-bold text-lg">{t(UI.story.strengthsHeading)}</h3>
                 </div>
                 <ul className="mt-5 space-y-4">
                   {STRENGTHS.map((s, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00A94F] shrink-0" />
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00707A] shrink-0" />
                       <span className="text-[#0A0A0A] leading-relaxed">{t(s)}</span>
                     </li>
                   ))}
@@ -917,7 +922,7 @@ function App() {
               </div>
 
               {/* gap */}
-              <div className="border border-[#FFB800]/40 bg-[#FBF3E6] p-7">
+              <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-[6px_6px_0_0_#FFFFFF]">
                 <div className="flex items-center gap-2 text-[#9c6a1c]">
                   <AlertTriangle className="w-5 h-5" />
                   <h3 className="font-bold text-lg">{t(UI.story.gapHeading)}</h3>
@@ -925,7 +930,7 @@ function App() {
                 <ul className="mt-5 space-y-4">
                   {GAPS.map((g, i) => (
                     <li key={i} className="flex gap-3">
-                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#FFB800] shrink-0" />
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#9c6a1c] shrink-0" />
                       <span className="text-[#0A0A0A] leading-relaxed">{t(g)}</span>
                     </li>
                   ))}
@@ -934,33 +939,33 @@ function App() {
             </div>
 
             {/* CTAs */}
-            <div className="mt-10 bg-[#1A1AE5] text-white p-8 sm:p-10">
+            <div className="mt-10 bg-[#375FFF] text-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-8 sm:p-10">
               <div className="grid gap-4 sm:grid-cols-2 items-center">
                 <button
                   onClick={() => scrollTo("assessment")}
-                  className="group text-left bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
+                  className="group text-left bg-black/15 hover:bg-black/25 border border-white/25 p-5 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
                       {t(UI.story.ctaAssessTitle)}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-[#FFB800] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-[#FFE600] group-hover:translate-x-1 transition-transform" />
                   </div>
-                  <p className="mt-1 text-blue-100/80 text-sm">
+                  <p className="mt-1 text-white text-sm">
                     {t(UI.story.ctaAssessSub)}
                   </p>
                 </button>
                 <button
                   onClick={() => scrollTo("representatives")}
-                  className="group text-left bg-white/10 hover:bg-white/20 border border-white/15 p-5 transition-colors"
+                  className="group text-left bg-black/15 hover:bg-black/25 border border-white/25 p-5 transition-colors"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-semibold text-lg">
                       {t(UI.story.ctaRepsTitle)}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-[#FFB800] group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-5 h-5 text-[#FFE600] group-hover:translate-x-1 transition-transform" />
                   </div>
-                  <p className="mt-1 text-blue-100/80 text-sm">
+                  <p className="mt-1 text-white text-sm">
                     {t(UI.story.ctaRepsSub)}
                   </p>
                 </button>
@@ -974,21 +979,21 @@ function App() {
         <Route path="/assessment" element={
         <section
           id="assessment"
-          className="pt-16 bg-white border-b-4 border-[#0A0A0A]"
+          className="pt-16 bg-[#04070F] border-b-4 border-[#0A0A0A]"
         >
           <div className="max-w-[1000px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>{t(UI.assessment.sectionLabel)}</SectionLabel>
-              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+              <SectionLabel tone="cyber">{t(UI.assessment.sectionLabel)}</SectionLabel>
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
                 {t(UI.assessment.heading)}
               </h2>
-              <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
+              <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed">
                 {t(UI.assessment.intro)}
               </p>
             </div>
 
             {/* explanation box */}
-            <div className="mt-8 rounded-r-xl bg-[#EAF1FB] border-l-4 border-[#1A1AE5] p-5">
+            <div className="mt-8 rounded-r-xl bg-white border-l-4 border-[#375FFF] p-5">
               <p className="text-[#0A0A0A] leading-relaxed">
                 {t(UI.assessment.explainer)}
               </p>
@@ -997,18 +1002,18 @@ function App() {
             {!results && (
               <div className="mt-10">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="font-mono text-xs tracking-wider uppercase text-[#2B2B2B]">
+                  <span className="font-mono text-xs tracking-wider uppercase text-[#9FA8C4]">
                     {t(UI.assessment.question)} {Math.min(step + 1, QUESTIONS.length)}{" "}
                     {t(UI.assessment.of)} {QUESTIONS.length}
                   </span>
-                  <span className="font-mono text-xs text-[#2B2B2B]">
+                  <span className="font-mono text-xs text-[#9FA8C4]">
                     {Math.round(((step + (allAnswered ? 1 : 0)) / QUESTIONS.length) * 100)}
                     %
                   </span>
                 </div>
-                <div className="h-2 rounded-full bg-[#0A0A0A] overflow-hidden">
+                <div className="h-2 rounded-full bg-white border-2 border-[#0A0A0A] overflow-hidden">
                   <div
-                    className="h-full bg-[#1A1AE5] transition-all duration-500"
+                    className="h-full bg-[#375FFF] transition-all duration-500"
                     style={{
                       width: `${
                         ((step + (allAnswered ? 1 : 0)) / QUESTIONS.length) * 100
@@ -1028,7 +1033,7 @@ function App() {
                   return (
                     <fieldset
                       key={q.id}
-                      className="border-2 border-[#0A0A0A] bg-[#F2EFE4] p-6 shadow-hard"
+                      className="border-2 border-[#0A0A0A] bg-white p-6 shadow-[6px_6px_0_0_#FFFFFF]"
                     >
                       <legend className="px-2">
                         <span className="font-mono text-xs font-bold text-[#C42B00]">
@@ -1055,8 +1060,8 @@ function App() {
                               aria-pressed={selected}
                               className={`flex items-start gap-3 text-left border p-4 transition-all ${
                                 selected
-                                  ? "border-[#1A1AE5] bg-[#1A1AE5]/5 ring-1 ring-[#1A1AE5]/30"
-                                  : "border-[#0A0A0A] bg-white hover:border-[#1A1AE5]/40"
+                                  ? "border-[#375FFF] bg-[#EAF0FF] ring-1 ring-[#375FFF]/30"
+                                  : "border-[#0A0A0A] bg-white hover:border-[#375FFF]/40"
                               }`}
                             >
                               <span
@@ -1064,7 +1069,7 @@ function App() {
                                   isMulti ? "rounded-md" : "rounded-full"
                                 } border-2 ${
                                   selected
-                                    ? "bg-[#1A1AE5] border-[#1A1AE5]"
+                                    ? "bg-[#375FFF] border-[#375FFF]"
                                     : "border-[#CBD5E0] bg-white"
                                 }`}
                               >
@@ -1094,7 +1099,7 @@ function App() {
                             <button
                               type="button"
                               onClick={() => advanceFromMulti(index)}
-                              className="inline-flex items-center gap-2 bg-[#1A1AE5] text-white font-semibold px-5 py-2.5 hover:bg-[#0F0FA8] transition-colors"
+                              className="inline-flex items-center gap-2 bg-[#375FFF] text-white font-semibold px-5 py-2.5 hover:bg-[#2748CC] transition-colors"
                             >
                               {t(UI.assessment.continue)}
                               <ArrowRight className="w-4 h-4" />
@@ -1111,7 +1116,7 @@ function App() {
                     <button
                       type="button"
                       onClick={generate}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFB800] hover:bg-[#E5A600] text-[#0A0A0A] border-2 border-[#0A0A0A] shadow-hard-sm font-black text-lg px-8 py-4 transition-colors"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFE600] hover:bg-[#E5CE00] text-[#04070F] border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-black text-lg px-8 py-4 transition-colors"
                     >
                       <ClipboardCheck className="w-5 h-5" />
                       {t(UI.assessment.generate)}
@@ -1125,12 +1130,12 @@ function App() {
             {results && (
               <div ref={resultsRef} className="mt-12 scroll-mt-20">
                 <div className="flex items-center justify-between flex-wrap gap-3">
-                  <h3 className="font-display font-black tracking-tight text-2xl text-[#0A0A0A]">
+                  <h3 className="font-display font-black tracking-tight text-2xl text-[#EEF1FA]">
                     {t(UI.assessment.profileHeading)}
                   </h3>
                   <button
                     onClick={restart}
-                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#2B2B2B] hover:text-[#1A1AE5]"
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-[#9FA8C4] hover:text-[#6E8CFF]"
                   >
                     <RotateCcw className="w-4 h-4" />
                     {t(UI.assessment.retake)}
@@ -1140,9 +1145,8 @@ function App() {
                 <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
                   {/* Panel 1 — score */}
                   <div
-                    className="border p-7 flex flex-col items-center text-center"
+                    className="border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-7 flex flex-col items-center text-center"
                     style={{
-                      borderColor: results.tier.color + "55",
                       backgroundColor: results.tier.bg,
                     }}
                   >
@@ -1168,7 +1172,7 @@ function App() {
                   </div>
 
                   {/* Panel 2 — risk factors */}
-                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard">
+                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-[6px_6px_0_0_#FFFFFF]">
                     <h4 className="font-bold text-lg text-[#0A0A0A]">
                       {t(UI.assessment.riskFactorsHeading)}
                     </h4>
@@ -1188,7 +1192,7 @@ function App() {
                   </div>
 
                   {/* Panel 3 — actions */}
-                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard">
+                  <div className="border-2 border-[#0A0A0A] bg-white p-7 shadow-[6px_6px_0_0_#FFFFFF]">
                     <h4 className="font-bold text-lg text-[#0A0A0A]">
                       {t(UI.assessment.actionListHeading)}
                     </h4>
@@ -1198,7 +1202,7 @@ function App() {
                           <span
                             className={`inline-block font-mono text-[10px] tracking-wider uppercase px-2 py-0.5 rounded-full ${
                               PRIORITY_CLASS[a.priority] ||
-                              "bg-[#1A1AE5] text-white"
+                              "bg-[#375FFF] text-white"
                             }`}
                           >
                             {t(PRIORITY_LABELS[a.priority]) || a.priority}
@@ -1214,7 +1218,7 @@ function App() {
                               href={a.resource.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-[#1A1AE5] hover:underline"
+                              className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold text-[#375FFF] hover:underline"
                             >
                               {t(a.resource.label)}
                               <ExternalLink className="w-3 h-3" />
@@ -1230,21 +1234,21 @@ function App() {
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <button
                     onClick={handlePrint}
-                    className="inline-flex items-center justify-center gap-2 bg-[#1A1AE5] hover:bg-[#0F0FA8] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-[#375FFF] hover:bg-[#2748CC] text-white border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-semibold px-6 py-3 transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     {t(UI.assessment.downloadPdf)}
                   </button>
                   <button
                     onClick={handleShare}
-                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#1A1AE5]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#375FFF]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
                   >
                     <Share2 className="w-4 h-4" />
                     {copied ? t(UI.assessment.linkCopied) : t(UI.assessment.shareTeam)}
                   </button>
                   <button
                     onClick={() => setShowQr((v) => !v)}
-                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#1A1AE5]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#0A0A0A] hover:border-[#375FFF]/40 text-[#0A0A0A] font-semibold px-6 py-3 transition-colors"
                   >
                     <QrCode className="w-4 h-4" />
                     {showQr ? t(UI.assessment.hideQr) : t(UI.assessment.showQr)}
@@ -1252,7 +1256,7 @@ function App() {
                 </div>
 
                 {showQr && qrDataUrl && (
-                  <div className="mt-4 flex flex-col items-center gap-2 border-2 border-[#0A0A0A] bg-white p-6 shadow-hard">
+                  <div className="mt-4 flex flex-col items-center gap-2 border-2 border-[#0A0A0A] bg-white p-6 shadow-[6px_6px_0_0_#FFFFFF]">
                     <img
                       src={qrDataUrl}
                       alt={t(UI.assessment.showQr)}
@@ -1267,7 +1271,7 @@ function App() {
                 )}
 
                 {/* resources */}
-                <div className="mt-10 bg-[#F2EFE4] border-2 border-[#0A0A0A] p-7">
+                <div className="mt-10 bg-white border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-7">
                   <h4 className="font-bold text-lg text-[#0A0A0A]">
                     {t(UI.assessment.learnMore)}
                   </h4>
@@ -1278,9 +1282,9 @@ function App() {
                         href={r.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-start gap-2 bg-white border-2 border-[#0A0A0A] p-4 hover:border-[#1A1AE5]/40 transition-colors"
+                        className="flex items-start gap-2 bg-[#F2EFE4] border-2 border-[#0A0A0A] p-4 hover:border-[#375FFF]/40 transition-colors"
                       >
-                        <ExternalLink className="w-4 h-4 text-[#1A1AE5] mt-0.5 shrink-0" />
+                        <ExternalLink className="w-4 h-4 text-[#375FFF] mt-0.5 shrink-0" />
                         <span className="text-sm font-semibold text-[#0A0A0A] leading-snug">
                           {t(r.label)}
                         </span>
@@ -1296,21 +1300,21 @@ function App() {
 
         {/* ======================================================= SECTION 3 */}
         <Route path="/representatives" element={
-        <section id="representatives" className="pt-16">
+        <section id="representatives" className="pt-16 bg-[#04070F]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-20">
             <div className="max-w-3xl">
-              <SectionLabel>{t(UI.reps.sectionLabel)}</SectionLabel>
-              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+              <SectionLabel tone="cyber">{t(UI.reps.sectionLabel)}</SectionLabel>
+              <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
                 {t(UI.reps.heading)}
               </h2>
-              <p className="mt-4 text-[#2B2B2B] text-lg leading-relaxed">
+              <p className="mt-4 text-[#9FA8C4] text-lg leading-relaxed">
                 {t(UI.reps.intro)}
               </p>
             </div>
 
             {/* A — Investment gap */}
             <div className="mt-12">
-              <h3 className="font-bold text-xl text-[#0A0A0A]">
+              <h3 className="font-bold text-xl text-[#EEF1FA]">
                 {t(UI.reps.caseHeading)}
               </h3>
 
@@ -1319,7 +1323,7 @@ function App() {
                 <div className="overflow-x-auto border-2 border-[#0A0A0A] bg-white">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-[#1A1AE5] text-white text-left">
+                      <tr className="bg-[#375FFF] text-white text-left">
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableState)}</th>
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInitiative)}</th>
                         <th className="px-4 py-3 font-semibold">{t(UI.reps.tableInvestment)}</th>
@@ -1353,7 +1357,7 @@ function App() {
                 </div>
 
                 {/* chart */}
-                <div className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard">
+                <div className="border-2 border-[#0A0A0A] bg-white p-6 shadow-[6px_6px_0_0_#FFFFFF]">
                   <p className="font-semibold text-[#0A0A0A]">
                     {t(UI.reps.chartHeading)}
                   </p>
@@ -1387,8 +1391,8 @@ function App() {
                               key={i}
                               fill={
                                 entry.state === "Colorado"
-                                  ? C.danger
-                                  : C.primary
+                                  ? CYBER.danger
+                                  : CYBER.primary
                               }
                             />
                           ))}
@@ -1413,7 +1417,7 @@ function App() {
               </div>
 
               {/* callout */}
-              <div className="mt-6 bg-[#FFB800] text-[#0A0A0A] p-7">
+              <div className="mt-6 bg-[#FFE600] text-[#04070F] border-2 border-[#0A0A0A] shadow-[6px_6px_0_0_#FFFFFF] p-7">
                 <p className="text-lg leading-relaxed">
                   {t(UI.reps.callout)}
                 </p>
@@ -1422,10 +1426,10 @@ function App() {
 
             {/* B — Detailed ecosystem accordion */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#0A0A0A]">
+              <h3 className="font-bold text-xl text-[#EEF1FA]">
                 {t(UI.reps.ecosystemHeading)}
               </h3>
-              <p className="mt-2 text-[#2B2B2B]">
+              <p className="mt-2 text-[#9FA8C4]">
                 {t(UI.reps.ecosystemIntro)}
               </p>
 
@@ -1448,7 +1452,7 @@ function App() {
                           </span>
                         </span>
                         <ChevronDown
-                          className={`w-5 h-5 text-[#1A1AE5] shrink-0 transition-transform ${
+                          className={`w-5 h-5 text-[#375FFF] shrink-0 transition-transform ${
                             open ? "rotate-180" : ""
                           }`}
                         />
@@ -1474,7 +1478,7 @@ function App() {
 
               <button
                 onClick={handlePrint}
-                className="mt-5 inline-flex items-center gap-2 bg-[#1A1AE5] hover:bg-[#0F0FA8] text-white border-2 border-[#0A0A0A] shadow-hard-sm font-semibold px-6 py-3 transition-colors"
+                className="mt-5 inline-flex items-center gap-2 bg-[#375FFF] hover:bg-[#2748CC] text-white border-2 border-[#0A0A0A] shadow-[3px_3px_0_0_#FFFFFF] font-semibold px-6 py-3 transition-colors"
               >
                 <FileText className="w-4 h-4" />
                 {t(UI.reps.downloadReportPdf)}
@@ -1483,17 +1487,17 @@ function App() {
 
             {/* C — Recommendations */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#0A0A0A]">
+              <h3 className="font-bold text-xl text-[#EEF1FA]">
                 {t(UI.reps.recommendationsHeading)}
               </h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                 {RECOMMENDATIONS.map((rec, i) => (
                   <div
                     key={i}
-                    className="border-2 border-[#0A0A0A] bg-white p-7 shadow-hard"
+                    className="border-2 border-[#0A0A0A] bg-white p-7 shadow-[6px_6px_0_0_#FFFFFF]"
                   >
                     <div className="flex items-center gap-3">
-                      <span className="inline-flex items-center justify-center w-9 h-9 bg-[#1A1AE5] text-white font-mono font-bold">
+                      <span className="inline-flex items-center justify-center w-9 h-9 bg-[#375FFF] text-white font-mono font-bold">
                         {i + 1}
                       </span>
                       <h4 className="font-bold text-[#0A0A0A] leading-snug">
@@ -1505,13 +1509,13 @@ function App() {
                     </p>
                     <div className="mt-4 grid gap-2">
                       <div className="flex gap-2 text-sm">
-                        <span className="font-semibold text-[#1A1AE5] shrink-0">
+                        <span className="font-semibold text-[#375FFF] shrink-0">
                           {t(UI.reps.precedentLabel)}
                         </span>
                         <span className="text-[#2B2B2B]">{t(rec.precedent)}</span>
                       </div>
                       <div className="flex gap-2 text-sm">
-                        <span className="font-semibold text-[#00A94F] shrink-0">
+                        <span className="font-semibold text-[#00707A] shrink-0">
                           {t(UI.reps.impactLabel)}
                         </span>
                         <span className="text-[#2B2B2B]">{t(rec.impact)}</span>
@@ -1524,22 +1528,22 @@ function App() {
 
             {/* D — Contact & engagement */}
             <div className="mt-16">
-              <h3 className="font-bold text-xl text-[#0A0A0A]">{t(UI.reps.takeActionHeading)}</h3>
+              <h3 className="font-bold text-xl text-[#EEF1FA]">{t(UI.reps.takeActionHeading)}</h3>
               <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
                 <a
                   href="https://crow.house.gov"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard hover:border-[#1A1AE5]/40 transition-colors"
+                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-[6px_6px_0_0_#FFFFFF] hover:border-[#375FFF]/40 transition-colors"
                 >
-                  <Landmark className="w-6 h-6 text-[#1A1AE5]" />
+                  <Landmark className="w-6 h-6 text-[#375FFF]" />
                   <h4 className="mt-3 font-bold text-[#0A0A0A]">
                     {t(UI.reps.contactCrowTitle)}
                   </h4>
                   <p className="mt-1 text-sm text-[#2B2B2B]">
                     {t(UI.reps.contactCrowSub)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#375FFF]">
                     crow.house.gov <ExternalLink className="w-3.5 h-3.5" />
                   </span>
                 </a>
@@ -1548,23 +1552,23 @@ function App() {
                   href="https://coloradoquantum.org"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-hard hover:border-[#1A1AE5]/40 transition-colors"
+                  className="border-2 border-[#0A0A0A] bg-white p-6 shadow-[6px_6px_0_0_#FFFFFF] hover:border-[#375FFF]/40 transition-colors"
                 >
-                  <Users className="w-6 h-6 text-[#00A94F]" />
+                  <Users className="w-6 h-6 text-[#00707A]" />
                   <h4 className="mt-3 font-bold text-[#0A0A0A]">
                     {t(UI.reps.contactCQNTitle)}
                   </h4>
                   <p className="mt-1 text-sm text-[#2B2B2B]">
                     {t(UI.reps.contactCQNSub)}
                   </p>
-                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#1A1AE5]">
+                  <span className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[#375FFF]">
                     coloradoquantum.org <ExternalLink className="w-3.5 h-3.5" />
                   </span>
                 </a>
 
                 <button
                   onClick={emailTemplate}
-                  className="text-left border border-[#FFB800]/40 bg-[#FBF3E6] p-6 hover:border-[#FFB800] transition-colors"
+                  className="text-left border-2 border-[#0A0A0A] bg-white shadow-[6px_6px_0_0_#FFFFFF] p-6 hover:border-[#FFE600] transition-colors"
                 >
                   <Mail className="w-6 h-6 text-[#9c6a1c]" />
                   <h4 className="mt-3 font-bold text-[#0A0A0A]">
@@ -1612,17 +1616,17 @@ function App() {
 
         {/* ======================================================= SECTION 5 */}
         <Route path="/about" element={
-        <section id="about" className="pt-16 bg-white">
+        <section id="about" className="pt-16 bg-[#04070F]">
           <div className="max-w-[900px] mx-auto px-4 sm:px-6 py-20">
-            <SectionLabel>About</SectionLabel>
-            <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#0A0A0A]">
+            <SectionLabel tone="cyber">About</SectionLabel>
+            <h2 className="font-display font-black tracking-tight text-2xl sm:text-4xl text-[#EEF1FA]">
               About Quantum4Colorado
             </h2>
 
             <div className="mt-8 space-y-8">
               <div>
-                <h3 className="font-bold text-lg text-[#0A0A0A]">What this is</h3>
-                <p className="mt-2 text-[#2B2B2B] leading-relaxed">
+                <h3 className="font-bold text-lg text-[#EEF1FA]">What this is</h3>
+                <p className="mt-2 text-[#9FA8C4] leading-relaxed">
                   Quantum4Colorado was built by a team of Colorado high school
                   students for the 2026 Congressional App Challenge. It is a
                   nonpartisan civic information resource.
@@ -1630,10 +1634,10 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#0A0A0A]">
+                <h3 className="font-bold text-lg text-[#EEF1FA]">
                   Why we built it
                 </h3>
-                <p className="mt-2 text-[#2B2B2B] leading-relaxed">
+                <p className="mt-2 text-[#9FA8C4] leading-relaxed">
                   Colorado sits at the center of the quantum computing
                   revolution. NIST Boulder, JILA, and Quantinuum put this state
                   in a position no other one holds. We built this app because
@@ -1644,10 +1648,10 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#0A0A0A]">
+                <h3 className="font-bold text-lg text-[#EEF1FA]">
                   Where This Data Comes From
                 </h3>
-                <p className="mt-2 text-sm text-[#2B2B2B]">
+                <p className="mt-2 text-sm text-[#9FA8C4]">
                   Every ecosystem entry, assessment recommendation, and policy
                   claim in this app traces back to one of these sources.
                 </p>
@@ -1669,11 +1673,11 @@ function App() {
                         href={src.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-start justify-between gap-3 p-4 hover:bg-[#F2EFE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1AE5] focus-visible:ring-inset"
+                        className="group flex items-start justify-between gap-3 p-4 hover:bg-[#F2EFE4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-inset"
                       >
                         <div>{content}</div>
                         <ExternalLink
-                          className="w-4 h-4 text-[#1A1AE5] shrink-0 mt-0.5 opacity-60 group-hover:opacity-100"
+                          className="w-4 h-4 text-[#375FFF] shrink-0 mt-0.5 opacity-60 group-hover:opacity-100"
                           aria-hidden="true"
                         />
                       </a>
@@ -1684,7 +1688,7 @@ function App() {
                     );
                   })}
                 </div>
-                <p className="mt-3 text-xs text-[#2B2B2B] leading-relaxed">
+                <p className="mt-3 text-xs text-[#9FA8C4] leading-relaxed">
                   Statistics are drawn from public sources. Figures such as
                   federal investment and researcher counts are approximate and
                   reflect the most recent publicly available reporting. Quantum
@@ -1695,12 +1699,12 @@ function App() {
               </div>
 
               <div>
-                <h3 className="font-bold text-lg text-[#0A0A0A]">
+                <h3 className="font-bold text-lg text-[#EEF1FA]">
                   Contact &amp; feedback
                 </h3>
                 <a
                   href="mailto:team@quantum4colorado.org"
-                  className="mt-2 inline-flex items-center gap-2 text-[#1A1AE5] font-semibold hover:underline"
+                  className="mt-2 inline-flex items-center gap-2 text-[#6E8CFF] font-semibold hover:underline"
                 >
                   <Mail className="w-4 h-4" />
                   team@quantum4colorado.org
@@ -1713,15 +1717,15 @@ function App() {
         </Routes>
 
         {/* footer */}
-        <footer className="bg-[#05003D] text-blue-100/70">
+        <footer className="bg-[#04070F] border-t-4 border-[#0A0A0A] text-[#9FA8C4]">
           <div className="max-w-[1200px] mx-auto px-4 sm:px-6 py-10">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center justify-center w-8 h-8 bg-white/10">
-                  <Atom className="w-4 h-4 text-[#FFB800]" />
+                  <Atom className="w-4 h-4 text-[#FFE600]" />
                 </span>
                 <span className="font-black text-white">
-                  Quantum<span className="text-[#C42B00]">4</span>Colorado
+                  Quantum<span className="text-[#FF6A3D]">4</span>Colorado
                 </span>
               </div>
               <p className="text-sm text-center sm:text-right">
