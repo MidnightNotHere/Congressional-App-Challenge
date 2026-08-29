@@ -82,6 +82,7 @@ import {
   LanguageContext,
   useLanguage,
 } from "./src/shared/uiKit.jsx";
+import MatrixRain from "./src/shared/MatrixRain.jsx";
 import LearnHub from "./src/education/LearnHub.jsx";
 import LessonPage from "./src/education/LessonPage.jsx";
 import QuantumLab from "./src/lab/QuantumLab.jsx";
@@ -732,11 +733,16 @@ function App() {
         <Route path="/" element={
         <section id="story" className="pt-16 bg-[#04070F]">
           {/* Hero */}
-          <div className="bg-gradient-to-b from-[#375FFF] to-[#04070F] text-white">
-            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
+          <div className="relative overflow-hidden bg-[#04070F] text-white">
+            <MatrixRain className="absolute inset-0" />
+            <div
+              className="absolute inset-0 bg-gradient-to-b from-[#375FFF]/20 via-[#04070F]/55 to-[#04070F]/95"
+              aria-hidden="true"
+            />
+            <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 pt-6">
               <QuantumLine className="opacity-80" tone="cyber" />
             </div>
-            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-20">
+            <div className="relative max-w-[1200px] mx-auto px-4 sm:px-6 pt-10 pb-20">
               <p className="font-mono text-xs sm:text-sm tracking-widest uppercase text-[#FFE600] mb-5">
                 {t(UI.story.heroEyebrow)}
               </p>
@@ -1627,7 +1633,7 @@ function App() {
               <div>
                 <h3 className="font-bold text-lg text-[#EEF1FA]">What this is</h3>
                 <p className="mt-2 text-[#9FA8C4] leading-relaxed">
-                  Quantum4Colorado was built by a team of Colorado high school
+                  Quantum4Colorado was built by a team of high school
                   students for the 2026 Congressional App Challenge. It is a
                   nonpartisan civic information resource.
                 </p>
