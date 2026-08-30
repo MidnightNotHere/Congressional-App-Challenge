@@ -83,6 +83,7 @@ import {
   useLanguage,
 } from "./src/shared/uiKit.jsx";
 import MatrixRain from "./src/shared/MatrixRain.jsx";
+import ReviewsPage from "./src/reviews/ReviewsPage.jsx";
 import LearnHub from "./src/education/LearnHub.jsx";
 import LessonPage from "./src/education/LessonPage.jsx";
 import QuantumLab from "./src/lab/QuantumLab.jsx";
@@ -118,6 +119,7 @@ const PATH_BY_KEY = {
   representatives: "/representatives",
   learn: "/learn",
   youth: "/youth",
+  reviews: "/reviews",
   about: "/about",
 };
 const KEY_BY_PATH = Object.fromEntries(
@@ -643,6 +645,7 @@ function App() {
       key: "youth",
       label: { en: "Youth and Education", es: "Juventud y Educación" },
     },
+    { key: "reviews", label: { en: "Reviews", es: "Reseñas" } },
     { key: "about", label: { en: "About", es: "Acerca de" } },
   ];
 
@@ -1718,6 +1721,13 @@ function App() {
               </div>
             </div>
           </div>
+        </section>
+        } />
+
+        {/* ======================================================= SECTION 6 */}
+        <Route path="/reviews" element={
+        <section id="reviews" className="pt-16 min-h-screen bg-[#04070F]">
+          <ReviewsPage />
         </section>
         } />
         </Routes>
