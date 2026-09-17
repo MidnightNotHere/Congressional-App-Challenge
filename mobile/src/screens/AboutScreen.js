@@ -16,7 +16,7 @@ export default function AboutScreen() {
         <H2>About Quantum4Colorado</H2>
 
         <Block title="What this is">
-          Quantum4Colorado was built by a team of Colorado high school students for the 2026
+          Quantum4Colorado was built by Christian Lee and Arnav Rohilla for the 2026
           Congressional App Challenge. It is a nonpartisan civic information resource.
         </Block>
 

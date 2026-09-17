@@ -1636,8 +1636,8 @@ function App() {
               <div>
                 <h3 className="font-bold text-lg text-[#EEF1FA]">What this is</h3>
                 <p className="mt-2 text-[#9FA8C4] leading-relaxed">
-                  Quantum4Colorado was built by a team of high school
-                  students for the 2026 Congressional App Challenge. It is a
+                  Quantum4Colorado was built by Christian Lee and Arnav
+                  Rohilla for the 2026 Congressional App Challenge. It is a
                   nonpartisan civic information resource.
                 </p>
               </div>

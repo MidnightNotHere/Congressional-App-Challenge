@@ -81,9 +81,9 @@ toggle the language switch to Spanish and show a section re-render, then
 **Visual:** Return to the Story hero or a wide shot of the nav showing
 all four sections.
 
-> "Quantum4Colorado — built by Colorado students, for Colorado's 6th
-> District, to make sure the state that's leading the quantum revolution
-> doesn't miss the chance to act on it."
+> "Quantum4Colorado — built by Christian Lee and Arnav Rohilla, for
+> Colorado's 6th District, to make sure the state that's leading the
+> quantum revolution doesn't miss the chance to act on it."
 
 **End card (text on screen):** Quantum4Colorado · 2026 Congressional App
 Challenge · CO-06 · [your GitHub/deployed URL here]
