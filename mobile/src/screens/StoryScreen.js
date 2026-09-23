@@ -40,7 +40,7 @@ const UI = {
     es: "Por Qué el Liderazgo de Colorado Importa y Podría Perderse",
   },
   strengthsHeading: { en: "Colorado's strengths", es: "Las fortalezas de Colorado" },
-  gapHeading: { en: "The investment gap", es: "La brecha de inversión" },
+  gapHeading: { en: "Keeping Colorado's lead", es: "Manteniendo la ventaja de Colorado" },
   ctaAssessTitle: { en: "Is your organization ready?", es: "¿Está lista su organización?" },
   ctaAssessSub: { en: "Take the 3-minute readiness assessment", es: "Realice la evaluación de preparación de 3 minutos" },
   ctaRepsTitle: { en: "For representatives", es: "Para representantes" },

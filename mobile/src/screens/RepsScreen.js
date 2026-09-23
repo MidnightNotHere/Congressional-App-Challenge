@@ -23,12 +23,12 @@ const UI = {
   chartTitle: { en: "State quantum investment commitments", es: "Compromisos estatales de inversión cuántica" },
   chartSub: { en: "Reported state funding, in $ millions", es: "Financiamiento estatal reportado, en millones de $" },
   chartNote: {
-    en: "Figures reflect publicly reported state commitments. Colorado has no coordinated state quantum investment despite hosting federal and university infrastructure other states are spending hundreds of millions to approximate.",
-    es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado no tiene inversión cuántica estatal coordinada a pesar de albergar infraestructura federal y universitaria que otros estados gastan cientos de millones en intentar igualar.",
+    en: "Figures reflect publicly reported state commitments. Colorado made a bipartisan $74 million commitment in 2024 through HB24-1325, which supports a shared quantum research facility and access to capital for Colorado quantum companies. Illinois has committed $500 million to a single quantum campus.",
+    es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado hizo un compromiso bipartidista de $74 millones en 2024 a través de la HB24-1325, que respalda una instalación de investigación cuántica compartida y el acceso a capital para las empresas cuánticas de Colorado. Illinois ha comprometido $500 millones para un solo campus cuántico.",
   },
   calloutText: {
-    en: "Other states are spending hundreds of millions to build what Colorado already has in NIST Boulder and JILA. A state Quantum Economic Development Initiative could turn that head start into jobs, new companies, and national leadership. Illinois and New York are already moving.",
-    es: "Otros estados gastan cientos de millones para construir lo que Colorado ya tiene en NIST Boulder y JILA. Una Iniciativa Estatal de Desarrollo Económico Cuántico podría convertir esa ventaja en empleos, nuevas empresas y liderazgo nacional. Illinois y Nueva York ya se están moviendo.",
+    en: "Colorado already has what other states are spending hundreds of millions to build: NIST Boulder, JILA, and the largest cluster of quantum companies in the country. HB24-1325 was a strong first step. The next steps are protecting state government systems with post-quantum security and building a university talent pipeline so quantum graduates stay in Colorado.",
+    es: "Colorado ya tiene lo que otros estados están gastando cientos de millones en construir: NIST Boulder, JILA, y el mayor grupo de empresas cuánticas del país. La HB24-1325 fue un primer paso importante. Los próximos pasos son proteger los sistemas del gobierno estatal con seguridad poscuántica y construir una cantera de talento universitario para que los graduados en computación cuántica permanezcan en Colorado.",
   },
   detailHeading: { en: "Detailed Ecosystem Report", es: "Informe Detallado del Ecosistema" },
   researchFocus: { en: "Research focus", es: "Enfoque de investigación" },

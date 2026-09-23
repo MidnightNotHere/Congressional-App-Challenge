@@ -16,22 +16,22 @@
 /* Chart-friendly view of the investment gap (numeric `amount` in $M) for
    the web app's Recharts bar chart and the mobile app's native bar chart. */
 export const INVESTMENT_CHART = [
-  { state: "Illinois", amount: 500, note: "Illinois Quantum Act + campus" },
+  { state: "Illinois", amount: 500, note: "Illinois quantum campus (2024)" },
   { state: "New York", amount: 200, note: "IBM Quantum Campus" },
   { state: "California", amount: 200, note: "Research expansion" },
-  { state: "Colorado", amount: 0, note: "No coordinated state initiative" },
+  { state: "Colorado", amount: 74, note: "HB24-1325 quantum tax credits (2024)" },
 ];
 
 /* Same comparison, formatted for the table layout. */
 export const INVESTMENT_TABLE = [
   {
     state: "Illinois",
-    initiative: { en: "Illinois Quantum Act", es: "Ley Cuántica de Illinois" },
+    initiative: { en: "Quantum campus investment", es: "Inversión en campus cuántico" },
     investment: {
-      en: "State-dedicated funding + quantum campus",
-      es: "Financiamiento estatal dedicado + campus cuántico",
+      en: "$500M committed",
+      es: "$500 millones comprometidos",
     },
-    year: "2023",
+    year: "2024",
   },
   {
     state: "New York",
@@ -59,9 +59,15 @@ export const INVESTMENT_TABLE = [
   },
   {
     state: "Colorado",
-    initiative: { en: "No coordinated state initiative", es: "Sin iniciativa estatal coordinada" },
-    investment: { en: "Federal infrastructure only", es: "Solo infraestructura federal" },
-    year: { en: "None", es: "Ninguna" },
+    initiative: {
+      en: "HB24-1325 Quantum Tax Credits (bipartisan)",
+      es: "HB24-1325, Créditos Fiscales Cuánticos (bipartidista)",
+    },
+    investment: {
+      en: "$74M in refundable tax credits",
+      es: "$74 millones en créditos fiscales reembolsables",
+    },
+    year: "2024",
     highlight: true,
   },
 ];
@@ -73,8 +79,8 @@ export const RECOMMENDATIONS = [
       es: "Establecer una Iniciativa de Desarrollo Económico Cuántico de Colorado",
     },
     rationale: {
-      en: "Pair Colorado's existing federal infrastructure (NIST, JILA, NREL) with state economic development funding to attract quantum companies and keep talent here. The pieces already exist. What is missing is a strategy to connect them and the state money to back it.",
-      es: "Combinar la infraestructura federal que Colorado ya tiene (NIST, JILA, NREL) con financiamiento estatal de desarrollo económico para atraer empresas cuánticas y retener talento. Las piezas ya existen. Lo que falta es una estrategia que las conecte y el dinero estatal que la respalde.",
+      en: "Pair Colorado's existing federal infrastructure (NIST, JILA, NREL) with a coordinated state strategy to attract quantum companies and keep talent here. HB24-1325's $74M in quantum tax credits was a strong first step. What is still missing is the broader initiative to connect that funding to the federal assets already in place.",
+      es: "Combinar la infraestructura federal que Colorado ya tiene (NIST, JILA, NREL) con una estrategia estatal coordinada para atraer empresas cuánticas y retener talento. Los $74 millones en créditos fiscales cuánticos de la HB24-1325 fueron un primer paso importante. Lo que aún falta es la iniciativa más amplia que conecte ese financiamiento con los activos federales ya existentes.",
     },
     precedent: {
       en: "Modeled on the Illinois Quantum Act (2023).",

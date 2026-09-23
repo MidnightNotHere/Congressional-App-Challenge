@@ -276,20 +276,20 @@ export const STRENGTHS = [
 
 export const GAPS = [
   {
-    en: "Illinois passed the Illinois Quantum Act in 2023 with dedicated state funding.",
-    es: "Illinois aprobó la Ley Cuántica de Illinois en 2023 con financiamiento estatal dedicado.",
+    en: "In 2024, Colorado passed HB24-1325, a bipartisan $74M quantum tax credit program.",
+    es: "En 2024, Colorado aprobó la HB24-1325, un programa bipartidista de créditos fiscales cuánticos de $74 millones.",
   },
   {
-    en: "New York committed $200M to a quantum campus at IBM's Hudson Valley site.",
-    es: "Nueva York comprometió $200 millones para un campus cuántico en el sitio de IBM en Hudson Valley.",
+    en: "Illinois committed $500M to a quantum campus the same year.",
+    es: "Illinois comprometió $500 millones para un campus cuántico ese mismo año.",
   },
   {
-    en: "Colorado has world-class federal and university facilities, but no state plan to invest in them.",
-    es: "Colorado tiene instalaciones federales y universitarias de primer nivel, pero ningún plan estatal para invertir en ellas.",
+    en: "Colorado still has no statewide plan for post-quantum security in state government.",
+    es: "Colorado todavía no cuenta con un plan estatal de seguridad poscuántica para el gobierno estatal.",
   },
   {
-    en: "Other states already run quantum economic development programs. Without one, Colorado risks losing its talent and its companies to them.",
-    es: "Otros estados ya tienen programas de desarrollo económico cuántico. Sin uno, Colorado corre el riesgo de perder su talento y sus empresas ante ellos.",
+    en: "Without continued investment, Colorado risks losing talent and companies to states that are spending more.",
+    es: "Sin inversión continua, Colorado corre el riesgo de perder talento y empresas ante estados que están invirtiendo más.",
   },
 ];
 
@@ -565,12 +565,34 @@ export const SOURCES = [
   },
   {
     organization: {
+      en: "Colorado Governor's Office — press release on HB24-1325, May 28, 2024",
+      es: "Oficina del Gobernador de Colorado — comunicado de prensa sobre la HB24-1325, 28 de mayo de 2024",
+    },
+    supports: {
+      en: "Colorado's $74M bipartisan quantum tax credit commitment (HB24-1325) in the investment-gap comparison table and chart.",
+      es: "El compromiso bipartidista de Colorado de $74 millones en créditos fiscales cuánticos (HB24-1325) en la tabla y el gráfico comparativos de la brecha de inversión.",
+    },
+    url: "https://www.colorado.gov/governor",
+  },
+  {
+    organization: {
+      en: "Office of Illinois Governor JB Pritzker — announcement, July 26, 2024",
+      es: "Oficina del Gobernador de Illinois, JB Pritzker — anuncio, 26 de julio de 2024",
+    },
+    supports: {
+      en: "Illinois's $500M commitment to its quantum campus in the investment-gap comparison table and chart.",
+      es: "El compromiso de $500 millones de Illinois para su campus cuántico en la tabla y el gráfico comparativos de la brecha de inversión.",
+    },
+    url: null,
+  },
+  {
+    organization: {
       en: "State quantum initiative public announcements",
       es: "Anuncios públicos de iniciativas estatales cuánticas",
     },
     supports: {
-      en: "The investment-gap comparison table (Illinois Quantum Act, New York's IBM quantum campus, California's research funding).",
-      es: "La tabla comparativa de la brecha de inversión (Ley Cuántica de Illinois, el campus cuántico de IBM en Nueva York, el financiamiento de investigación de California).",
+      en: "The remaining investment-gap comparison figures (New York's IBM quantum campus, California's research funding).",
+      es: "El resto de las cifras de la comparación de la brecha de inversión (el campus cuántico de IBM en Nueva York, el financiamiento de investigación de California).",
     },
     url: null,
   },
