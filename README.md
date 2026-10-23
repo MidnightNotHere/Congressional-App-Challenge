@@ -1,7 +1,9 @@
 # Quantum4Colorado
 
-A nonpartisan civic information platform that answers one question for three audiences:
+A civic information platform that answers one simple question for three different audiences:
 **"What does quantum computing mean for me, my organization, and my state?"**
+
+In a landscape filled with the rise of technology and quantum computing, understanding this topic becomes essential, and we have done this in a very simple way!
 
 Built for the **2026 Congressional App Challenge**, Colorado's 6th Congressional District (Rep. Jason Crow).
 
@@ -12,7 +14,7 @@ The app has four sections, available on both a web app and a native mobile app, 
 3. **For Representatives** — ecosystem data, an investment-gap analysis, policy recommendations, and engagement tools formatted for legislative use.
 4. **Youth & Education** — a quantum-careers quiz, learning resources, and Colorado-specific opportunities aimed at students.
 
-Every fact in the app links back to its public source — see **About → Where This Data Comes From** on either platform.
+Every fact in the app links back to its public source - see **About → Where This Data Comes From** on either platform.
 
 ## How the project is organized
 
@@ -26,7 +28,7 @@ mobile/                 ← the native Expo/React Native app
 
 ### The shared `/data` layer
 
-Both apps read from the same seven files in `data/` — `ecosystem.js`, `pqc-scoring.js`, `quiz-data.js`, `policy-recommendations.js`, `careers.js`, `resources.js`, `i18n.js` — so a factual correction or a translation only ever needs to happen in one place. Every user-facing string in these files is bilingual, stored inline as `{ en: "...", es: "..." }` and resolved at render time (see `data/i18n.js`). The mobile app reaches these files through a local `mobile/data` link (recreated automatically by `npm install` — see `mobile/scripts/link-data.js`) since Metro doesn't reliably resolve files outside its project root on every platform.
+Both apps use the same seven files in `data/` — `ecosystem.js`, `pqc-scoring.js`, `quiz-data.js`, `policy-recommendations.js`, `careers.js`, `resources.js`, `i18n.js` — so a factual correction or a translation only needs to happen in one place. Every user-facing string in these files is bilingual, stored inline as `{ en: "...", es: "..." }` and resolved at render time (see `data/i18n.js`). The mobile app reaches these files through a local `mobile/data` link (recreated automatically by `npm install` — see `mobile/scripts/link-data.js`) since Metro doesn't reliably resolve files outside its project root on every platform.
 
 ### The web app
 
