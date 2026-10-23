@@ -75,13 +75,13 @@ function AppNavigator() {
         })}
       >
         <Tab.Screen name="Story" component={StoryScreen} />
-        <Tab.Screen name="Assessment" component={AssessmentScreen} />
-        <Tab.Screen name="Reps" component={RepsScreen} />
         {/* The Youth tab also hosts the Learn Quantum course — YouthTab
             switches between the Youth screen, the course map, and a
             lesson. Kept inside this tab rather than adding a sixth so the
             bottom bar stays legible, especially with Spanish labels. */}
         <Tab.Screen name="Youth" component={YouthTab} />
+        <Tab.Screen name="Assessment" component={AssessmentScreen} />
+        <Tab.Screen name="Reps" component={RepsScreen} />
         <Tab.Screen name="About" component={AboutScreen} />
       </Tab.Navigator>
     </NavigationContainer>

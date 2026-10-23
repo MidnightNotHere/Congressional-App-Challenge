@@ -81,7 +81,7 @@ toggle the language switch to Spanish and show a section re-render, then
 **Visual:** Return to the Story hero or a wide shot of the nav showing
 all four sections.
 
-> "Quantum4Colorado — built by Christian Lee and Arnav Rohilla, for
+> "Quantum4Colorado — built by Aarush Goradia, Arnav Rohilla, and Christian Lee, for
 > Colorado's 6th District, to make sure the state that's leading the
 > quantum revolution doesn't miss the chance to act on it."
 

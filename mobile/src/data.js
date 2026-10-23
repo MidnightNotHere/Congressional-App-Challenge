@@ -51,6 +51,7 @@ import {
   QUIZ_RESULTS,
   computeQuizResult as computeQuizResultId,
 } from "../data/quiz-data.js";
+import { LEGAL, LEGAL_UPDATED, CONTACT_EMAILS } from "../data/legal.js";
 import {
   UNITS,
   ALL_LESSONS,
@@ -76,6 +77,8 @@ export {
   getUnitById,
   getAdjacentLessons,
 };
+
+export { LEGAL, LEGAL_UPDATED, CONTACT_EMAILS };
 
 export {
   HERO_STATS,

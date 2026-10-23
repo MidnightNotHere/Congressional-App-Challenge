@@ -499,8 +499,8 @@ export function calculateResults(answers) {
   if (answers.q6 === "no-audit") {
     score += 10;
     factors.push({
-      en: "Your organization has not had a recent cybersecurity assessment, leaving your current cryptographic exposure unmeasured.",
-      es: "Su organización no ha tenido una evaluación de ciberseguridad reciente, dejando su exposición criptográfica actual sin medir.",
+      en: "Your organization has not had a recent cybersecurity assessment, so nobody has measured your current cryptographic exposure.",
+      es: "Su organización no ha tenido una evaluación de ciberseguridad reciente, así que nadie ha medido su exposición criptográfica actual.",
     });
   } else if (answers.q6 === "planning") {
     score += 4;
@@ -521,8 +521,8 @@ export function calculateResults(answers) {
   if (answers.q8 === "not-familiar" || answers.q8 === "learning") {
     score += 5;
     factors.push({
-      en: "Awareness of the quantum threat is still early in your organization, which is the most important gap to close first.",
-      es: "La conciencia sobre la amenaza cuántica todavía es incipiente en su organización, lo cual es la brecha más importante que cerrar primero.",
+      en: "Awareness of the quantum threat is still low in your organization. Close that gap first.",
+      es: "La conciencia sobre la amenaza cuántica todavía es baja en su organización. Esa es la primera brecha que debe cerrar.",
     });
   }
 
@@ -534,8 +534,8 @@ export function calculateResults(answers) {
 
   if (factors.length === 0) {
     factors.push({
-      en: "Your current exposure is limited, which makes this an ideal time to plan ahead before quantum-safe migration becomes urgent.",
-      es: "Su exposición actual es limitada, lo que hace de este el momento ideal para planificar con anticipación antes de que la migración a estándares seguros contra la computación cuántica se vuelva urgente.",
+      en: "Your current exposure is limited. Use the time to plan before quantum-safe migration becomes urgent.",
+      es: "Su exposición actual es limitada. Aproveche el tiempo para planificar antes de que la migración a estándares seguros contra la computación cuántica se vuelva urgente.",
     });
   }
 
@@ -624,8 +624,8 @@ export function buildActions(orgType, data, reg) {
           es: "Revise los requisitos de CMMC 2.0 y la guía emergente de la NSA sobre seguridad cuántica",
         },
         description: {
-          en: "Defense contracting requirements move first and fastest. Make sure you understand where quantum-resistant cryptography fits into your CMMC obligations.",
-          es: "Los requisitos de contratación de defensa avanzan primero y más rápido. Asegúrese de entender dónde encaja la criptografía resistente a la computación cuántica dentro de sus obligaciones de CMMC.",
+          en: "Defense contracting requirements tend to arrive first. Find out where quantum-resistant cryptography fits into your CMMC obligations.",
+          es: "Los requisitos de contratación de defensa tienden a llegar primero. Averigüe dónde encaja la criptografía resistente a la computación cuántica dentro de sus obligaciones de CMMC.",
         },
         resource: NSA_PQC,
       },
@@ -644,12 +644,12 @@ export function buildActions(orgType, data, reg) {
       {
         priority: "Within 6 Months",
         title: {
-          en: "Engage a CMMC consultant with PQC experience",
+          en: "Hire a CMMC consultant with PQC experience",
           es: "Contrate a un consultor de CMMC con experiencia en PQC",
         },
         description: {
-          en: "Specialized guidance prevents costly missteps. Bring in an advisor who understands both defense compliance and post-quantum migration.",
-          es: "La orientación especializada previene errores costosos. Incorpore a un asesor que entienda tanto el cumplimiento de defensa como la migración poscuántica.",
+          en: "Bring in an advisor who knows both defense compliance and post-quantum migration, so you avoid expensive mistakes.",
+          es: "Incorpore a un asesor que conozca tanto el cumplimiento de defensa como la migración poscuántica, para evitar errores costosos.",
         },
         resource: null,
       },
@@ -683,12 +683,12 @@ export function buildActions(orgType, data, reg) {
       {
         priority: "Within 6 Months",
         title: {
-          en: "Engage NIST Boulder and CISA resources for a migration roadmap",
+          en: "Use NIST Boulder and CISA resources to build a migration roadmap",
           es: "Utilice los recursos de NIST Boulder y CISA para elaborar una hoja de ruta de migración",
         },
         description: {
-          en: "Colorado has the federal standard-setting body for PQC in its own backyard. Use CISA's public-sector guidance to build a phased roadmap.",
-          es: "Colorado tiene en su propio territorio al organismo federal que establece los estándares de PQC. Use la guía del sector público de CISA para construir una hoja de ruta por etapas.",
+          en: "NIST, which sets the federal PQC standards, has a lab in Boulder. Use CISA's public-sector guidance to build a phased roadmap.",
+          es: "El NIST, que establece los estándares federales de PQC, tiene un laboratorio en Boulder. Use la guía del sector público de CISA para construir una hoja de ruta por etapas.",
         },
         resource: CISA_PQC,
       },
@@ -711,8 +711,8 @@ export function buildActions(orgType, data, reg) {
           es: "Establezca un cronograma de migración a PQC alineado con la guía federal",
         },
         description: {
-          en: "Establish a target (for example, beginning by 2027) so the effort has accountability and a clear destination.",
-          es: "Establezca una meta (por ejemplo, comenzar antes de 2027) para que el esfuerzo tenga responsabilidad y un destino claro.",
+          en: "Pick a target date, such as starting by 2027, so someone is accountable and everyone knows the goal.",
+          es: "Fije una fecha meta, por ejemplo comenzar antes de 2027, para que haya un responsable y un objetivo claro.",
         },
         resource: null,
       },
@@ -750,8 +750,8 @@ export function buildActions(orgType, data, reg) {
           es: "Revise la guía de protección de datos de FERPA a medida que surjan los requisitos de PQC",
         },
         description: {
-          en: "Federal education-data guidance will evolve alongside the new standards. Assign someone to monitor it.",
-          es: "La guía federal sobre datos educativos evolucionará junto con los nuevos estándares. Asigne a alguien para monitorearla.",
+          en: "Federal education-data guidance will change as the new standards arrive. Assign someone to watch for it.",
+          es: "La guía federal sobre datos educativos cambiará a medida que lleguen los nuevos estándares. Asigne a alguien para que la siga.",
         },
         resource: CISA_PQC,
       },

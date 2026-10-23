@@ -130,8 +130,8 @@ export const CAREERS = [
       es: "JILA, NIST Boulder, la Iniciativa Cuántica de CU Boulder, y laboratorios nacionales como NREL.",
     },
     nextStep: {
-      en: "Email a CU Boulder or JILA professor whose research interests you and ask if they take high school interns. Many genuinely do.",
-      es: "Envíe un correo a un profesor de CU Boulder o JILA cuya investigación le interese y pregunte si acepta pasantes de secundaria. Muchos realmente lo hacen.",
+      en: "Email a CU Boulder or JILA professor whose research interests you and ask if they take high school interns. Many do.",
+      es: "Envíe un correo a un profesor de CU Boulder o JILA cuya investigación le interese y pregunte si acepta pasantes de secundaria. Muchos lo hacen.",
     },
   },
   {
@@ -143,8 +143,8 @@ export const CAREERS = [
       es: "Convierte la investigación cuántica en empresas, alianzas y empleos.",
     },
     whatTheyBuild: {
-      en: "The partnerships, funding deals, and go-to-market strategy that turn quantum research into real companies, products, and jobs. This is the connective tissue between the lab and the market.",
-      es: "Las alianzas, los acuerdos de financiamiento y las estrategias de comercialización que convierten la investigación cuántica en empresas, productos y empleos reales. Es el tejido conector entre el laboratorio y el mercado.",
+      en: "The partnerships, funding deals, and go-to-market strategy that turn quantum research into real companies, products, and jobs. It is the link between the lab and the market.",
+      es: "Las alianzas, los acuerdos de financiamiento y las estrategias de comercialización que convierten la investigación cuántica en empresas, productos y empleos reales. Es el vínculo entre el laboratorio y el mercado.",
     },
     degreePath: {
       en: "A bachelor's in business, economics, or a technical field, often paired with an MBA later. Technical fluency helps but isn't required.",

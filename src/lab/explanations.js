@@ -43,32 +43,32 @@ function describeStep(op) {
 
 const T = {
   empty: {
-    en: "No gates are on the circuit yet. The qubit stays in the definite state |0⟩ — exactly like a normal classical bit set to 0. Measuring it will always give the same result: 0, every time, with no randomness at all.",
+    en: "No gates are on the circuit yet. The qubit stays in the definite state |0⟩, just like a classical bit set to 0. Measuring it gives 0 every time, with no randomness at all.",
     es: "Todavía no hay compuertas en el circuito. El qubit permanece en el estado definido |0⟩, igual que un bit clásico normal puesto en 0. Medirlo siempre dará el mismo resultado: 0, cada vez, sin ninguna aleatoriedad.",
   },
   superposition: {
-    en: "This circuit uses only the Hadamard gate, which creates superposition: the qubit becomes a genuine blend of 0 and 1 rather than settling on one value. That is why the histogram below shows roughly a 50/50 split instead of a single guaranteed outcome — the randomness is not uncertainty about a hidden value, it is a real property of the state itself.",
-    es: "Este circuito usa solo la compuerta Hadamard, que crea superposición: el qubit se convierte en una mezcla real de 0 y 1 en lugar de decidirse por un valor. Por eso el histograma de abajo muestra aproximadamente un reparto 50/50 en lugar de un único resultado garantizado: la aleatoriedad no es incertidumbre sobre un valor oculto, es una propiedad real del estado mismo.",
+    en: "This circuit uses only the Hadamard gate, which creates superposition. The qubit becomes a blend of 0 and 1 instead of settling on one value. That is why the histogram below shows roughly a 50/50 split instead of a single guaranteed outcome. The randomness is not uncertainty about a hidden value. It comes from the state itself.",
+    es: "Este circuito usa solo la compuerta Hadamard, que crea superposición. El qubit se convierte en una mezcla de 0 y 1 en lugar de decidirse por un valor. Por eso el histograma de abajo muestra aproximadamente un reparto 50/50 en lugar de un único resultado garantizado. La aleatoriedad no es incertidumbre sobre un valor oculto. Viene del estado mismo.",
   },
   entanglement: {
-    en: "This circuit uses a Hadamard gate together with a CNOT — the pattern that creates entanglement. The two qubits stop having independent states and share a single joint state instead. That is why the histogram below only ever shows matching outcomes (00 or 11) and never a mismatched one (01 or 10): measuring one qubit instantly determines the other, no matter which qubit you look at first.",
-    es: "Este circuito usa una compuerta Hadamard junto con una CNOT: el patrón que crea entrelazamiento. Los dos qubits dejan de tener estados independientes y comparten un único estado conjunto. Por eso el histograma de abajo solo muestra resultados que coinciden (00 u 11) y nunca uno que no coincide (01 o 10): medir un qubit determina instantáneamente al otro, sin importar cuál se mida primero.",
+    en: "This circuit uses a Hadamard gate together with a CNOT, the pattern that creates entanglement. The two qubits stop having independent states and share a single joint state instead. That is why the histogram below only shows matching outcomes (00 or 11) and never a mismatched one (01 or 10). Measuring one qubit instantly determines the other, no matter which one you look at first.",
+    es: "Este circuito usa una compuerta Hadamard junto con una CNOT, el patrón que crea entrelazamiento. Los dos qubits dejan de tener estados independientes y comparten un único estado conjunto. Por eso el histograma de abajo solo muestra resultados que coinciden (00 u 11) y nunca uno que no coincide (01 o 10). Medir un qubit determina instantáneamente al otro, sin importar cuál se mida primero.",
   },
   classicalFlip: {
-    en: "This circuit uses only the Pauli-X gate, which is a classical bit flip: 0 becomes 1 (or 1 becomes 0), completely deterministically. There is no randomness here at all — every run gives the identical result. Compare this to the Hadamard gate: X flips a definite value to another definite value, while H creates a genuine blend with no definite value until measured. That contrast is the difference between classical and quantum behavior in one gate each.",
-    es: "Este circuito usa solo la compuerta Pauli-X, que es un cambio de bit clásico: el 0 se convierte en 1 (o el 1 en 0), de forma completamente determinista. Aquí no hay ninguna aleatoriedad: cada ejecución da el mismo resultado. Compare esto con la compuerta Hadamard: X cambia un valor definido a otro valor definido, mientras que H crea una mezcla real sin valor definido hasta que se mide. Ese contraste es la diferencia entre comportamiento clásico y cuántico, cada uno en una sola compuerta.",
+    en: "This circuit uses only the Pauli-X gate, which works like a classical bit flip: 0 becomes 1 (or 1 becomes 0), every time. There is no randomness here, so every run gives the same result. Compare that to the Hadamard gate. X turns one definite value into another definite value, while H creates a blend with no definite value until you measure. Those two gates show the classical and quantum behavior side by side.",
+    es: "Este circuito usa solo la compuerta Pauli-X, que funciona como un cambio de bit clásico: el 0 se convierte en 1 (o el 1 en 0), siempre. Aquí no hay aleatoriedad, así que cada ejecución da el mismo resultado. Compare esto con la compuerta Hadamard. X cambia un valor definido a otro valor definido, mientras que H crea una mezcla sin valor definido hasta que se mide. Esas dos compuertas muestran el comportamiento clásico y el cuántico lado a lado.",
   },
   genericIntro: {
     en: "You built:",
     es: "Usted construyó:",
   },
   genericOutro: {
-    en: "The histogram below reflects the exact probability distribution this specific sequence of gates produces.",
-    es: "El histograma de abajo refleja la distribución de probabilidad exacta que produce esta secuencia específica de compuertas.",
+    en: "The histogram below shows the exact probabilities this sequence of gates produces.",
+    es: "El histograma de abajo muestra las probabilidades exactas que produce esta secuencia de compuertas.",
   },
   blochNoteRest: {
-    en: "toward the center of the sphere. That is not a rendering glitch — it is the physical signature of entanglement. Once a qubit is entangled with another, it no longer has a well-defined state on its own; only the pair, taken together, does.",
-    es: "hacia el centro de la esfera. Esto no es un error de la representación gráfica: es la firma física del entrelazamiento. Una vez que un qubit está entrelazado con otro, ya no tiene un estado bien definido por sí solo; solo lo tiene el par, tomado en conjunto.",
+    en: "toward the center of the sphere. That is not a rendering glitch. It is what entanglement looks like on a Bloch sphere. Once a qubit is entangled with another, it no longer has a well-defined state on its own. Only the pair, taken together, does.",
+    es: "hacia el centro de la esfera. Esto no es un error de la representación gráfica. Así se ve el entrelazamiento en una esfera de Bloch. Una vez que un qubit está entrelazado con otro, ya no tiene un estado bien definido por sí solo. Solo lo tiene el par, tomado en conjunto.",
   },
 };
 

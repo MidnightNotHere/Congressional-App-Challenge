@@ -17,7 +17,7 @@ import { useLanguage } from "../i18n/LanguageContext";
 const UI = {
   heading: { en: "Check your understanding", es: "Compruebe lo que entendió" },
   intro: {
-    en: "No score is saved and nothing is locked — this is just to see what stuck.",
+    en: "No score is saved and nothing is locked. This is just to see what stuck.",
     es: "No se guarda ninguna puntuación ni se bloquea nada: es solo para ver qué quedó claro.",
   },
   questionCounter: { en: "Question", es: "Pregunta" },
@@ -29,15 +29,15 @@ const UI = {
   yourScore: { en: "You got", es: "Acertó" },
   outOf: { en: "out of", es: "de" },
   allCorrect: {
-    en: "Every one correct. You've got this.",
-    es: "Todas correctas. Lo tiene dominado.",
+    en: "Every one correct.",
+    es: "Todas correctas.",
   },
   mostCorrect: {
     en: "Solid. Worth rereading the sections you missed.",
     es: "Muy bien. Vale la pena releer las secciones que falló.",
   },
   someCorrect: {
-    en: "Worth another pass through the lesson — the ideas here build on each other.",
+    en: "Worth another pass through the lesson. The ideas build on each other.",
     es: "Vale la pena repasar la lección: estas ideas se apoyan unas en otras.",
   },
   retake: { en: "Try again", es: "Intentar de nuevo" },

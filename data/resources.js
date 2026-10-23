@@ -28,8 +28,8 @@ export const HERO_CARDS = [
       es: "Cada mensaje de texto, foto y contraseña que usa está protegido por un cifrado que una computadora cuántica podría eventualmente romper.",
     },
     expanded: {
-      en: "Websites and apps lock your data behind math problems that regular computers cannot solve quickly. That is the whole trick. A powerful enough quantum computer could crack those same problems in a fraction of the time, which is why NIST finalized new \"quantum-safe\" encryption standards in 2024. Here is the good news. Those standards already exist, and organizations everywhere, including right here in Colorado, have started switching to them.",
-      es: "Los sitios web y las aplicaciones protegen sus datos con problemas matemáticos que las computadoras comunes no pueden resolver rápido. Ese es todo el truco. Una computadora cuántica suficientemente poderosa podría resolver esos mismos problemas en una fracción del tiempo, y por eso el NIST finalizó nuevos estándares de cifrado \"a prueba de computación cuántica\" en 2024. La buena noticia es esta. Esos estándares ya existen, y organizaciones de todo el mundo, incluso aquí en Colorado, ya empezaron a adoptarlos.",
+      en: "Websites and apps lock your data behind math problems that regular computers cannot solve quickly. A powerful enough quantum computer could crack those same problems in a fraction of the time, which is why NIST finalized new \"quantum-safe\" encryption standards in 2024. The good news is that those standards already exist, and organizations everywhere, including in Colorado, have started switching to them.",
+      es: "Los sitios web y las aplicaciones protegen sus datos con problemas matemáticos que las computadoras comunes no pueden resolver rápido. Una computadora cuántica suficientemente poderosa podría resolver esos mismos problemas en una fracción del tiempo, y por eso el NIST finalizó nuevos estándares de cifrado \"a prueba de computación cuántica\" en 2024. La buena noticia es que esos estándares ya existen, y organizaciones de todo el mundo, incluso aquí en Colorado, ya empezaron a adoptarlos.",
     },
   },
   {
@@ -40,20 +40,20 @@ export const HERO_CARDS = [
       es: "Colorado alberga algunas de las instituciones de investigación cuántica más importantes del mundo. Estos empleos no existían hace diez años.",
     },
     expanded: {
-      en: "Ten years ago, \"quantum software developer\" was not a job title anywhere in the world. Now Colorado companies like Quantinuum hire for it. Between JILA, NIST Boulder, and a growing cluster of quantum companies, Colorado has one of the highest concentrations of quantum job openings in the country. Maybe you like physics. Maybe you like code, policy, or business. There is very likely a version of this field built for you.",
-      es: "Hace diez años, \"desarrollador de software cuántico\" no era un puesto en ninguna parte del mundo. Hoy empresas de Colorado como Quantinuum contratan para ese puesto. Entre JILA, NIST Boulder y un grupo creciente de empresas cuánticas, Colorado tiene una de las mayores concentraciones de empleos cuánticos del país. Quizá le guste la física. Quizá le gusten la programación, las políticas públicas o los negocios. Es muy probable que exista una versión de este campo hecha para usted.",
+      en: "Ten years ago, \"quantum software developer\" was not a job title anywhere in the world. Now Colorado companies like Quantinuum hire for it. Between JILA, NIST Boulder, and a growing cluster of quantum companies, Colorado has one of the highest concentrations of quantum job openings in the country. Maybe you like physics. Maybe you like code, policy, or business. There is probably a place for you in this field.",
+      es: "Hace diez años, \"desarrollador de software cuántico\" no era un puesto en ninguna parte del mundo. Hoy empresas de Colorado como Quantinuum contratan para ese puesto. Entre JILA, NIST Boulder y un grupo creciente de empresas cuánticas, Colorado tiene una de las mayores concentraciones de empleos cuánticos del país. Quizá le guste la física. Quizá le gusten la programación, las políticas públicas o los negocios. Probablemente hay un lugar para usted en este campo.",
     },
   },
   {
     title: { en: "The Global Race", es: "La Carrera Global" },
     icon: "Globe",
     teaser: {
-      en: "The US, China, and the EU are racing to build quantum computers that will reshape medicine, security, and the world economy.",
-      es: "Estados Unidos, China y la Unión Europea están compitiendo por construir computadoras cuánticas que transformarán la medicina, la seguridad y la economía mundial.",
+      en: "The US, China, and the EU are racing to build quantum computers that could change medicine, security, and the world economy.",
+      es: "Estados Unidos, China y la Unión Europea están compitiendo por construir computadoras cuánticas que podrían cambiar la medicina, la seguridad y la economía mundial.",
     },
     expanded: {
-      en: "Countries are pouring billions into quantum computing. Whoever builds the most powerful systems first could gain a real edge in medicine, encryption, and military technology. Part of the United States' quantum strategy runs straight through Colorado, because NIST Boulder wrote the post-quantum cryptography rules the rest of the world is now adopting. That puts Colorado students unusually close to a decision that will shape the next few decades.",
-      es: "Los países están invirtiendo miles de millones en la computación cuántica. Quien construya primero los sistemas más poderosos podría obtener una ventaja real en medicina, cifrado y tecnología militar. Parte de la estrategia cuántica de Estados Unidos pasa directamente por Colorado, porque NIST Boulder escribió las reglas de criptografía poscuántica que el resto del mundo adopta ahora. Eso coloca a los estudiantes de Colorado muy cerca de una decisión que definirá las próximas décadas.",
+      en: "Countries are pouring billions into quantum computing. Whoever builds the most powerful systems first could gain a real edge in medicine, encryption, and military technology. Part of the United States' quantum strategy runs straight through Colorado, because NIST Boulder wrote the post-quantum cryptography rules the rest of the world is now adopting. That puts Colorado students close to where those rules get written.",
+      es: "Los países están invirtiendo miles de millones en la computación cuántica. Quien construya primero los sistemas más poderosos podría obtener una ventaja real en medicina, cifrado y tecnología militar. Parte de la estrategia cuántica de Estados Unidos pasa directamente por Colorado, porque NIST Boulder escribió las reglas de criptografía poscuántica que el resto del mundo adopta ahora. Eso coloca a los estudiantes de Colorado cerca de donde se escriben esas reglas.",
     },
   },
 ];
@@ -221,8 +221,8 @@ export const RESOURCE_TABS = [
       {
         name: "Qubit by Qubit Intro Course",
         description: {
-          en: "The most accessible structured curriculum built specifically for high schoolers with zero background.",
-          es: "El plan de estudios estructurado más accesible, diseñado específicamente para estudiantes de secundaria sin ningún conocimiento previo.",
+          en: "A structured curriculum built for high schoolers with zero background.",
+          es: "Un plan de estudios estructurado, diseñado para estudiantes de secundaria sin ningún conocimiento previo.",
         },
         href: "#", // TODO: https://qubitbyqubit.org/courses
       },

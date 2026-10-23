@@ -23,12 +23,12 @@ const UI = {
   chartTitle: { en: "State quantum investment commitments", es: "Compromisos estatales de inversión cuántica" },
   chartSub: { en: "Reported state funding, in $ millions", es: "Financiamiento estatal reportado, en millones de $" },
   chartNote: {
-    en: "Figures reflect publicly reported state commitments. Colorado made a bipartisan $74 million commitment in 2024 through HB24-1325, which supports a shared quantum research facility and access to capital for Colorado quantum companies. Illinois has committed $500 million to a single quantum campus.",
-    es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado hizo un compromiso bipartidista de $74 millones en 2024 a través de la HB24-1325, que respalda una instalación de investigación cuántica compartida y el acceso a capital para las empresas cuánticas de Colorado. Illinois ha comprometido $500 millones para un solo campus cuántico.",
+    en: "These are publicly reported state commitments. Colorado committed a bipartisan $74 million in 2024 through HB24-1325, which supports a shared quantum research facility and access to capital for Colorado quantum companies. Illinois committed $500 million to a single quantum campus.",
+    es: "Estos son compromisos estatales reportados públicamente. Colorado comprometió $74 millones de forma bipartidista en 2024 a través de la HB24-1325, que respalda una instalación de investigación cuántica compartida y el acceso a capital para las empresas cuánticas de Colorado. Illinois comprometió $500 millones para un solo campus cuántico.",
   },
   calloutText: {
-    en: "Colorado already has what other states are spending hundreds of millions to build: NIST Boulder, JILA, and the largest cluster of quantum companies in the country. HB24-1325 was a strong first step. The next steps are protecting state government systems with post-quantum security and building a university talent pipeline so quantum graduates stay in Colorado.",
-    es: "Colorado ya tiene lo que otros estados están gastando cientos de millones en construir: NIST Boulder, JILA, y el mayor grupo de empresas cuánticas del país. La HB24-1325 fue un primer paso importante. Los próximos pasos son proteger los sistemas del gobierno estatal con seguridad poscuántica y construir una cantera de talento universitario para que los graduados en computación cuántica permanezcan en Colorado.",
+    en: "Colorado already has what other states are spending hundreds of millions to build: NIST Boulder, JILA, and the largest cluster of quantum companies in the country. HB24-1325 was a strong first step. Next come post-quantum security for state government systems and a university talent pipeline that keeps quantum graduates in Colorado.",
+    es: "Colorado ya tiene lo que otros estados están gastando cientos de millones en construir: NIST Boulder, JILA y el mayor grupo de empresas cuánticas del país. La HB24-1325 fue un primer paso importante. Lo que sigue es la seguridad poscuántica para los sistemas del gobierno estatal y una cantera de talento universitario que mantenga a los graduados en computación cuántica en Colorado.",
   },
   detailHeading: { en: "Detailed Ecosystem Report", es: "Informe Detallado del Ecosistema" },
   researchFocus: { en: "Research focus", es: "Enfoque de investigación" },
@@ -50,7 +50,7 @@ function emailTemplate() {
     "Colorado Quantum Economic Development: Resource for Your Office"
   );
   const body = encodeURIComponent(
-    "I wanted to share a Colorado-specific quantum computing resource that may be relevant to your office's work on technology and economic development. Quantum4Colorado provides an overview of Colorado's quantum infrastructure, a constituent-facing readiness tool, and policy recommendations for state action."
+    "I wanted to share a Colorado quantum computing resource that may be useful to your office's work on technology and economic development. Quantum4Colorado maps Colorado's quantum infrastructure, has a readiness tool for constituents, and lays out policy recommendations for state action."
   );
   Linking.openURL(`mailto:?subject=${subject}&body=${body}`);
 }

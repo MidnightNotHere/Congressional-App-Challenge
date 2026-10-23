@@ -23,8 +23,8 @@ const UI = {
     es: "La Computación Cuántica para la Juventud de Colorado",
   },
   intro: {
-    en: "You do not need to know any physics to start here. This is what quantum computing actually means for you: your privacy, your future job, and Colorado's place in a race that has already started.",
-    es: "No necesita saber nada de física para empezar aquí. Esto es lo que la computación cuántica significa de verdad para usted: su privacidad, su futuro empleo y el lugar de Colorado en una carrera que ya comenzó.",
+    en: "You do not need any physics to start here. Quantum computing affects your privacy, your future job, and where Colorado lands in a race that has already started.",
+    es: "No necesita saber nada de física para empezar aquí. La computación cuántica afecta su privacidad, su futuro empleo y el lugar de Colorado en una carrera que ya comenzó.",
   },
   showLess: { en: "Show less", es: "Mostrar menos" },
   tellMeMore: { en: "Tell me more", es: "Contarme más" },

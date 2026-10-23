@@ -87,8 +87,8 @@ export const RECOMMENDATIONS = [
       es: "Basado en la Ley Cuántica de Illinois (2023).",
     },
     impact: {
-      en: "Company formation, high-wage job creation, and national quantum leadership built on assets Colorado already owns.",
-      es: "Formación de empresas, creación de empleos bien remunerados, y liderazgo cuántico nacional construido sobre activos que Colorado ya posee.",
+      en: "New companies and high-wage jobs, built on assets Colorado already owns.",
+      es: "Nuevas empresas y empleos bien remunerados, construidos sobre activos que Colorado ya posee.",
     },
   },
   {
@@ -133,16 +133,16 @@ export const RECOMMENDATIONS = [
       es: "Establecer a Colorado como un Gobierno Estatal Seguro Frente a la Computación Cuántica",
     },
     rationale: {
-      en: "Set a state target to begin PQC migration of all state agency systems by 2027, making Colorado the first state to formally commit to quantum-safe government infrastructure.",
-      es: "Establecer una meta estatal para comenzar la migración a PQC de todos los sistemas de las agencias estatales antes de 2027, convirtiendo a Colorado en el primer estado en comprometerse formalmente con una infraestructura gubernamental segura frente a la computación cuántica.",
+      en: "Set a state target to begin PQC migration of all state agency systems by 2027. Colorado would be the first state to formally commit to quantum-safe government infrastructure.",
+      es: "Establecer una meta estatal para comenzar la migración a PQC de todos los sistemas de las agencias estatales antes de 2027. Colorado sería el primer estado en comprometerse formalmente con una infraestructura gubernamental segura frente a la computación cuántica.",
     },
     precedent: {
       en: "Federal quantum-safe migration mandates for U.S. agencies, applied at the state level.",
       es: "Los mandatos federales de migración segura frente a la computación cuántica para las agencias de EE. UU., aplicados a nivel estatal.",
     },
     impact: {
-      en: "National recognition as a first-mover, plus concrete protection for the data of every Coloradan.",
-      es: "Reconocimiento nacional como pionero, además de protección concreta para los datos de cada habitante de Colorado.",
+      en: "National recognition as a first mover, and real protection for every Coloradan's data.",
+      es: "Reconocimiento nacional como pionero y protección real para los datos de cada habitante de Colorado.",
     },
   },
 ];

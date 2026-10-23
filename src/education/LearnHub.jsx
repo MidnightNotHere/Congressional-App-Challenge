@@ -28,7 +28,7 @@ const UI = {
     es: "Computación cuántica, desde cero",
   },
   intro: {
-    en: "A free course for students with no physics background. Seven units, eighteen short lessons, plain language and everyday analogies throughout. Start anywhere — nothing is locked, and your progress saves in this browser.",
+    en: "A free course for students with no physics background. Seven units, eighteen short lessons, plain language and everyday analogies throughout. Start anywhere. Nothing is locked, and your progress saves in this browser.",
     es: "Un curso gratuito para estudiantes sin conocimientos de física. Siete unidades, dieciocho lecciones breves, lenguaje sencillo y analogías cotidianas de principio a fin. Empiece donde quiera: nada está bloqueado y su progreso se guarda en este navegador.",
   },
   lessonsLabel: { en: "lessons", es: "lecciones" },

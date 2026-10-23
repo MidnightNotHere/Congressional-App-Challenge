@@ -84,6 +84,7 @@ import {
 } from "./src/shared/uiKit.jsx";
 import MatrixRain from "./src/shared/MatrixRain.jsx";
 import ReviewsPage from "./src/reviews/ReviewsPage.jsx";
+import { TermsPage, PrivacyPage } from "./src/legal/LegalPages.jsx";
 import LearnHub from "./src/education/LearnHub.jsx";
 import LessonPage from "./src/education/LessonPage.jsx";
 import QuantumLab from "./src/lab/QuantumLab.jsx";
@@ -121,6 +122,10 @@ const PATH_BY_KEY = {
   youth: "/youth",
   reviews: "/reviews",
   about: "/about",
+  /* Legal pages: reached from the footer, so they have routes but no nav
+     item (and no nav link ends up highlighted while you're on them). */
+  terms: "/terms",
+  privacy: "/privacy",
 };
 const KEY_BY_PATH = Object.fromEntries(
   Object.entries(PATH_BY_KEY).map(([k, v]) => [v, k])
@@ -186,8 +191,8 @@ const UI = {
       es: "¿Su Organización Está Lista para la Era Cuántica?",
     },
     intro: {
-      en: "NIST finalized post-quantum cryptography standards in 2024. Every organization handling sensitive data needs to understand its exposure and begin migrating. This free assessment takes 3 minutes.",
-      es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Toda organización que maneje datos confidenciales necesita comprender su exposición y comenzar a migrar. Esta evaluación gratuita toma 3 minutos.",
+      en: "NIST finalized post-quantum cryptography standards in 2024. If your organization handles sensitive data, you should know where it is exposed and start planning the switch. This free assessment takes 3 minutes.",
+      es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Si su organización maneja datos confidenciales, debe saber dónde está expuesta y empezar a planificar el cambio. Esta evaluación gratuita toma 3 minutos.",
     },
     explainer: {
       en: "Current encryption protects your data the way a combination lock protects a safe. A quantum computer is like a machine that tries every combination at once, in seconds. NIST's new PQC standards are the fix. Here is where your organization stands.",
@@ -245,8 +250,8 @@ const UI = {
       es: "La Computación Cuántica para la Juventud de Colorado",
     },
     intro: {
-      en: "You do not need to know any physics to start here. This is what quantum computing actually means for you: your privacy, your future job, and Colorado's place in a race that has already started.",
-      es: "No necesita saber nada de física para empezar aquí. Esto es lo que la computación cuántica significa de verdad para usted: su privacidad, su futuro empleo y el lugar de Colorado en una carrera que ya comenzó.",
+      en: "You do not need any physics to start here. Quantum computing affects your privacy, your future job, and where Colorado lands in a race that has already started.",
+      es: "No necesita saber nada de física para empezar aquí. La computación cuántica afecta su privacidad, su futuro empleo y el lugar de Colorado en una carrera que ya comenzó.",
     },
     showLess: { en: "Show less", es: "Mostrar menos" },
     tellMeMore: { en: "Tell me more", es: "Contarme más" },
@@ -326,12 +331,12 @@ const UI = {
   story: {
     heroEyebrow: { en: "A Civic Resource for Colorado · CO-06", es: "Un Recurso Cívico para Colorado · CO-06" },
     heroTitle: {
-      en: "Colorado is at the center of the quantum revolution.",
-      es: "Colorado está en el centro de la revolución cuántica.",
+      en: "Colorado is one of the country's quantum hubs.",
+      es: "Colorado es uno de los centros cuánticos del país.",
     },
     heroSubtitle: {
-      en: "From NIST Boulder to JILA to the startups reshaping cryptography, here is what is happening in our state and why it matters to every Coloradan.",
-      es: "Desde NIST Boulder hasta JILA y las startups que están transformando la criptografía, esto es lo que sucede en nuestro estado y por qué le importa a cada habitante de Colorado.",
+      en: "NIST Boulder, JILA, and a cluster of startups working on cryptography: here is what quantum work in our state looks like and why it affects every Coloradan.",
+      es: "NIST Boulder, JILA y un grupo de startups que trabajan en criptografía: así se ve el trabajo cuántico en nuestro estado y por qué afecta a cada habitante de Colorado.",
     },
     assessCta: { en: "Assess your organization", es: "Evalúe su organización" },
     forRepsCta: { en: "For representatives", es: "Para representantes" },
@@ -343,8 +348,8 @@ const UI = {
     mapLabel: { en: "The Map", es: "El Mapa" },
     mapHeading: { en: "Colorado's Quantum Infrastructure", es: "La Infraestructura Cuántica de Colorado" },
     mapIntro: {
-      en: "Every major quantum research program, federal facility, and quantum-adjacent organization operating in Colorado.",
-      es: "Todos los programas principales de investigación cuántica, instalaciones federales y organizaciones relacionadas con la computación cuántica que operan en Colorado.",
+      en: "The major quantum research programs, federal facilities, and related organizations in Colorado.",
+      es: "Los principales programas de investigación cuántica, instalaciones federales y organizaciones afines en Colorado.",
     },
     significanceLabel: { en: "Significance to Colorado:", es: "Importancia para Colorado:" },
     stakesLabel: { en: "The Stakes", es: "Lo Que Está en Juego" },
@@ -389,12 +394,12 @@ const UI = {
     chartHeading: { en: "State quantum investment commitments", es: "Compromisos estatales de inversión cuántica" },
     chartSub: { en: "Reported state funding, in $ millions", es: "Financiamiento estatal reportado, en millones de $" },
     chartFootnote: {
-      en: "Figures reflect publicly reported state commitments. Colorado made a bipartisan $74 million commitment in 2024 through HB24-1325, which supports a shared quantum research facility and access to capital for Colorado quantum companies. Illinois has committed $500 million to a single quantum campus.",
-      es: "Las cifras reflejan compromisos estatales reportados públicamente. Colorado hizo un compromiso bipartidista de $74 millones en 2024 a través de la HB24-1325, que respalda una instalación de investigación cuántica compartida y el acceso a capital para las empresas cuánticas de Colorado. Illinois ha comprometido $500 millones para un solo campus cuántico.",
+      en: "These are publicly reported state commitments. Colorado committed a bipartisan $74 million in 2024 through HB24-1325, which supports a shared quantum research facility and access to capital for Colorado quantum companies. Illinois committed $500 million to a single quantum campus.",
+      es: "Estos son compromisos estatales reportados públicamente. Colorado comprometió $74 millones de forma bipartidista en 2024 a través de la HB24-1325, que respalda una instalación de investigación cuántica compartida y el acceso a capital para las empresas cuánticas de Colorado. Illinois comprometió $500 millones para un solo campus cuántico.",
     },
     callout: {
-      en: "Colorado already has what other states are spending hundreds of millions to build: NIST Boulder, JILA, and the largest cluster of quantum companies in the country. HB24-1325 was a strong first step. The next steps are protecting state government systems with post-quantum security and building a university talent pipeline so quantum graduates stay in Colorado.",
-      es: "Colorado ya tiene lo que otros estados están gastando cientos de millones en construir: NIST Boulder, JILA, y el mayor grupo de empresas cuánticas del país. La HB24-1325 fue un primer paso importante. Los próximos pasos son proteger los sistemas del gobierno estatal con seguridad poscuántica y construir una cantera de talento universitario para que los graduados en computación cuántica permanezcan en Colorado.",
+      en: "Colorado already has what other states are spending hundreds of millions to build: NIST Boulder, JILA, and the largest cluster of quantum companies in the country. HB24-1325 was a strong first step. Next come post-quantum security for state government systems and a university talent pipeline that keeps quantum graduates in Colorado.",
+      es: "Colorado ya tiene lo que otros estados están gastando cientos de millones en construir: NIST Boulder, JILA y el mayor grupo de empresas cuánticas del país. La HB24-1325 fue un primer paso importante. Lo que sigue es la seguridad poscuántica para los sistemas del gobierno estatal y una cantera de talento universitario que mantenga a los graduados en computación cuántica en Colorado.",
     },
     ecosystemHeading: {
       en: "Detailed Colorado Quantum Ecosystem Report",
@@ -618,7 +623,7 @@ function App() {
         ? `${window.location.origin}${window.location.pathname}`
         : "[link]";
     const body = encodeURIComponent(
-      `I wanted to share a Colorado-specific quantum computing resource that may be relevant to your office's work on technology and economic development. Quantum4Colorado provides an overview of Colorado's quantum infrastructure, a constituent-facing readiness tool, and policy recommendations for state action.\n\n${link}`
+      `I wanted to share a Colorado quantum computing resource that may be useful to your office's work on technology and economic development. Quantum4Colorado maps Colorado's quantum infrastructure, has a readiness tool for constituents, and lays out policy recommendations for state action.\n\n${link}`
     );
     if (typeof window !== "undefined")
       window.location.href = `mailto:?subject=${subject}&body=${body}`;
@@ -630,20 +635,20 @@ function App() {
       label: { en: "Colorado's Quantum Story", es: "La Historia Cuántica de Colorado" },
     },
     {
-      key: "assessment",
-      label: { en: "Is Your Org Ready?", es: "¿Está Lista su Organización?" },
-    },
-    {
-      key: "representatives",
-      label: { en: "For Representatives", es: "Para Representantes" },
-    },
-    {
       key: "learn",
       label: { en: "Learn Quantum", es: "Aprender Cuántica" },
     },
     {
       key: "youth",
       label: { en: "Youth and Education", es: "Juventud y Educación" },
+    },
+    {
+      key: "assessment",
+      label: { en: "Is Your Org Ready?", es: "¿Está Lista su Organización?" },
+    },
+    {
+      key: "representatives",
+      label: { en: "For Representatives", es: "Para Representantes" },
     },
     { key: "reviews", label: { en: "Reviews", es: "Reseñas" } },
     { key: "about", label: { en: "About", es: "Acerca de" } },
@@ -1636,9 +1641,9 @@ function App() {
               <div>
                 <h3 className="font-bold text-lg text-[#EEF1FA]">What this is</h3>
                 <p className="mt-2 text-[#9FA8C4] leading-relaxed">
-                  Quantum4Colorado was built by Christian Lee and Arnav
-                  Rohilla for the 2026 Congressional App Challenge. It is a
-                  nonpartisan civic information resource.
+                  Quantum4Colorado was built by Aarush Goradia, Arnav
+                  Rohilla, and Christian Lee for the 2026 Congressional App
+                  Challenge. It is a nonpartisan civic information resource.
                 </p>
               </div>
 
@@ -1647,12 +1652,11 @@ function App() {
                   Why we built it
                 </h3>
                 <p className="mt-2 text-[#9FA8C4] leading-relaxed">
-                  Colorado sits at the center of the quantum computing
-                  revolution. NIST Boulder, JILA, and Quantinuum put this state
-                  in a position no other one holds. We built this app because
-                  most Coloradans have no idea, and because the organizations
-                  and representatives who need to act on it deserve a clear
-                  place to start.
+                  Colorado is one of the country's quantum hubs. NIST Boulder,
+                  JILA, and Quantinuum are all here, and most Coloradans have
+                  no idea. We built this app to change that, and to give the
+                  organizations and representatives who need to act on it a
+                  clear place to start.
                 </p>
               </div>
 
@@ -1662,7 +1666,7 @@ function App() {
                 </h3>
                 <p className="mt-2 text-sm text-[#9FA8C4]">
                   Every ecosystem entry, assessment recommendation, and policy
-                  claim in this app traces back to one of these sources.
+                  claim in this app comes from one of these sources.
                 </p>
                 <div className="mt-4 border-2 border-[#0A0A0A] bg-white divide-y divide-[#0A0A0A] overflow-hidden">
                   {SOURCES.map((src, i) => {
@@ -1698,11 +1702,11 @@ function App() {
                   })}
                 </div>
                 <p className="mt-3 text-xs text-[#9FA8C4] leading-relaxed">
-                  Statistics are drawn from public sources. Figures such as
-                  federal investment and researcher counts are approximate and
-                  reflect the most recent publicly available reporting. Quantum
-                  threat timelines are inherently uncertain; this resource
-                  presents preparation as prudent, not as a prediction of a
+                  Statistics come from public sources. Figures like federal
+                  investment and researcher counts are approximate and match
+                  the most recent public reporting. Nobody knows when quantum
+                  computers will break today's encryption, so this site treats
+                  preparation as sensible planning, not a prediction of a
                   specific date.
                 </p>
               </div>
@@ -1718,6 +1722,13 @@ function App() {
                   <Mail className="w-4 h-4" />
                   team@quantum4colorado.org
                 </a>
+                <a
+                  href="mailto:quantum4colorado@protonmail.com"
+                  className="mt-2 flex items-center gap-2 text-[#6E8CFF] font-semibold hover:underline w-fit"
+                >
+                  <Mail className="w-4 h-4" />
+                  quantum4colorado@protonmail.com
+                </a>
               </div>
             </div>
           </div>
@@ -1728,6 +1739,18 @@ function App() {
         <Route path="/reviews" element={
         <section id="reviews" className="pt-16 min-h-screen bg-[#04070F]">
           <ReviewsPage />
+        </section>
+        } />
+
+        <Route path="/terms" element={
+        <section id="terms" className="pt-16 min-h-screen bg-[#04070F]">
+          <TermsPage />
+        </section>
+        } />
+
+        <Route path="/privacy" element={
+        <section id="privacy" className="pt-16 min-h-screen bg-[#04070F]">
+          <PrivacyPage />
         </section>
         } />
         </Routes>
@@ -1744,10 +1767,23 @@ function App() {
                   Quantum<span className="text-[#FF6A3D]">4</span>Colorado
                 </span>
               </div>
-              <p className="text-sm text-center sm:text-right">
-                A nonpartisan civic resource &middot; 2026 Congressional App
-                Challenge &middot; Colorado's 6th District
-              </p>
+              <div className="text-sm text-center sm:text-right space-y-2">
+                <p>
+                  Built by Aarush Goradia, Arnav Rohilla, and Christian Lee
+                </p>
+                <p>
+                  A nonpartisan civic resource &middot; 2026 Congressional App
+                  Challenge &middot; Colorado's 6th District
+                </p>
+                <p className="flex items-center justify-center sm:justify-end gap-4 font-bold">
+                  <Link to="/terms" className="text-[#6E8CFF] hover:underline">
+                    {t({ en: "Terms of Service", es: "Términos de Servicio" })}
+                  </Link>
+                  <Link to="/privacy" className="text-[#6E8CFF] hover:underline">
+                    {t({ en: "Privacy Policy", es: "Política de Privacidad" })}
+                  </Link>
+                </p>
+              </div>
             </div>
           </div>
         </footer>

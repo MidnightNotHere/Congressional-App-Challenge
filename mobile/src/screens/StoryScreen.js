@@ -13,12 +13,12 @@ const W = Dimensions.get("window").width;
 const UI = {
   heroEyebrow: { en: "A CIVIC RESOURCE FOR COLORADO · CO-06", es: "UN RECURSO CÍVICO PARA COLORADO · CO-06" },
   heroTitle: {
-    en: "Colorado is at the center of the quantum revolution.",
-    es: "Colorado está en el centro de la revolución cuántica.",
+    en: "Colorado is one of the country's quantum hubs.",
+    es: "Colorado es uno de los centros cuánticos del país.",
   },
   heroSub: {
-    en: "From NIST Boulder to JILA to the startups reshaping cryptography, here is what is happening in our state and why it matters to every Coloradan.",
-    es: "Desde NIST Boulder hasta JILA y las startups que están transformando la criptografía, esto es lo que sucede en nuestro estado y por qué le importa a cada habitante de Colorado.",
+    en: "NIST Boulder, JILA, and a cluster of startups working on cryptography: here is what quantum work in our state looks like and why it affects every Coloradan.",
+    es: "NIST Boulder, JILA y un grupo de startups que trabajan en criptografía: así se ve el trabajo cuántico en nuestro estado y por qué afecta a cada habitante de Colorado.",
   },
   assessCta: { en: "Assess your organization", es: "Evalúe su organización" },
   forRepsCta: { en: "For representatives", es: "Para representantes" },
@@ -30,8 +30,8 @@ const UI = {
   mapLabel: { en: "THE MAP", es: "EL MAPA" },
   mapHeading: { en: "Colorado's Quantum Infrastructure", es: "La Infraestructura Cuántica de Colorado" },
   mapIntro: {
-    en: "Every major quantum research program, federal facility, and quantum-adjacent organization operating in Colorado.",
-    es: "Todos los programas principales de investigación cuántica, instalaciones federales y organizaciones relacionadas con la computación cuántica que operan en Colorado.",
+    en: "The major quantum research programs, federal facilities, and related organizations in Colorado.",
+    es: "Los principales programas de investigación cuántica, instalaciones federales y organizaciones afines en Colorado.",
   },
   significanceLabel: { en: "Significance:", es: "Importancia:" },
   stakesLabel: { en: "THE STAKES", es: "LO QUE ESTÁ EN JUEGO" },

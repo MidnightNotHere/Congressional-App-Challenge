@@ -58,8 +58,8 @@ export const QUIZ_QUESTIONS = [
   },
   {
     prompt: {
-      en: "What sounds most exciting?",
-      es: "¿Qué le suena más emocionante?",
+      en: "Which of these would you most want to do?",
+      es: "¿Cuál de estas cosas le gustaría más hacer?",
     },
     options: [
       {
@@ -142,8 +142,8 @@ export const TRACK_TALLY_ORDER = [
 export const QUIZ_RESULTS = {
   hardware: {
     resultBlurb: {
-      en: "You lit up at figuring out how things physically work and building hardware that does not exist yet. That is a hardware engineer's instinct. This path is for people who want to touch the machine itself, not just the code running on it. Colorado happens to have some of the best hardware labs anywhere.",
-      es: "Se le iluminó el rostro con descubrir cómo funcionan físicamente las cosas y construir hardware que todavía no existe. Ese es el instinto de un ingeniero de hardware. Este camino es para quienes quieren tocar la máquina misma, no solo el código que corre en ella. Y resulta que Colorado tiene algunos de los mejores laboratorios de hardware del mundo.",
+      en: "You picked figuring out how things physically work and building hardware that does not exist yet. That is a hardware engineer's instinct. This path is for people who want to work on the machine itself, not only the code running on it. Colorado has a lot of that work, including the JILA labs at CU Boulder.",
+      es: "Usted eligió descubrir cómo funcionan físicamente las cosas y construir hardware que todavía no existe. Ese es el instinto de un ingeniero de hardware. Este camino es para quienes quieren trabajar en la máquina misma, no solo en el código que corre en ella. Colorado tiene mucho de ese trabajo, incluidos los laboratorios de JILA en CU Boulder.",
     },
     firstSteps: [
       {
@@ -222,8 +222,8 @@ export const QUIZ_RESULTS = {
   },
   researcher: {
     resultBlurb: {
-      en: "A love of unsolved problems, plus a pull toward math and physics, points to research. This is the path for people who want to discover something nobody has proven yet. You happen to live in a state with one of the best quantum physics institutes on Earth.",
-      es: "Amar los problemas sin resolver, junto con una inclinación hacia las matemáticas y la física, apunta hacia la investigación. Es el camino para quienes quieren descubrir algo que nadie ha demostrado todavía. Y usted vive en un estado con uno de los mejores institutos de física cuántica del planeta.",
+      en: "A love of unsolved problems, plus a pull toward math and physics, points to research. This is the path for people who want to discover something nobody has proven yet. And Colorado has JILA at CU Boulder, one of the best quantum physics institutes anywhere.",
+      es: "Amar los problemas sin resolver, junto con una inclinación hacia las matemáticas y la física, apunta hacia la investigación. Es el camino para quienes quieren descubrir algo que nadie ha demostrado todavía. Y Colorado tiene a JILA en CU Boulder, uno de los mejores institutos de física cuántica del mundo.",
     },
     firstSteps: [
       {
@@ -242,8 +242,8 @@ export const QUIZ_RESULTS = {
   },
   business: {
     resultBlurb: {
-      en: "Strategy, big-picture thinking, and a pull toward where business meets technology all point toward business development. This is the role that turns brilliant research into a company people can actually work at. Colorado's quantum industry needs this as much as it needs engineers.",
-      es: "La estrategia, la visión de conjunto y la inclinación hacia donde se cruzan los negocios y la tecnología apuntan al desarrollo de negocios. Es el rol que convierte una investigación brillante en una empresa donde la gente realmente puede trabajar. La industria cuántica de Colorado necesita esto tanto como necesita ingenieros.",
+      en: "Strategy, big-picture thinking, and a pull toward where business meets technology all point toward business development. This is the role that turns lab research into a company people can actually work at. Colorado's quantum industry needs this as much as it needs engineers.",
+      es: "La estrategia, la visión de conjunto y la inclinación hacia donde se cruzan los negocios y la tecnología apuntan al desarrollo de negocios. Es el rol que convierte la investigación de laboratorio en una empresa donde la gente realmente puede trabajar. La industria cuántica de Colorado necesita esto tanto como necesita ingenieros.",
     },
     firstSteps: [
       {

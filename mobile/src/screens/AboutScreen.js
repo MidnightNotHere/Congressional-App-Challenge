@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable, StyleSheet, Linking } from "react-native";
 import { Screen, Eyebrow, H2, Body } from "../components/ui";
 import Icon from "../components/Icon";
 import QuantumLine from "../components/QuantumLine";
 import { colors, mono, radius, withAlpha, fonts } from "../theme";
-import { SOURCES } from "../data";
+import { SOURCES, LEGAL, LEGAL_UPDATED, CONTACT_EMAILS } from "../data";
 import { useLanguage } from "../i18n/LanguageContext";
 
 export default function AboutScreen() {
   const { t } = useLanguage();
+  const [openDoc, setOpenDoc] = useState(null); // "terms" | "privacy" | null
   return (
     <Screen>
       <View style={styles.section}>
@@ -16,21 +17,20 @@ export default function AboutScreen() {
         <H2>About Quantum4Colorado</H2>
 
         <Block title="What this is">
-          Quantum4Colorado was built by Christian Lee and Arnav Rohilla for the 2026
-          Congressional App Challenge. It is a nonpartisan civic information resource.
+          Quantum4Colorado was built by Aarush Goradia, Arnav Rohilla, and Christian Lee for the
+          2026 Congressional App Challenge. It is a nonpartisan civic information resource.
         </Block>
 
         <Block title="Why we built it">
-          Colorado sits at the center of the quantum computing revolution. NIST Boulder, JILA, and
-          Quantinuum put this state in a position no other one holds. We built this app because most
-          Coloradans have no idea, and because the organizations and representatives who need to act
-          on it deserve a clear place to start.
+          Colorado is one of the country's quantum hubs. NIST Boulder, JILA, and Quantinuum are all
+          here, and most Coloradans have no idea. We built this app to change that, and to give the
+          organizations and representatives who need to act on it a clear place to start.
         </Block>
 
         <Text style={styles.blockTitle}>Where This Data Comes From</Text>
         <Body style={{ marginTop: 6 }}>
-          Every ecosystem entry, assessment recommendation, and policy claim in this app traces
-          back to one of these sources.
+          Every ecosystem entry, assessment recommendation, and policy claim in this app comes from
+          one of these sources.
         </Body>
         <View style={styles.sourceList}>
           {SOURCES.map((s, i) => {
@@ -59,19 +59,61 @@ export default function AboutScreen() {
           })}
         </View>
         <Text style={styles.disclaimer}>
-          Statistics are drawn from public sources and are approximate, reflecting the most recent
-          publicly available reporting. Quantum-threat timelines are inherently uncertain; this
-          resource frames preparation as prudent, not as a prediction of a specific date.
+          Statistics come from public sources. Figures like federal investment and researcher
+          counts are approximate and match the most recent public reporting. Nobody knows when
+          quantum computers will break today's encryption, so this site treats preparation as
+          sensible planning, not a prediction of a specific date.
         </Text>
 
         <Text style={styles.blockTitle}>Contact & feedback</Text>
-        <Pressable
-          style={styles.mail}
-          onPress={() => Linking.openURL("mailto:team@quantum4colorado.org")}
-        >
-          <Icon name="Mail" size={16} color={colors.primary} />
-          <Text style={styles.mailText}>team@quantum4colorado.org</Text>
-        </Pressable>
+        {CONTACT_EMAILS.map((addr) => (
+          <Pressable
+            key={addr}
+            style={styles.mail}
+            onPress={() => Linking.openURL(`mailto:${addr}`)}
+          >
+            <Icon name="Mail" size={16} color={colors.primary} />
+            <Text style={styles.mailText}>{addr}</Text>
+          </Pressable>
+        ))}
+
+        <Text style={styles.blockTitle}>{t({ en: "Terms & Privacy", es: "Términos y Privacidad" })}</Text>
+        {["terms", "privacy"].map((key) => {
+          const doc = LEGAL[key];
+          const open = openDoc === key;
+          return (
+            <View key={key} style={styles.legalCard}>
+              <Pressable
+                onPress={() => setOpenDoc(open ? null : key)}
+                style={styles.legalHead}
+                accessibilityRole="button"
+                accessibilityState={{ expanded: open }}
+              >
+                <Text style={styles.sourceOrg}>{t(doc.title)}</Text>
+                <Icon name={open ? "ChevronUp" : "ChevronDown"} size={18} color={colors.primary} />
+              </Pressable>
+              {open && (
+                <View style={styles.legalBody}>
+                  <Text style={styles.disclaimer}>
+                    {t({ en: "Last updated", es: "Última actualización" })}: {t(LEGAL_UPDATED)}
+                  </Text>
+                  <Body style={{ marginTop: 8 }}>{t(doc.intro)}</Body>
+                  {doc.sections.map((s, i) => (
+                    <View key={i} style={{ marginTop: 16 }}>
+                      <Text style={styles.sourceOrg}>{t(s.heading)}</Text>
+                      {s.paragraphs.map((p, j) => (
+                        <Body key={j} style={{ marginTop: 6 }}>{t(p)}</Body>
+                      ))}
+                      {(s.bullets || []).map((b, j) => (
+                        <Body key={`b${j}`} style={{ marginTop: 6 }}>• {t(b)}</Body>
+                      ))}
+                    </View>
+                  ))}
+                </View>
+              )}
+            </View>
+          );
+        })}
 
         <View style={{ alignItems: "center", marginTop: 32, opacity: 0.7 }}>
           <QuantumLine width={220} />
@@ -116,6 +158,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: "flex-start",
   },
+  legalCard: {
+    marginTop: 10,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: radius.lg,
+    overflow: "hidden",
+  },
+  legalHead: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding: 14 },
+  legalBody: { paddingHorizontal: 14, paddingBottom: 16, borderTopWidth: 1, borderTopColor: colors.border, paddingTop: 10 },
   mailText: { fontSize: 15, fontFamily: fonts.bodyBlack, color: colors.primary },
   foot: { fontSize: 12, color: colors.textSecondary, textAlign: "center", marginTop: 10, lineHeight: 18 },
 });

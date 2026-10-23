@@ -53,8 +53,8 @@ const UI = {
   sectionLabel: { en: "Try It Yourself", es: "Pruébelo Usted Mismo" },
   heading: { en: "The Quantum Lab", es: "El Laboratorio Cuántico" },
   intro: {
-    en: "This is a real quantum circuit simulator running actual state-vector math underneath — not a mockup. Place gates on the wires below, press Run, and see exactly what happens when you measure the result.",
-    es: "Este es un simulador de circuitos cuánticos real, con matemática de vectores de estado real por debajo, no una simulación de apariencia. Coloque compuertas en las líneas de abajo, presione Ejecutar y vea exactamente qué pasa al medir el resultado.",
+    en: "This is a working quantum circuit simulator. It runs real state-vector math underneath, so it is not a mockup. Place gates on the wires below, press Run, and see what happens when you measure the result.",
+    es: "Este es un simulador de circuitos cuánticos que funciona. Usa matemática de vectores de estado real por debajo, así que no es una simulación de apariencia. Coloque compuertas en las líneas de abajo, presione Ejecutar y vea qué pasa al medir el resultado.",
   },
   presetsHeading: { en: "Not sure where to start?", es: "¿No sabe por dónde empezar?" },
   presetSuperposition: { en: "Build Superposition", es: "Construir Superposición" },
@@ -73,16 +73,16 @@ const UI = {
   qubitLabel: { en: "Qubit", es: "Qubit" },
   stepLabel: { en: "Step", es: "Paso" },
   armedStatus: {
-    en: (name) => `${name} armed — tap an empty wire slot to place it.`,
-    es: (name) => `${name} activada — toque una casilla vacía para colocarla.`,
+    en: (name) => `${name} armed. Tap an empty wire slot to place it.`,
+    es: (name) => `${name} activada. Toque una casilla vacía para colocarla.`,
   },
   cnotPendingStatus: {
-    en: (qubit) => `CNOT started — tap Qubit ${qubit} at the same step to finish it.`,
-    es: (qubit) => `CNOT iniciada — toque Qubit ${qubit} en el mismo paso para terminarla.`,
+    en: (qubit) => `CNOT started. Tap Qubit ${qubit} at the same step to finish it.`,
+    es: (qubit) => `CNOT iniciada. Toque Qubit ${qubit} en el mismo paso para terminarla.`,
   },
   selectedStatus: {
-    en: "Gate selected — press Delete, or the trash button below, to remove it.",
-    es: "Compuerta seleccionada — presione Suprimir, o el botón de la papelera, para quitarla.",
+    en: "Gate selected. Press Delete, or the trash button below, to remove it.",
+    es: "Compuerta seleccionada. Presione Suprimir, o el botón de la papelera, para quitarla.",
   },
   cancelHint: { en: "Press Escape to cancel.", es: "Presione Escape para cancelar." },
   runButton: { en: "Run Circuit", es: "Ejecutar Circuito" },
@@ -119,8 +119,8 @@ const UI = {
     es: (qubit, step) => `Qubit ${qubit}, paso ${step}, vacío`,
   },
   gateCellLabel: {
-    en: (qubit, step, gateName) => `Qubit ${qubit}, step ${step}, ${gateName} — tap to select`,
-    es: (qubit, step, gateName) => `Qubit ${qubit}, paso ${step}, ${gateName} — toque para seleccionar`,
+    en: (qubit, step, gateName) => `Qubit ${qubit}, step ${step}, ${gateName}. Tap to select`,
+    es: (qubit, step, gateName) => `Qubit ${qubit}, paso ${step}, ${gateName}. Toque para seleccionar`,
   },
 };
 
@@ -453,7 +453,7 @@ export default function QuantumLab({ presetRequest }) {
                     setArmedGate((cur) => (cur === gate.type ? null : gate.type));
                   }}
                   aria-pressed={armed}
-                  aria-label={`${t(gate.name)}${disabled ? ` — ${t(UI.cnotDisabledHint)}` : ""}`}
+                  aria-label={`${t(gate.name)}${disabled ? `, ${t(UI.cnotDisabledHint)}` : ""}`}
                   title={disabled ? t(UI.cnotDisabledHint) : t(gate.name)}
                   className={`w-20 h-20 flex flex-col items-center justify-center border-2 shadow-[3px_3px_0_0_#FFFFFF] font-mono transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#375FFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#04070F] ${
                     disabled

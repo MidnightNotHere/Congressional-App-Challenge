@@ -31,8 +31,8 @@ const UI = {
     es: "¿Su Organización Está Lista para la Era Cuántica?",
   },
   intro: {
-    en: "NIST finalized post-quantum cryptography standards in 2024. Every organization handling sensitive data needs to understand its exposure and begin migrating. This free assessment takes 3 minutes.",
-    es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Toda organización que maneje datos confidenciales necesita comprender su exposición y comenzar a migrar. Esta evaluación gratuita toma 3 minutos.",
+    en: "NIST finalized post-quantum cryptography standards in 2024. If your organization handles sensitive data, you should know where it is exposed and start planning the switch. This free assessment takes 3 minutes.",
+    es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Si su organización maneja datos confidenciales, debe saber dónde está expuesta y empezar a planificar el cambio. Esta evaluación gratuita toma 3 minutos.",
   },
   explainer: {
     en: "Current encryption protects your data the way a combination lock protects a safe. A quantum computer is like a machine that tries every combination at once, in seconds. NIST's new PQC standards are the fix. Here is where your organization stands.",
