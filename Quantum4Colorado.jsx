@@ -91,29 +91,9 @@ import QuantumLab from "./src/lab/QuantumLab.jsx";
 import qrcode from "qrcode-generator";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 
-/* =========================================================================
-   Quantum4Colorado
-   A civic information platform for Colorado residents, organizations,
-   and representatives to understand quantum computing's relevance to
-   Colorado. Built for the 2026 Congressional App Challenge (CO-06).
-   Single-file React component. Tailwind utility classes only.
+// Most content is in data at the repo root, shared with mobile
+// This file contains design and markup. The UI-kit file has many templates this borrows from - Aarush
 
-   Content (ecosystem entries, assessment questions/scoring, quiz data,
-   policy recommendations, career profiles, youth resources) lives in
-   /data at the repo root and is shared verbatim with the mobile app —
-   see /data/*.js. Only design tokens and JSX/markup live in this file.
-   ========================================================================= */
-
-/* ------------------------------- Static data ----------------------------- */
-/* Content now lives in /data — see imports above. Design tokens and the
-   small primitives built on them (the palette, QuantumLine, SectionLabel,
-   readableOn, the language context, and the icon registry) live in
-   src/shared/uiKit.jsx so the course pages under src/education can use
-   them without importing from this file. */
-
-/* Section key <-> URL path. Each section is a real route so they're
-   independently linkable and the app isn't one endless scroll. The course
-   also owns /learn/:lessonSlug, which has no section key of its own. */
 const PATH_BY_KEY = {
   story: "/",
   assessment: "/assessment",
@@ -133,25 +113,16 @@ const KEY_BY_PATH = Object.fromEntries(
 
 /* ------------------------------ Small atoms ------------------------------ */
 const PRIORITY_CLASS = {
-  // #FF2D55 measures only ~3.65:1 against white in either direction — under
-  // the 4.5:1 this small (10px) pill text needs. The darker on-light red
-  // (same value as CYBER.dangerTextOnLight) is the fix, same reasoning as
-  // the diagrams' D.red.
+  // do not change #FF2D55
   Immediate: "bg-[#B8123F] text-white",
   "Within 6 Months": "bg-[#FFE600] text-[#04070F]",
   "Within 1 Year": "bg-[#375FFF] text-white",
 };
 
 /* ------------------------------ Language context --------------------------- */
-/* Bilingual support (English/Spanish). Content fields are { en, es } pairs
-   living directly in /data (see data/i18n.js); LanguageContext (in the shared
-   UI kit) tracks which language is active, and the provider below persists
-   the user's choice across sessions. */
+// remembers the language
 const LANG_STORAGE_KEY = "q4co-lang";
 
-/* Toggle rendered in the web nav and reused in the mobile-style spots that
-   need it (kept small and self-contained since it's used in a couple of
-   different layout contexts — desktop nav, mobile nav drawer). */
 function LanguageToggle({ className = "" }) {
   const { lang, setLang } = useLanguage();
   return (
@@ -179,10 +150,7 @@ function LanguageToggle({ className = "" }) {
   );
 }
 
-/* Static UI chrome text (headings, buttons, labels) that isn't part of
-   the Phase 1 shared /data content — kept local to this file since each
-   platform has always had its own UI copy. Bilingual for the sections
-   translated per the Phase 4 priority order. */
+// headings, buttons, labels not part of /data
 const UI = {
   assessment: {
     sectionLabel: { en: "Readiness Assessment", es: "Evaluación de Preparación" },
@@ -195,7 +163,7 @@ const UI = {
       es: "El NIST finalizó los estándares de criptografía poscuántica en 2024. Si su organización maneja datos confidenciales, debe saber dónde está expuesta y empezar a planificar el cambio. Esta evaluación gratuita toma 3 minutos.",
     },
     explainer: {
-      en: "Current encryption protects your data the way a combination lock protects a safe. A quantum computer is like a machine that tries every combination at once, in seconds. NIST's new PQC standards are the fix. Here is where your organization stands.",
+      en: "Current encryption protects your data the way a combination lock protects a safe, one at a time. But what if we could do it much faster? A quantum computer is like a machine that tries every combination at once, in seconds. NIST's new PQC standards are the fix. Here is where your organization stands.",
       es: "El cifrado actual protege sus datos como una cerradura de combinación protege una caja fuerte. Una computadora cuántica es como una máquina que prueba todas las combinaciones a la vez, en segundos. Los nuevos estándares de PQC del NIST son la solución. Esto es lo que le toca a su organización.",
     },
     question: { en: "Question", es: "Pregunta" },
